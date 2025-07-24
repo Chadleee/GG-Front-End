@@ -193,9 +193,9 @@ function MemberDetail() {
           <Typography variant="h5" component="h3" gutterBottom color="text.primary">
             {member.displayName || member.name}'s Characters
           </Typography>
-          <Grid spacing={3}>
+          <Grid container spacing={3}>
             {memberCharacters.map((character) => (
-              <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4 }}>
+              <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                 <CharacterCard character={character} />
               </Grid>
             ))}
