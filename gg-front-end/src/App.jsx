@@ -1,35 +1,123 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Tabs, Tab, Box, Container, Switch, IconButton } from '@mui/material';
+import { LightMode, DarkMode } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import logo from './assets/tnc_logo.jpg';
 
-function App() {
-  const [count, setCount] = useState(0)
+import Home from './components/Home';
+import Characters from './components/characters/Characters';
+import CharacterDetail from './components/characters/CharacterDetail';
+import Members from './components/members/Members';
+import MemberDetail from './components/members/MemberDetail';
+import { useColorMode } from './components/ThemeProvider';
+
+function Header() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { toggleColorMode, mode } = useColorMode();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setValue(0);
+    }
+    else if (location.pathname.startsWith('/members')) {
+      setValue(1);
+    }
+    else if (location.pathname.startsWith('/characters')) {
+      setValue(2);
+    }
+  }, [location.pathname]);
+
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+    const routes = ['/', '/members', '/characters'];
+    navigate(routes[newValue]);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppBar position="static" elevation={0}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%', py: 0 }}>
+          <Box component="img" src={logo} alt="App Logo" sx={{ width: '100%', maxWidth: '1200px' }} />
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', py: 0, px: 2 }}>
+          <Tabs 
+            value={value} 
+            onChange={handleChange}
+            sx={{ 
+              '& .MuiTab-root': { 
+                color: 'rgba(255, 255, 255, 0.7)',
+                '&.Mui-selected': { 
+                  color: 'white',
+                  border: 'none',
+                  outline: 'none'
+                },
+                '&:focus': {
+                  outline: 'none',
+                  border: 'none'
+                }
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: 'white',
+                height: '2px'
+              }
+            }}
+          >
+            <Tab label="Home" onClick={() => navigate('/')} />
+            <Tab label="Members" onClick={() => navigate('/members')} />
+            <Tab label="Characters" onClick={() => navigate('/characters')} />
+          </Tabs>
+          
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <LightMode sx={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: 20 }} />
+            <Switch
+              checked={mode === 'dark'}
+              onChange={toggleColorMode}
+              sx={{
+                '& .MuiSwitch-switchBase.Mui-checked': {
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  },
+                },
+                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                  backgroundColor: 'white',
+                },
+                '& .MuiSwitch-switchBase': {
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  },
+                },
+                '& .MuiSwitch-track': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                },
+              }}
+            />
+            <DarkMode sx={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: 20 }} />
+          </Box>
+        </Box>
+      </Box>
+    </AppBar>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Router>
+      <Header />
+      <Container sx={{ mt: 4 }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/characters" element={<Characters />} />
+          <Route path="/characters/:id" element={<CharacterDetail />} />
+          <Route path="/members" element={<Members />} />
+          <Route path="/members/:id" element={<MemberDetail />} />
+        </Routes>
+      </Container>
+    </Router>
+  );
+}
+
+export default App;

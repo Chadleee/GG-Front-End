@@ -2,5 +2,89 @@
   "users": [
     { "id": 1, "name": "Jane" },
     { "id": 2, "name": "John" }
+  ],
+  "characters": [
+    {
+      "id": 1,
+      "memberId": 2,
+      "name": "Shabammabop",
+      "race": "Gator",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 1,
+      "memberId": 2,
+      "name": "Crazy Girl",
+      "race": "Human",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 2,
+      "memberId": 1,
+      "name": "Joe Biden",
+      "race": "Human",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 3,
+      "memberId": 1,
+      "name": "Marcus",
+      "race": "Worm",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 4,
+      "memberId": 3,
+      "name": "Roflgator",
+      "race": "Gator",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 5,
+      "memberId": 3,
+      "name": "Jigsaw",
+      "race": "Puppet",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 6,
+      "memberId": 4,
+      "name": "Steven",
+      "race": "Worm",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 7,
+      "memberId": 4,
+      "name": "Gas Station Employee",
+      "race": "Human",
+      "avatar": "https://via.placeholder.com/150"
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "name": "Jouffa",
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/ef3f5c17-c4de-4a48-a16b-d921402de104-profile_image-70x70.png",
+      "joinDate": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "name": "MementosMori",
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/35b2fdb6-5dca-4b8a-8c83-37293718fbc6-profile_image-70x70.png",
+      "joinDate": "2024-02-20"
+    },
+    {
+      "id": 3,
+      "name": "Moonbu",
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/9d049255-fcac-4b19-9df7-6befd60e7cde-profile_image-70x70.png",
+      "joinDate": "2024-03-10"
+    },
+    {
+      "id": 4,
+      "name": "itskxtlyn",
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/f3e897a6-c86b-4d1a-9cb9-b4f9676d8b48-profile_image-70x70.png",
+      "joinDate": "2024-04-10"
+    }
   ]
 }
