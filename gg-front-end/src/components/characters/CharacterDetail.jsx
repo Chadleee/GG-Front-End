@@ -8,7 +8,6 @@ import {
   Avatar, 
   Button, 
   Chip,
-  Grid,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -23,6 +22,7 @@ import {
 import { ArrowBack as ArrowBackIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import { useMembers } from '../../contexts/MemberContext';
+import Portrait from '../Portrait';
 import shabammabop from '../../assets/shabammabop.png';
 import crazyGirl from '../../assets/crazy_girl.png';
 import joeBiden from '../../assets/joe_biden.png';
@@ -31,6 +31,7 @@ import roflgator from '../../assets/roflgator.png';
 import steven from '../../assets/steven.png';
 import gasStationEmployee from '../../assets/gas_station_employee.png';
 import marcus from '../../assets/marcus.png';
+import Grid from '@mui/material/Grid';
 
 function CharacterDetail() {
   const theme = useTheme();
@@ -44,9 +45,9 @@ function CharacterDetail() {
   const [editDialog, setEditDialog] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
-    race: '',
+    affiliations: [],
     memberId: '',
-    avatar: ''
+    image: ''
   });
 
   useEffect(() => {
@@ -55,15 +56,15 @@ function CharacterDetail() {
       setCharacter(characterData);
       setEditForm({
         name: characterData.name,
-        race: characterData.race,
+        affiliations: characterData.affiliations,
         memberId: characterData.memberId.toString(),
-        avatar: characterData.avatar
+        image: characterData.image
       });
     }
     setLoading(false);
   }, [id, getCharacterById]);
 
-  const getCharacterAvatar = (characterName) => {
+  const getCharacterImage = (characterName, imageUrl) => {
     switch (characterName) {
       case 'Shabammabop':
         return shabammabop;
@@ -82,7 +83,7 @@ function CharacterDetail() {
       case 'Marcus':
         return marcus;
       default:
-        return 'https://via.placeholder.com/150';
+        return imageUrl;
     }
   };
 
@@ -92,14 +93,14 @@ function CharacterDetail() {
   };
 
   const handleEdit = async () => {
-    if (editForm.name && editForm.race && editForm.memberId) {
+    if (editForm.name && editForm.affiliations && editForm.memberId) {
       try {
         const updatedCharacter = {
           ...character,
           name: editForm.name,
-          race: editForm.race,
+          affiliations: editForm.affiliations,
           memberId: parseInt(editForm.memberId),
-          avatar: editForm.avatar
+          image: editForm.image
         };
         
         await updateCharacter(character.id, updatedCharacter);
@@ -137,18 +138,20 @@ function CharacterDetail() {
   }
 
   return (
-    <Box sx={{ py: 4 }}>
-      {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+    <Box sx={{ pb: 4 }}>
+      <Box sx={{ width: '100%', display: 'flex', alignItems: 'right', mb: 2, justifyContent: 'right' }}>
         <Button 
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/characters')}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
+          sx={{ color: theme.palette.primary.main }}
         >
           Back to Characters
         </Button>
+      </Box>
+      {/* Header */}
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-          Character Details
+          {character.displayName || character.name}
         </Typography>
         <Button 
           startIcon={<EditIcon />}
@@ -168,7 +171,7 @@ function CharacterDetail() {
 
       {/* Character Details */}
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Card 
             sx={{
               backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
@@ -178,70 +181,51 @@ function CharacterDetail() {
           >
             <CardContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                <Avatar 
-                  src={getCharacterAvatar(character.name)} 
-                  sx={{ 
-                    width: 120, 
-                    height: 120, 
-                    mb: 2,
-                    border: `3px solid ${theme.palette.primary.main}`
-                  }}
-                />
-                <Typography variant="h4" component="h2" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }} gutterBottom>
-                  {character.name}
-                </Typography>
-                <Chip 
-                  label={character.race} 
-                  sx={{ 
-                    mb: 2,
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText,
-                    fontSize: '1.1rem',
-                    padding: '8px 16px'
-                  }}
-                />
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+                <Box sx={{mb: 2}}>
+                  <Portrait 
+                    src={getCharacterImage(character.name, character.image)}
+                    alt={character.name}
+                    size={120}
+                  />
+                </Box>
+                <Box sx={{ mb: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
+                  <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+                    Played by:
+                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'column' }}>
+                      <Typography
+                        key={character.memberId}
+                        variant="body2"
+                        sx={{
+                          color: theme.palette.primary.main,
+                          cursor: 'pointer',
+                          textDecoration: 'none',
+                          width: 'fit-content',
+                          '&:hover': {
+                            textDecoration: 'underline',
+                          },
+                        }}
+                        onClick={() => navigate(`/members/${character.memberId}`)}
+                      >
+                        {getMemberName(character.memberId)}
+                      </Typography>
+                  </Box>
+                </Box>
 
-        <Grid item xs={12} md={6}>
-          <Card 
-            sx={{
-              backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
-              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
-              border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6" component="h3" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }} gutterBottom>
-                Character Information
-              </Typography>
-              
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                  Played by
-                </Typography>
-                <Button
-                  onClick={() => navigate(`/members/${character.memberId}`)}
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    color: theme.palette.primary.main,
-                    borderColor: theme.palette.primary.main,
-                    textTransform: 'none',
-                    '&:hover': {
+                {character.affiliations && character.affiliations.map((affiliation) => (
+                  <Chip 
+                    key={affiliation}
+                    label={affiliation}
+                    sx={{ 
+                      mb: 2,
                       backgroundColor: theme.palette.primary.main,
                       color: theme.palette.primary.contrastText,
-                      borderColor: theme.palette.primary.main,
-                    }
-                  }}
-                >
-                  {getMemberName(character.memberId)}
-                </Button>
+                      fontSize: '1.1rem',
+                      padding: '8px 16px'
+                    }}
+                  />
+                ))}
               </Box>
-
-
             </CardContent>
           </Card>
         </Grid>
@@ -285,9 +269,9 @@ function CharacterDetail() {
               }}
             />
             <TextField
-              label="Race"
-              value={editForm.race}
-              onChange={(e) => setEditForm({...editForm, race: e.target.value})}
+              label="Affiliations"
+              value={editForm.affiliations}
+              onChange={(e) => setEditForm({...editForm, affiliations: e.target.value})}
               fullWidth
               sx={{
                 '& .MuiOutlinedInput-root': {
@@ -331,9 +315,9 @@ function CharacterDetail() {
               </Select>
             </FormControl>
             <TextField
-              label="Avatar URL"
-              value={editForm.avatar}
-              onChange={(e) => setEditForm({...editForm, avatar: e.target.value})}
+              label="Image URL"
+              value={editForm.image}
+              onChange={(e) => setEditForm({...editForm, image: e.target.value})}
               fullWidth
               sx={{
                 '& .MuiOutlinedInput-root': {

@@ -1,4 +1,5 @@
-import { Box, Typography, Paper, Grid, Card, CardContent, CardActions, Button, useTheme } from '@mui/material';
+import { Box, Typography, Paper, Card, CardContent, CardActions, Button, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
@@ -15,8 +16,8 @@ function Home() {
         Manage your characters and members with ease
       </Typography>
 
-      <Grid container spacing={4} justifyContent="center">
-        <Grid item xs={12} md={6}>
+      <Grid spacing={4} justifyContent="center">
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card 
             sx={{ 
               height: '100%', 
@@ -54,7 +55,7 @@ function Home() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card 
             sx={{ 
               height: '100%', 

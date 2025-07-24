@@ -34,7 +34,7 @@ function MemberCard({ member }) {
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Avatar 
-            src={member.avatar} 
+            src={member.image} 
             sx={{ 
               width: 56, 
               height: 56, 

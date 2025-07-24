@@ -17,7 +17,7 @@ function AddMemberDialog({ open, onClose }) {
   
   const [newMember, setNewMember] = useState({
     name: '',
-    avatar: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150'
   });
 
   const handleAddMember = async () => {
@@ -29,7 +29,7 @@ function AddMemberDialog({ open, onClose }) {
         };
         
         await createMember(memberData);
-        setNewMember({ name: '', avatar: 'https://via.placeholder.com/150' });
+        setNewMember({ name: '', image: 'https://via.placeholder.com/150' });
         onClose();
       } catch (err) {
         // Error is handled by the context
@@ -39,7 +39,7 @@ function AddMemberDialog({ open, onClose }) {
   };
 
   const handleClose = () => {
-    setNewMember({ name: '', avatar: 'https://via.placeholder.com/150' });
+    setNewMember({ name: '', image: 'https://via.placeholder.com/150' });
     onClose();
   };
 
@@ -81,9 +81,9 @@ function AddMemberDialog({ open, onClose }) {
             }}
           />
           <TextField
-            label="Avatar URL"
-            value={newMember.avatar}
-            onChange={(e) => setNewMember({...newMember, avatar: e.target.value})}
+            label="Image URL"
+            value={newMember.image}
+            onChange={(e) => setNewMember({...newMember, image: e.target.value})}
             fullWidth
             sx={{
               '& .MuiOutlinedInput-root': {

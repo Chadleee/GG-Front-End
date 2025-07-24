@@ -7,7 +7,6 @@ import {
   CardContent, 
   Avatar, 
   Button, 
-  Grid,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -15,10 +14,12 @@ import {
   TextField,
   useTheme
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { ArrowBack as ArrowBackIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useMembers } from '../../contexts/MemberContext';
 import { useCharacters } from '../../contexts/CharacterContext';
 import CharacterCard from '../characters/CharacterCard';
+import Portrait from '../Portrait';
 
 function MemberDetail() {
   const theme = useTheme();
@@ -33,7 +34,7 @@ function MemberDetail() {
   const [editDialog, setEditDialog] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
-    avatar: ''
+    image: ''
   });
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function MemberDetail() {
       setMember(memberData);
       setEditForm({
         name: memberData.name,
-        avatar: memberData.avatar
+        image: memberData.image
       });
       
       // Get characters for this member
@@ -58,7 +59,7 @@ function MemberDetail() {
         const updatedMember = {
           ...member,
           name: editForm.name,
-          avatar: editForm.avatar
+          image: editForm.image
         };
         
         await updateMember(member.id, updatedMember);
@@ -96,18 +97,20 @@ function MemberDetail() {
   }
 
   return (
-    <Box sx={{ py: 4 }}>
+    <Box sx={{ pb: 4 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+      <Box sx={{ width: '100%', display: 'flex', alignItems: 'right', mb: 2, justifyContent: 'right' }}>
         <Button 
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/members')}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
+          sx={{ color: theme.palette.primary.main }}
         >
           Back to Members
         </Button>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-          Member Details
+          {member.displayName || member.name}
         </Typography>
         <Button 
           startIcon={<EditIcon />}
@@ -127,7 +130,7 @@ function MemberDetail() {
 
       {/* Member Details */}
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <Card 
             sx={{
               backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
@@ -137,55 +140,48 @@ function MemberDetail() {
           >
             <CardContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                <Avatar 
-                  src={member.avatar} 
-                  sx={{ 
-                    width: 120, 
-                    height: 120, 
-                    mb: 2,
-                    border: `3px solid ${theme.palette.primary.main}`
-                  }}
+                <Portrait 
+                  src={member.image}
+                  alt={member.name}
+                  size={120}
                 />
-                <Typography variant="h4" component="h2" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }} gutterBottom>
-                  {member.name}
-                </Typography>
               </Box>
-            </CardContent>
-          </Card>
-        </Grid>
 
-        <Grid item xs={12} md={6}>
-          <Card 
-            sx={{
-              backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
-              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
-              border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6" component="h3" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }} gutterBottom>
-                Member Information
-              </Typography>
-              
-
-
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                  Join Date
+              <Box sx={{ mb: 1, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
+                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+                  Join Date:
                 </Typography>
-                <Typography variant="body1" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
+                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
                   {member.joinDate}
                 </Typography>
               </Box>
 
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                  Characters Played
+              <Box sx={{ mb: 1, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
+                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+                  Characters Played:
                 </Typography>
-                <Typography variant="body1" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
-                  {memberCharacters.length} character{memberCharacters.length !== 1 ? 's' : ''}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'column' }}>
+                  {memberCharacters.map((character) => (
+                    <Typography
+                      key={character.id}
+                      variant="body2"
+                      sx={{
+                        color: theme.palette.primary.main,
+                        cursor: 'pointer',
+                        textDecoration: 'none',
+                        width: 'fit-content',
+                        '&:hover': {
+                          textDecoration: 'underline',
+                        },
+                      }}
+                      onClick={() => navigate(`/characters/${character.id}`)}
+                    >
+                      {character.name}
+                    </Typography>
+                  ))}
+                </Box>
               </Box>
+
             </CardContent>
           </Card>
         </Grid>
@@ -195,11 +191,11 @@ function MemberDetail() {
       {memberCharacters.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h5" component="h3" gutterBottom color="text.primary">
-            {member.name}'s Characters
+            {member.displayName || member.name}'s Characters
           </Typography>
-          <Grid container spacing={3}>
+          <Grid spacing={3}>
             {memberCharacters.map((character) => (
-              <Grid item xs={12} sm={6} md={4} key={character.id}>
+              <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4 }}>
                 <CharacterCard character={character} />
               </Grid>
             ))}
@@ -245,9 +241,9 @@ function MemberDetail() {
               }}
             />
             <TextField
-              label="Avatar URL"
-              value={editForm.avatar}
-              onChange={(e) => setEditForm({...editForm, avatar: e.target.value})}
+              label="Image URL"
+              value={editForm.image}
+              onChange={(e) => setEditForm({...editForm, image: e.target.value})}
               fullWidth
               sx={{
                 '& .MuiOutlinedInput-root': {

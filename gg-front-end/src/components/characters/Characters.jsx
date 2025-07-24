@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { 
   Box, 
   Typography, 
-  Grid, 
   Button, 
   useTheme
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Add as AddIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import { useMembers } from '../../contexts/MemberContext';
@@ -64,7 +64,7 @@ function Characters() {
 
       <Grid container spacing={3}>
         {characters.map((character) => (
-          <Grid item xs={12} sm={6} md={4} key={character.id}>
+          <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CharacterCard character={character} />
           </Grid>
         ))}

@@ -21,13 +21,13 @@ function AddCharacterDialog({ open, onClose, members }) {
   
   const [newCharacter, setNewCharacter] = useState({
     name: '',
-    race: '',
+    affiliations: [],
     memberId: '',
-    avatar: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150'
   });
 
   const handleAddCharacter = async () => {
-    if (newCharacter.name && newCharacter.race && newCharacter.memberId) {
+    if (newCharacter.name && newCharacter.affiliations && newCharacter.memberId) {
       try {
         const characterData = {
           ...newCharacter,
@@ -35,7 +35,7 @@ function AddCharacterDialog({ open, onClose, members }) {
         };
         
         await createCharacter(characterData);
-        setNewCharacter({ name: '', race: '', memberId: '', avatar: 'https://via.placeholder.com/150' });
+        setNewCharacter({ name: '', affiliations: [], memberId: '', image: 'https://via.placeholder.com/150' });
         onClose();
       } catch (err) {
         // Error is handled by the context
@@ -45,7 +45,7 @@ function AddCharacterDialog({ open, onClose, members }) {
   };
 
   const handleClose = () => {
-    setNewCharacter({ name: '', race: '', memberId: '', avatar: 'https://via.placeholder.com/150' });
+    setNewCharacter({ name: '', affiliations: '', memberId: '', image: 'https://via.placeholder.com/150' });
     onClose();
   };
 
@@ -87,9 +87,9 @@ function AddCharacterDialog({ open, onClose, members }) {
             }}
           />
           <TextField
-            label="Race"
-            value={newCharacter.race}
-            onChange={(e) => setNewCharacter({...newCharacter, race: e.target.value})}
+            label="Affiliations"
+            value={newCharacter.affiliations}
+            onChange={(e) => setNewCharacter({...newCharacter, affiliations: e.target.value})}
             fullWidth
             sx={{
               '& .MuiOutlinedInput-root': {
@@ -133,9 +133,9 @@ function AddCharacterDialog({ open, onClose, members }) {
               </Select>
             </FormControl>
             <TextField
-              label="Avatar URL"
-              value={newCharacter.avatar}
-              onChange={(e) => setNewCharacter({...newCharacter, avatar: e.target.value})}
+              label="Image URL"
+              value={newCharacter.image}
+              onChange={(e) => setNewCharacter({...newCharacter, image: e.target.value})}
               fullWidth
               sx={{
                 '& .MuiOutlinedInput-root': {

@@ -25,7 +25,7 @@ function CharacterCard({ character }) {
   const navigate = useNavigate();
   const { members } = useMembers();
 
-  const getCharacterAvatar = (characterName, aviUrl) => {
+  const getCharacterImage = (characterName, imageUrl) => {
     switch (characterName) {
       case 'Shabammabop':
         return shabammabop;
@@ -44,7 +44,7 @@ function CharacterCard({ character }) {
       case 'Marcus':
         return marcus;
       default:
-        return aviUrl;
+        return imageUrl;
     }
   };
 
@@ -75,7 +75,7 @@ function CharacterCard({ character }) {
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Avatar 
-            src={getCharacterAvatar(character.name, character.avatar)} 
+            src={getCharacterImage(character.name, character.image)} 
             sx={{ 
               width: 56, 
               height: 56, 
@@ -93,7 +93,7 @@ function CharacterCard({ character }) {
           </Box>
         </Box>
         <Chip 
-          label={character.race} 
+          label={character.affiliations} 
           sx={{ 
             mb: 1,
             backgroundColor: theme.palette.primary.main,

@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { 
   Box, 
   Typography, 
-  Grid, 
   Button, 
   useTheme
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Add as AddIcon } from '@mui/icons-material';
 import { useMembers } from '../../contexts/MemberContext';
 import MemberCard from './MemberCard';
@@ -61,7 +61,7 @@ function Members() {
 
       <Grid container spacing={3}>
         {members.map((member) => (
-          <Grid item xs={12} sm={6} md={4} key={member.id}>
+          <Grid key={member.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <MemberCard member={member} />
           </Grid>
         ))}
