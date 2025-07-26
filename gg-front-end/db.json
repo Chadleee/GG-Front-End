@@ -4,65 +4,455 @@
       "id": 1,
       "memberId": 2,
       "name": "Shabammabop",
-      "displayName": "Shabammabop",
       "affiliations": ["Gator"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Shabammabop is a gator and the best crime solver.",
+      "backstory": "",
+      "quotes": [
+        "Believe you can and you're halfway there.",
+        "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+        "Don't watch the clock; do what it does. Keep going."
+      ],
+      "relationships": [
+        {
+          "character_id": 3,
+          "relationship_type": "Friend",
+          "description": "Shabammabop and Joe Biden are friends."
+        }
+      ],
+      "characterType": "Gator",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/_MementosMori/status/1928208402381164618/photo/1",
+          "description": "Anyone Has Sitting Arrangements?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1926503935113650194/photo/1",
+          "description": "Is this Wallpaper Worthy for you?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1924800615101956369/photo/1",
+          "description": "Looking for Hearts, Holding Hearts <3"
+        }
+      ],
+      "clips": [
+        {
+          "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
+          "publishedAt": "1 month ago"
+        },
+        {
+          "title": "I spent 3 days cooking in the lab to show this",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
+          "publishedAt": "3 months ago"
+        },
+        {
+          "title": "if you don't raid me... you don't love me",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
+          "publishedAt": "3 months ago"
+        }
+      ],
+      "avatarInfo": {
+        "name": "Shabammabop",
+        "description": "Shabammabop is a gator who is friends with Joe Biden.",
+        "url": "https://via.placeholder.com/150"
+      },
+      "avatarName": "Shabammabop",
+      "avatarDescription": "Shabammabop is a gator who is friends with Joe Biden.",
+      "avatarUrl": "https://via.placeholder.com/150",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 2,
       "memberId": 2,
       "name": "Crazy Girl",
-      "displayName": "Crazy Girl",
       "affiliations": ["Human"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Joe Biden is a human who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "You are never too old to set another goal or to dream a new dream.",
+        "It always seems impossible until it’s done.",
+        "Start where you are. Use what you have. Do what you can."
+      ],
+      "relationships": [
+        {
+          "character_id": 4,
+          "relationship_type": "Rival",
+          "description": "Competes for Rob's attention"
+        }
+      ],
+      "characterType": "Human",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/_MementosMori/status/1928208402381164618/photo/1",
+          "description": "Anyone Has Sitting Arrangements?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1926503935113650194/photo/1",
+          "description": "Is this Wallpaper Worthy for you?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1924800615101956369/photo/1",
+          "description": "Looking for Hearts, Holding Hearts <3"
+        }
+      ],
+      "clips": [
+        {
+          "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
+          "publishedAt": "1 month ago"
+        },
+        {
+          "title": "I spent 3 days cooking in the lab to show this",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
+          "publishedAt": "3 months ago"
+        },
+        {
+          "title": "if you don't raid me... you don't love me",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
+          "publishedAt": "3 months ago"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 3,
       "memberId": 1,
       "name": "Joe Biden",
-      "displayName": "Joe Biden",
       "affiliations": ["Human"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Joe Biden is a human who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Your only limit is your mind.",
+        "Dream big and dare to fail.",
+        "Push yourself, because no one else is going to do it for you."
+      ],
+      "relationships": [
+        {
+          "character_id": 1,
+          "relationship_type": "Friend",
+          "description": "Shabammabop and Joe Biden are friends."
+        }],
+      "characterType": "Human",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/jouffas/status/1947046745235411164/photo/1",
+          "description": "henblo :3"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1939462120149578119/photo/1",
+          "description": "hru today?"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1934408355641954369/photo/1",
+          "description": "henlo :3 (say it back)"
+        }
+      ]
+      ,
+      "clips": [
+        {
+          "title": "A Scared Jouffa",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
+          "publishedAt": "2023"
+        },
+        {
+          "title": "jouffa gf experience",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
+          "publishedAt": "2022"
+        },
+        {
+          "title": "ALL NEW JOUFFA BUCKET",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
+          "publishedAt": "2023"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 4,
       "memberId": 1,
       "name": "Marcus",
-      "displayName": "Marcus",
       "affiliations": ["Worm"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Marcus is a worm who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Hardships often prepare ordinary people for an extraordinary destiny.",
+        "Great things never come from comfort zones.",
+        "Do something today that your future self will thank you for."
+      ],
+      "relationships": [
+        {
+          "character_id": 2,
+          "relationship_type": "Rival",
+          "description": "Competes for Rob's attention"
+        }
+      ],
+      "characterType": "Worm",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/jouffas/status/1947046745235411164/photo/1",
+          "description": "henblo :3"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1939462120149578119/photo/1",
+          "description": "hru today?"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1934408355641954369/photo/1",
+          "description": "henlo :3 (say it back)"
+        }
+      ]
+      ,
+      "clips": [
+        {
+          "title": "A Scared Jouffa",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
+          "publishedAt": "2023"
+        },
+        {
+          "title": "jouffa gf experience",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
+          "publishedAt": "2022"
+        },
+        {
+          "title": "ALL NEW JOUFFA BUCKET",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
+          "publishedAt": "2023"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 5,
       "memberId": 3,
       "name": "Roflgator",
-      "displayName": "Roflgator",
       "affiliations": ["Gator"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Roflgator is a gator who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Success doesn’t just find you. You have to go out and get it.",
+        "The harder you work for something, the greater you'll feel when you achieve it.",
+        "Don’t limit your challenges—challenge your limits."
+      ],
+      "relationships": [
+        {
+          "character_id": 7,
+          "relationship_type": "Acquaintance",
+          "description": "Roflgator and Steven are acquaintances."
+        }
+      ],
+      "characterType": "Gator",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/MoonBuVR/status/1913585158197838134/photo/1",
+          "description": "Are you going to keep me waiting?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1909951904618078537/photo/1",
+          "description": "Are you busy tonight?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1891115133763461629/photo/1",
+          "description": "What would you do if I were yours for one night?"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Neat by MoonBuVr VRChat Toggle Showcase",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
+          "publishedAt": "10 months ago"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 6,
       "memberId": 3,
       "name": "Jigsaw",
-      "displayName": "Jigsaw",
       "affiliations": ["Puppet"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Jigsaw is a puppet who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Stay focused and never give up.",
+        "The best time to plant a tree was 20 years ago. The second best time is now.",
+        "Small steps in the right direction can turn out to be the biggest steps of your life."
+      ],
+      "relationships": [
+        {
+          "character_id": 8,
+          "relationship_type": "Acquaintance",
+          "description": "Interacted with each other at the gas station"
+        }
+      ],
+      "characterType": "Puppet",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/MoonBuVR/status/1913585158197838134/photo/1",
+          "description": "Are you going to keep me waiting?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1909951904618078537/photo/1",
+          "description": "Are you busy tonight?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1891115133763461629/photo/1",
+          "description": "What would you do if I were yours for one night?"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Neat by MoonBuVr VRChat Toggle Showcase",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
+          "publishedAt": "10 months ago"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 7,
       "memberId": 4,  
       "name": "Steven",
-      "displayName": "Steven",
       "affiliations": ["Worm"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Steven is a worm who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+        "Act as if what you do makes a difference. It does.",
+        "Doubt kills more dreams than failure ever will."
+      ],
+      "relationships": [
+        {
+          "character_id": 5,
+          "relationship_type": "Acquaintance",
+          "description": "Roflgator and Steven are acquaintances."
+        }
+      ],
+      "characterType": "Worm",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/itskxtlyn/status/1934571084096930240/photo/1",
+          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1930016070452084752/photo/1",
+          "description": "has your lap always been this comfy?~"
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1928262052679766054/photo/1",
+          "description": "how can i please you?~"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Stephen and the rat",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
+          "publishedAt": "7 days ago"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     },
     {
       "id": 8,
       "memberId": 4,
       "name": "Gas Station Employee",
-      "displayName": "Gas Station Employee",
       "affiliations": ["Human"],
-      "image": "https://via.placeholder.com/150"
+      "image": "https://via.placeholder.com/150",
+      "description": "Gas Station Employee is a human who is friends with Shabammabop.",
+      "backstory": "",
+      "quotes": [
+        "Make your life a masterpiece; imagine no limitations on what you can be, have or do.",
+        "You don’t have to be perfect to be amazing.",
+        "Strive for progress, not perfection."
+      ],
+      "relationships": [
+        {
+          "character_id": 6,
+          "relationship_type": "Acquaintance",
+          "description": "Interacted with each other at the gas station"
+        }
+      ],
+      "characterType": "Human",
+      "season": "1",
+      "gallary": [
+        {
+          "url": "https://x.com/itskxtlyn/status/1934571084096930240/photo/1",
+          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1930016070452084752/photo/1",
+          "description": "has your lap always been this comfy?~"
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1928262052679766054/photo/1",
+          "description": "how can i please you?~"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Stephen and the rat",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
+          "publishedAt": "7 days ago"
+        }
+      ],
+      "avatarName": "",
+      "avatarDescription": "",
+      "avatarUrl": "",
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-15"
     }
   ],
   "members": [
@@ -71,28 +461,487 @@
       "name": "Jouffa",
       "displayName": "Jouffa",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/ef3f5c17-c4de-4a48-a16b-d921402de104-profile_image-70x70.png",
-      "joinDate": "2024-01-15"
+      "joinDate": "2024-01-15",
+      "bio": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Jouffa is not just sizzling on stream—she’s braising in charisma and grilled reactions.\n\nFrom VRChat to epic Twitch moments, Jouffa smokes every entrance like bacon in a cast iron skillet. Shoulder alcatra short loin, with a side of chicken fried joy. Whether you’re laughing or spooked, it’s all medium rare vibes and crispy entertainment. She’s got style, sass, and sausage. Bacon bits and best vibes only.",
+      "socials": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/jouffa" },
+        { "platform": "youtube", "url": "https://www.youtube.com/@jouffas" },
+        { "platform": "youtube", "url": "https://www.youtube.com/@jouffaArchives" },
+        { "platform": "tiktok", "url": "https://www.tiktok.com/@jouffas" },
+        { "platform": "x", "url": "https://twitter.com/jouffas" },
+        { "platform": "kick", "url": "https://kick.com/jouffa" },
+        { "platform": "discord", "url": "https://discord.gg/jouffa" }
+      ],
+      "gallary": [
+        {
+          "url": "https://x.com/jouffas/status/1947046745235411164/photo/1",
+          "description": "henblo :3"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1939462120149578119/photo/1",
+          "description": "hru today?"
+        },
+        {
+          "url": "https://x.com/jouffas/status/1934408355641954369/photo/1",
+          "description": "henlo :3 (say it back)"
+        }
+      ]
+      ,
+      "clips": [
+        {
+          "title": "A Scared Jouffa",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
+          "publishedAt": "2023"
+        },
+        {
+          "title": "jouffa gf experience",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
+          "publishedAt": "2022"
+        },
+        {
+          "title": "ALL NEW JOUFFA BUCKET",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
+          "publishedAt": "2023"
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2025-07-26"
     },
     {
       "id": 2,
       "name": "MementosMori",
       "displayName": "MementosMori",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/35b2fdb6-5dca-4b8a-8c83-37293718fbc6-profile_image-70x70.png",
-      "joinDate": "2024-02-20"
+      "joinDate": "2024-02-20",
+      "bio": "Pork loin pastrami pancetta frankfurter kevin. Salami shoulder short ribs, meatloaf picanha landjaeger strip steak turducken. MementosMori brings the deep-fried drama with a pan-seared personality and a knack for meat-tier memes. Rump brisket cow pancetta, ham tongue burgdoggen jerky. Sausage bacon turkey, meatball porchetta strip steak t-bone chislic. This isn't just a stream—it’s a full-course smokehouse of chaos and charm. From Just Chatting to VRChatting, Mori serves it all like a hog roast under moonlight.\n\nFatback short loin ribeye brisket drumstick pig. No fluff, all gristle. Followers leave full—on laughter and existential vibes. Sizzle included.",
+      "socials": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/mementosmori" },
+        { "platform": "x", "url": "https://twitter.com/_MementosMori" },
+        { "platform": "kick", "url": "https://kick.com/mementosmori" },
+        { "platform": "youtube", "url": "https://www.youtube.com/@MementosMoriVODS" },
+        { "platform": "discord", "url": "https://discord.com/invite/tXf6AvpAvh" }
+      ],
+      "gallary": [
+        {
+          "url": "https://x.com/_MementosMori/status/1928208402381164618/photo/1",
+          "description": "Anyone Has Sitting Arrangements?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1926503935113650194/photo/1",
+          "description": "Is this Wallpaper Worthy for you?"
+        },
+        {
+          "url": "https://x.com/_MementosMori/status/1924800615101956369/photo/1",
+          "description": "Looking for Hearts, Holding Hearts <3"
+        }
+      ],
+      "clips": [
+        {
+          "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
+          "publishedAt": "1 month ago"
+        },
+        {
+          "title": "I spent 3 days cooking in the lab to show this",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
+          "publishedAt": "3 months ago"
+        },
+        {
+          "title": "if you don't raid me... you don't love me",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
+          "publishedAt": "3 months ago"
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2025-07-26"
     },
     {
       "id": 3,
-      "name": "Moonbu", 
+      "name": "Moonbu",
       "displayName": "Moonbu",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/9d049255-fcac-4b19-9df7-6befd60e7cde-profile_image-70x70.png",
-      "joinDate": "2024-03-10"
+      "joinDate": "2024-03-10",
+      "bio": "Chuck ham doner cow brisket. Moonbu marinates in mystery and grills up good vibes nightly. Flank jowl pig alcatra salami picanha. Landjaeger chislic rump meatloaf kielbasa turkey pork belly. Shoulder tenderloin cow, spare ribs pig turducken. Her stream is like bacon: you didn’t know you needed it until it’s 3AM and you’re all in.\n\nWith sausage-slicked style and immersive flavor, Moonbu pan-fries every stream moment. Strip steak vibes, meatball reactions. She’s not moonlight—she’s moon-meat.",
+      "socials": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/moonbuvr" },
+        { "platform": "youtube", "url": "https://www.youtube.com/@moonbuvr" },
+        { "platform": "tiktok", "url": "https://www.tiktok.com/@moonbuvr" },
+        { "platform": "x", "url": "https://twitter.com/MoonBuVR" },
+        { "platform": "kick", "url": "https://kick.com/moonbuvr" },
+        { "platform": "discord", "url": "https://discord.com/invite/yhJZ3Hy2H9" }
+      ],
+      "gallary": [
+        {
+          "url": "https://x.com/MoonBuVR/status/1913585158197838134/photo/1",
+          "description": "Are you going to keep me waiting?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1909951904618078537/photo/1",
+          "description": "Are you busy tonight?"
+        },
+        {
+          "url": "https://x.com/MoonBuVR/status/1891115133763461629/photo/1",
+          "description": "What would you do if I were yours for one night?"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Neat by MoonBuVr VRChat Toggle Showcase",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
+          "publishedAt": "10 months ago"
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2025-07-26"
     },
     {
-      "id": 4,  
+      "id": 4,
       "name": "itskxtlyn",
       "displayName": "itskxtlyn",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/f3e897a6-c86b-4d1a-9cb9-b4f9676d8b48-profile_image-70x70.png",
-      "joinDate": "2024-04-10"
+      "joinDate": "2024-04-10",
+      "bio": "Drumstick tail ribeye, chislic turkey ham hock chuck corned beef. Itskxtlyn isn’t just cooking—she’s flambéing. Pancetta bacon frankfurter kevin t-bone ham. Her stream is like brisket: low and slow, then BAM—flavor punch. Bacon chislic tri-tip alcatra sausage. T-bone prosciutto jowl, meatball burgdoggen salami. She’s your digital grillmaster of good vibes, comedy, and chaos.\n\nIn a sea of tofu, she’s the sizzle. And yes, her laugh is crispy.",
+      "socials": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/itskxtlyn" },
+        { "platform": "x", "url": "https://twitter.com/itskxtlyn" },
+        { "platform": "kick", "url": "https://kick.com/itskxtlyn" },
+        { "platform": "discord", "url": "https://discord.com/invite/k2Dj8S43Af" }
+      ],
+      "gallary": [
+        {
+          "url": "https://x.com/itskxtlyn/status/1934571084096930240/photo/1",
+          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1930016070452084752/photo/1",
+          "description": "has your lap always been this comfy?~"
+        },
+        {
+          "url": "https://x.com/itskxtlyn/status/1928262052679766054/photo/1",
+          "description": "how can i please you?~"
+        }
+      ],
+      "clips": [
+        {
+          "title": "Stephen and the rat",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
+          "publishedAt": "7 days ago"
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2025-07-26"
     }
+  ],
+      "change_requests": [
+      {
+        "id": 1,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "image",
+      "action": "update",
+      "oldValue": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Character+Avatar",
+      "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Avatar"
+          },
+      {
+        "id": 2,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "description",
+      "action": "update",
+      "oldValue": "A mysterious character with a dark past who seeks redemption through acts of kindness.",
+      "newValue": "A reformed villain turned hero, now dedicated to protecting the innocent and fighting for justice."
+          },
+      {
+        "id": 3,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "name",
+      "action": "update",
+      "oldValue": "Shadow Walker",
+      "newValue": "The Shadow Walker"
+          },
+      {
+        "id": 4,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "joinDate",
+      "action": "update",
+      "oldValue": "2024-01-15",
+      "newValue": "2024-02-01"
+          },
+
+          {
+        "id": 5,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "socials",
+      "action": "update",
+      "oldValue": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/character" },
+        { "platform": "youtube", "url": "https://www.youtube.com/@character" },
+        { "platform": "x", "url": "https://twitter.com/character" }
+      ],
+      "newValue": [
+        { "platform": "twitch", "url": "https://www.twitch.tv/updatedcharacter" },
+        { "platform": "discord", "url": "https://discord.gg/character" }
+      ]
+    },
+    {
+      "id": 6,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "gallery",
+      "action": "update",
+      "oldValue": [
+        {
+          "url": "https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Gallery+Image+1",
+          "description": "Character in action scene"
+        },
+        {
+          "url": "https://via.placeholder.com/400x300/9C27B0/FFFFFF?text=Gallery+Image+2",
+          "description": "Character portrait"
+        }
+      ],
+      "newValue": [
+        {
+          "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Gallery+1",
+          "description": "Updated action scene"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "entity": "character",
+      "entityId": 1,
+      "fieldType": "clips",
+      "action": "update",
+      "oldValue": [
+          {
+            "title": "Character's Best Moments",
+            "source": "YouTube",
+            "url": "https://www.youtube.com/watch?v=example1",
+            "publishedAt": "2024-01-15"
+          },
+          {
+            "title": "Epic Battle Scene",
+            "source": "Twitch",
+            "url": "https://www.twitch.tv/videos/example2",
+            "publishedAt": "2024-01-20"
+          }
+      ],
+      "newValue": [
+          {
+            "title": "Updated Character Moments",
+            "source": "YouTube",
+            "url": "https://www.youtube.com/watch?v=updated1",
+            "publishedAt": "2024-02-01"
+          }
+              ]
+      },
+      {
+        "id": 8,
+        "entity": "character",
+        "entityId": 1,
+        "fieldType": "backstory",
+        "action": "update",
+        "oldValue": "Born in the shadows of the city, this character learned to survive through cunning and stealth. Their mysterious past is filled with both triumph and tragedy.",
+        "newValue": "A former street urchin who rose to become a legendary hero, this character's journey from darkness to light inspires all who hear their tale."
+      },
+      {
+        "id": 9,
+        "entity": "character",
+        "entityId": 1,
+        "fieldType": "season",
+        "action": "update",
+        "oldValue": "Season 2",
+        "newValue": "Season 3"
+      },
+      {
+        "id": 10,
+        "entity": "character",
+        "entityId": 1,
+        "fieldType": "relationships",
+        "action": "update",
+        "oldValue": [
+          {
+            "character_id": 2,
+            "relationship_type": "Friend",
+            "description": "Close allies who have fought side by side"
+          }
+        ],
+        "newValue": [
+          {
+            "character_id": 2,
+            "relationship_type": "Best Friend",
+            "description": "Inseparable companions who share everything"
+          },
+          {
+            "character_id": 4,
+            "relationship_type": "Mentor",
+            "description": "Guides and teaches the character"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "entity": "character",
+        "entityId": 1,
+        "fieldType": "quotes",
+        "action": "update",
+        "oldValue": [
+          "The shadows are my home, but the light is my choice.",
+          "Every step forward is a step away from who I used to be."
+        ],
+        "newValue": [
+          "The shadows are my home, but the light is my choice.",
+          "Every step forward is a step away from who I used to be.",
+          "Heroes aren't born, they're made through choice and sacrifice.",
+          "The greatest power is the power to choose your own path."
+        ]
+      },
+
+      {
+        "id": 12,
+        "entity": "character",
+        "entityId": 1,
+        "fieldType": "characterType",
+        "action": "update",
+        "oldValue": "Anti-Hero",
+        "newValue": "Hero"
+      },
+      {
+        "id": 13,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "image",
+        "action": "update",
+        "oldValue": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Member+Avatar",
+        "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Member+Avatar"
+      },
+      {
+        "id": 14,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "bio",
+        "action": "update",
+        "oldValue": "A dedicated guild member who brings wisdom and experience to every adventure.",
+        "newValue": "A legendary guild member whose leadership and strategic thinking have saved countless missions."
+      },
+      {
+        "id": 15,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "displayName",
+        "action": "update",
+        "oldValue": "GuildMaster",
+        "newValue": "The GuildMaster"
+      },
+      {
+        "id": 16,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "joinDate",
+        "action": "update",
+        "oldValue": "2023-01-15",
+        "newValue": "2023-01-10"
+      },
+      {
+        "id": 17,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "socials",
+        "action": "update",
+        "oldValue": [
+          { "platform": "twitch", "url": "https://www.twitch.tv/member" },
+          { "platform": "youtube", "url": "https://www.youtube.com/@member" },
+          { "platform": "discord", "url": "https://discord.gg/member" }
+        ],
+        "newValue": [
+          { "platform": "twitch", "url": "https://www.twitch.tv/updatedmember" },
+          { "platform": "youtube", "url": "https://www.youtube.com/@updatedmember" },
+          { "platform": "discord", "url": "https://discord.gg/updatedmember" },
+          { "platform": "twitter", "url": "https://twitter.com/updatedmember" }
+        ]
+      },
+      {
+        "id": 18,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "gallery",
+        "action": "update",
+        "oldValue": [
+          {
+            "url": "https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Member+Image+1",
+            "description": "Member in action"
+          },
+          {
+            "url": "https://via.placeholder.com/400x300/9C27B0/FFFFFF?text=Member+Image+2",
+            "description": "Member portrait"
+          }
+        ],
+        "newValue": [
+          {
+            "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Member+1",
+            "description": "Updated action scene"
+          },
+          {
+            "url": "https://via.placeholder.com/400x300/795548/FFFFFF?text=Updated+Member+2",
+            "description": "Updated portrait"
+          },
+          {
+            "url": "https://via.placeholder.com/400x300/8BC34A/FFFFFF?text=New+Member+3",
+            "description": "New achievement"
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "entity": "member",
+        "entityId": 1,
+        "fieldType": "clips",
+        "action": "update",
+        "oldValue": [
+          {
+            "title": "Member's Best Moments",
+            "source": "YouTube",
+            "url": "https://www.youtube.com/watch?v=member1",
+            "publishedAt": "2023-01-15"
+          },
+          {
+            "title": "Epic Guild Battle",
+            "source": "Twitch",
+            "url": "https://www.twitch.tv/videos/member2",
+            "publishedAt": "2023-01-20"
+          }
+        ],
+        "newValue": [
+          {
+            "title": "Updated Member Moments",
+            "source": "YouTube",
+            "url": "https://www.youtube.com/watch?v=updatedmember1",
+            "publishedAt": "2024-02-01"
+          },
+          {
+            "title": "Legendary Guild Battle",
+            "source": "Twitch",
+            "url": "https://www.twitch.tv/videos/updatedmember2",
+            "publishedAt": "2024-02-15"
+          },
+          {
+            "title": "New Achievement Unlocked",
+            "source": "YouTube",
+            "url": "https://www.youtube.com/watch?v=newmember3",
+            "publishedAt": "2024-03-01"
+          }
+        ]
+      }
   ]
 }

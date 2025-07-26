@@ -76,7 +76,7 @@ export const MemberProvider = ({ children }) => {
 
   // Get member by ID
   const getMemberById = (id) => {
-    return members.find(member => member.id === id);
+    return members.find(member => member.id == id);
   };
 
   // Get member by name

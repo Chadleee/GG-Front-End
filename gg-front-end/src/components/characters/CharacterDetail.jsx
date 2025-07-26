@@ -32,6 +32,7 @@ import steven from '../../assets/steven.png';
 import gasStationEmployee from '../../assets/gas_station_employee.png';
 import marcus from '../../assets/marcus.png';
 import Grid from '@mui/material/Grid';
+import { useUser } from '../../contexts/UserContext';
 
 function CharacterDetail() {
   const theme = useTheme();
@@ -39,6 +40,7 @@ function CharacterDetail() {
   const navigate = useNavigate();
   const { getCharacterById, updateCharacter, deleteCharacter } = useCharacters();
   const { members } = useMembers();
+  const { user } = useUser();
   
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,9 +51,12 @@ function CharacterDetail() {
     memberId: '',
     image: ''
   });
+  const canEdit = user?.id.toString() === character?.memberId.toString();
+  const canDelete = user?.role === 'admin';
+
 
   useEffect(() => {
-    const characterData = getCharacterById(parseInt(id));
+    const characterData = getCharacterById(id);
     if (characterData) {
       setCharacter(characterData);
       setEditForm({
@@ -151,8 +156,9 @@ function CharacterDetail() {
       {/* Header */}
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-          {character.displayName || character.name}
+          {character.name}
         </Typography>
+        {canEdit && (
         <Button 
           startIcon={<EditIcon />}
           onClick={() => setEditDialog(true)}
@@ -160,6 +166,8 @@ function CharacterDetail() {
         >
           Edit
         </Button>
+        )}
+        {canDelete && (
         <Button 
           startIcon={<DeleteIcon />}
           onClick={handleDelete}
@@ -167,6 +175,7 @@ function CharacterDetail() {
         >
           Delete
         </Button>
+        )}
       </Box>
 
       {/* Character Details */}

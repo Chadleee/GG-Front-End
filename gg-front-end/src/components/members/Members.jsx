@@ -60,11 +60,13 @@ function Members() {
       </Box>
 
       <Grid container spacing={3}>
-        {members.map((member) => (
-          <Grid key={member.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <MemberCard member={member} />
-          </Grid>
-        ))}
+        {members
+          .sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name))
+          .map((member) => (
+            <Grid key={member.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              <MemberCard member={member} />
+            </Grid>
+          ))}
       </Grid>
 
       <AddMemberDialog 

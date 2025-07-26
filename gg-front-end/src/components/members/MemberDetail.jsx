@@ -20,6 +20,8 @@ import { useMembers } from '../../contexts/MemberContext';
 import { useCharacters } from '../../contexts/CharacterContext';
 import CharacterCard from '../characters/CharacterCard';
 import Portrait from '../Portrait';
+import { useUser } from '../../contexts/UserContext';
+import EditableExpandableCard from '../../shared/editableComponents/EditableExpandableCard';
 
 function MemberDetail() {
   const theme = useTheme();
@@ -27,7 +29,8 @@ function MemberDetail() {
   const navigate = useNavigate();
   const { getMemberById, updateMember, deleteMember } = useMembers();
   const { getCharactersByMemberId } = useCharacters();
-  
+  const { user } = useUser();
+
   const [member, setMember] = useState(null);
   const [memberCharacters, setMemberCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,9 +39,13 @@ function MemberDetail() {
     name: '',
     image: ''
   });
+  const canEdit = user?.id.toString() === member?.id.toString();
+  const canDelete = user?.role === 'admin';
+
+
 
   useEffect(() => {
-    const memberData = getMemberById(parseInt(id));
+    const memberData = getMemberById(id);
     if (memberData) {
       setMember(memberData);
       setEditForm({
@@ -80,6 +87,20 @@ function MemberDetail() {
     }
   };
 
+  const handleBioUpdate = async (newBio) => {
+    try {
+      const updatedMember = {
+        ...member,
+        bio: newBio
+      };
+      
+      await updateMember(member.id, updatedMember);
+      setMember(updatedMember);
+    } catch (err) {
+      console.error('Failed to update member bio:', err);
+    }
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -112,6 +133,7 @@ function MemberDetail() {
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
           {member.displayName || member.name}
         </Typography>
+        {canEdit && (
         <Button 
           startIcon={<EditIcon />}
           onClick={() => setEditDialog(true)}
@@ -119,6 +141,8 @@ function MemberDetail() {
         >
           Edit
         </Button>
+        )}
+        {canDelete && (
         <Button 
           startIcon={<DeleteIcon />}
           onClick={handleDelete}
@@ -126,6 +150,7 @@ function MemberDetail() {
         >
           Delete
         </Button>
+        )}
       </Box>
 
       {/* Member Details */}
@@ -184,6 +209,20 @@ function MemberDetail() {
 
             </CardContent>
           </Card>
+        </Grid>
+        
+        <Grid size={{ xs: 12, sm: 6, md: 8, lg: 9 }}>
+          <EditableExpandableCard 
+            title="Bio"
+            value={member.bio}
+            onSave={handleBioUpdate}
+            entityType="member"
+            entityId={member.id}
+            fieldType="bio"
+            placeholder="Enter member bio..."
+            defaultExpanded={false}
+            canEdit={canEdit}
+          />
         </Grid>
       </Grid>
 

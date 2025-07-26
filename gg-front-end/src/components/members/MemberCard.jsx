@@ -44,7 +44,7 @@ function MemberCard({ member }) {
           />
           <Box>
             <Typography variant="h6" component="h2" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
-              {member.name}
+              {member.displayName || member.name}
             </Typography>
             <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
               Joined: {member.joinDate}
