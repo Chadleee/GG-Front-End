@@ -38,15 +38,9 @@ function ExpandableCard({
   return (
     <Card 
       sx={{ 
-        backgroundColor: theme.palette.mode === 'light' 
-          ? '#f5f5f5' 
-          : theme.palette.background.paper,
-        color: theme.palette.mode === 'light' 
-          ? '#ffffff' 
-          : theme.palette.text.primary,
-        boxShadow: theme.palette.mode === 'light'
-          ? '0 4px 8px rgba(0, 0, 0, 0.1)'
-          : '0 4px 8px rgba(255, 255, 255, 0.1)',
+        backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
+        color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+        border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
         ...sx
       }}
     >
@@ -56,9 +50,7 @@ function ExpandableCard({
             variant="h6" 
             component="h3"
             sx={{ 
-              color: theme.palette.mode === 'light' 
-                ? '#ffffff' 
-                : theme.palette.text.primary 
+              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary
             }}
           >
             {title}
@@ -71,11 +63,12 @@ function ExpandableCard({
               sx={{
                 transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.3s ease-in-out',
-                color: theme.palette.mode === 'light' 
-                  ? '#ffffff' 
-                  : theme.palette.text.primary,
+                color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                 opacity: disableCollapse ? 0.5 : 1,
-                cursor: disableCollapse ? 'not-allowed' : 'pointer'
+                cursor: disableCollapse ? 'not-allowed' : 'pointer',
+                '&:hover': {
+                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                }
               }}
             >
               <ExpandMoreIcon />
@@ -87,9 +80,7 @@ function ExpandableCard({
       <Collapse in={isExpanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ 
-            borderTop: `1px solid ${theme.palette.mode === 'light' 
-              ? 'rgba(255, 255, 255, 0.2)' 
-              : 'rgba(255, 255, 255, 0.1)'}`,
+            borderTop: `1px solid ${theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
             pt: 2 
           }}>
           {children}

@@ -122,7 +122,7 @@ function EditableExpandableCard({
               sx={{ 
                 color: theme.palette.error.main,
                 '&:hover': {
-                  backgroundColor: theme.palette.mode === 'light' ? '#ffebee' : 'rgba(244, 67, 54, 0.1)',
+                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(244, 67, 54, 0.1)' : 'rgba(244, 67, 54, 0.1)',
                 }
               }}
             >
@@ -135,10 +135,10 @@ function EditableExpandableCard({
               disabled={isSubmitting || editValue === value}
               startIcon={<SaveIcon />}
               sx={{
-                backgroundColor: theme.palette.success.main,
-                color: theme.palette.success.contrastText,
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
                 '&:hover': {
-                  backgroundColor: theme.palette.success.dark,
+                  backgroundColor: theme.palette.primary.dark,
                 },
                 '&:disabled': {
                   backgroundColor: theme.palette.action.disabled,
@@ -183,7 +183,13 @@ function EditableExpandableCard({
           <Button 
             startIcon={<EditIcon />}
             onClick={() => handleEdit()}
-            sx={{ mr: 2, color: theme.palette.primary.main }}
+            sx={{ 
+              mr: 2, 
+              color: theme.palette.primary.main,
+              '&:hover': {
+                backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+              }
+            }}
           >
             Edit
           </Button>

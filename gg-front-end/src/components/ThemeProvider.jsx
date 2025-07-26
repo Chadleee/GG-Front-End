@@ -36,8 +36,8 @@ export default function CustomThemeProvider({ children }) {
           },
           // Background colors
           background: {
-            default: mode === 'light' ? '#f5f5f5' : '#121212', // Light grey / Dark grey
-            paper: mode === 'light' ? '#ffffff' : '#1e1e1e',   // White / Dark grey
+            default: mode === 'light' ? '#d3d3d3' : '#121212', // Light grey / Dark grey
+            paper: mode === 'light' ? '#d3d3d3' : '#1e1e1e',   // White / Dark grey
           },
           // Text colors
           text: {

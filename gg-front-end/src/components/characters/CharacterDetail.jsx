@@ -93,7 +93,7 @@ function CharacterDetail() {
   };
 
   const getMemberName = (memberId) => {
-    const member = members.find(m => m.id === memberId);
+    const member = members.find(m => m.id == memberId);
     return member ? member.name : 'Unknown Member';
   };
 
@@ -144,38 +144,30 @@ function CharacterDetail() {
 
   return (
     <Box sx={{ pb: 4 }}>
-      <Box sx={{ width: '100%', display: 'flex', alignItems: 'right', mb: 2, justifyContent: 'right' }}>
-        <Button 
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/characters')}
-          sx={{ color: theme.palette.primary.main }}
-        >
-          Back to Characters
-        </Button>
-      </Box>
-      {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-          {character.name}
-        </Typography>
-        {canEdit && (
-        <Button 
-          startIcon={<EditIcon />}
-          onClick={() => setEditDialog(true)}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
-        >
-          Edit
-        </Button>
-        )}
-        {canDelete && (
-        <Button 
-          startIcon={<DeleteIcon />}
-          onClick={handleDelete}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
-        >
-          Delete
-        </Button>
-        )}
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h4" component="h1" sx={{ flexGrow: 1, ml: 2 }}>
+            {character.name}
+          </Typography>
+          {canDelete && (
+          <Button 
+            startIcon={<DeleteIcon />}
+            onClick={handleDelete}
+            sx={{ ml: 2, color: theme.palette.primary.main }}
+          >
+            Delete
+          </Button>
+          )}
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button 
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/characters')}
+            sx={{ color: theme.palette.primary.main }}
+          >
+            Back to Characters
+          </Button>
+        </Box>
       </Box>
 
       {/* Character Details */}
@@ -206,7 +198,7 @@ function CharacterDetail() {
                         key={character.memberId}
                         variant="body2"
                         sx={{
-                          color: theme.palette.primary.main,
+                          color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                           cursor: 'pointer',
                           textDecoration: 'none',
                           width: 'fit-content',

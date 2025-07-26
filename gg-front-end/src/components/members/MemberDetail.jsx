@@ -12,7 +12,9 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  useTheme
+  useTheme,
+  Tooltip,
+  Divider
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { ArrowBack as ArrowBackIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
@@ -22,6 +24,21 @@ import CharacterCard from '../characters/CharacterCard';
 import Portrait from '../Portrait';
 import { useUser } from '../../contexts/UserContext';
 import EditableExpandableCard from '../../shared/editableComponents/EditableExpandableCard';
+import twitter_logo from '../../assets/twitter_logo.png';
+import youtube_logo from '../../assets/youtube_logo.png';
+import tiktok_logo from '../../assets/tiktok_logo.png';
+import kick_logo from '../../assets/kick_logo.png';
+import discord_logo from '../../assets/discord_logo.png';
+import instagram_logo from '../../assets/instagram_logo.png';
+import twitch_logo from '../../assets/twitch_logo.png';
+import shabammabop from '../../assets/shabammabop.png';
+import crazyGirl from '../../assets/crazy_girl.png';
+import joeBiden from '../../assets/joe_biden.png';
+import jigsaw from '../../assets/jigsaw.png';
+import roflgator from '../../assets/roflgator.png';
+import steven from '../../assets/steven.png';
+import gasStationEmployee from '../../assets/gas_station_employee.png';
+import marcus from '../../assets/marcus.png';
 
 function MemberDetail() {
   const theme = useTheme();
@@ -101,6 +118,56 @@ function MemberDetail() {
     }
   };
 
+  const getSocialLogo = (socialName) => {
+    switch (socialName) {
+      case 'Twitter':
+        return twitter_logo;
+      case 'X':
+        return twitter_logo;
+      case 'YouTube VODs':
+        return youtube_logo;
+      case 'YouTube Archives':
+        return youtube_logo;
+      case 'YouTube':
+        return youtube_logo;
+      case 'TikTok':
+        return tiktok_logo;
+      case 'Kick':
+        return kick_logo;
+      case 'Discord':
+        return discord_logo;
+      case 'Instagram':
+        return instagram_logo;
+      case 'Twitch':
+        return twitch_logo;
+      default:
+        return null;
+    }
+  };
+
+  const getCharacterImage = (characterName, imageUrl) => {
+    switch (characterName) {
+      case 'Shabammabop':
+        return shabammabop;
+      case 'Crazy Girl':
+        return crazyGirl;
+      case 'Joe Biden':
+        return joeBiden;
+      case 'Jigsaw':
+        return jigsaw;
+      case 'Roflgator':
+        return roflgator;
+      case 'Steven':
+        return steven;
+      case 'Gas Station Employee':
+        return gasStationEmployee;
+      case 'Marcus':
+        return marcus;
+      default:
+        return imageUrl;
+    }
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -120,37 +187,30 @@ function MemberDetail() {
   return (
     <Box sx={{ pb: 4 }}>
       {/* Header */}
-      <Box sx={{ width: '100%', display: 'flex', alignItems: 'right', mb: 2, justifyContent: 'right' }}>
-        <Button 
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/members')}
-          sx={{ color: theme.palette.primary.main }}
-        >
-          Back to Members
-        </Button>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-          {member.displayName || member.name}
-        </Typography>
-        {canEdit && (
-        <Button 
-          startIcon={<EditIcon />}
-          onClick={() => setEditDialog(true)}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
-        >
-          Edit
-        </Button>
-        )}
-        {canDelete && (
-        <Button 
-          startIcon={<DeleteIcon />}
-          onClick={handleDelete}
-          sx={{ mr: 2, color: theme.palette.primary.main }}
-        >
-          Delete
-        </Button>
-        )}
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h4" component="h1" sx={{ flexGrow: 1, ml: 2 }}>
+            {member.displayName || member.name}
+          </Typography>
+          {canDelete && (
+          <Button 
+            startIcon={<DeleteIcon />}
+            onClick={handleDelete}
+            sx={{ ml: 2, color: theme.palette.primary.main }}
+          >
+            Delete
+          </Button>
+          )}
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button 
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/members')}
+            sx={{ color: theme.palette.primary.main }}
+          >
+            Back to Members
+          </Button>
+        </Box>
       </Box>
 
       {/* Member Details */}
@@ -163,48 +223,56 @@ function MemberDetail() {
               border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
             }}
           >
-            <CardContent>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+            <CardContent sx={{ p: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                 <Portrait 
                   src={member.image}
                   alt={member.name}
-                  size={120}
+                  size={160}
                 />
               </Box>
-
-              <Box sx={{ mb: 1, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
-                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', m: 2 }}>
+                <Grid container spacing={2}>
+                  {member.socials.map((social) => (
+                    <Grid size={{ xs: 3 }} key={social.id}>
+                      <Tooltip title={social.platform}>
+                        <Box component="img" src={getSocialLogo(social.platform)} sx={{ width: 30, height: 30, mx: 1, cursor: 'pointer', borderRadius: '20%' }} onClick={() => window.open(social.url, '_blank')} />
+                      </Tooltip>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
+              <Box sx={{ m: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
+                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
                   Join Date:
                 </Typography>
-                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
+                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
                   {member.joinDate}
                 </Typography>
               </Box>
-
-              <Box sx={{ mb: 1, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
-                <Typography variant="body2" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
+              <Box sx={{ m: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'column' }}>
+                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
                   Characters Played:
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'column' }}>
                   {memberCharacters.map((character) => (
-                    <Typography
-                      key={character.id}
-                      variant="body2"
-                      sx={{
-                        color: theme.palette.primary.main,
-                        cursor: 'pointer',
-                        textDecoration: 'none',
-                        width: 'fit-content',
-                        '&:hover': {
-                          textDecoration: 'underline',
-                        },
-                      }}
-                      onClick={() => navigate(`/characters/${character.id}`)}
-                    >
-                      {character.name}
-                    </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', my: 1, textDecoration: 'underline', cursor: 'pointer' }} key={character.id} onClick={() => navigate(`/characters/${character.id}`)}>
+                        <Avatar 
+                          src={getCharacterImage(character.name, character.image)} 
+                          sx={{ 
+                            width: 56, 
+                            height: 56, 
+                            mr: 2,
+                            border: `2px solid ${theme.palette.primary.main}`
+                          }}
+                        />
+                        <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+                          {character.displayName || character.name}
+                        </Typography>
+                      </Box>
                   ))}
-                </Box>
               </Box>
 
             </CardContent>
@@ -220,27 +288,11 @@ function MemberDetail() {
             entityId={member.id}
             fieldType="bio"
             placeholder="Enter member bio..."
-            defaultExpanded={false}
+            defaultExpanded={true}
             canEdit={canEdit}
           />
         </Grid>
       </Grid>
-
-      {/* Member's Characters */}
-      {memberCharacters.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom color="text.primary">
-            {member.displayName || member.name}'s Characters
-          </Typography>
-          <Grid container spacing={3}>
-            {memberCharacters.map((character) => (
-              <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                <CharacterCard character={character} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
 
       {/* Edit Dialog */}
       <Dialog 
