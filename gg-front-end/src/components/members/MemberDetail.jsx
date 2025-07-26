@@ -24,6 +24,10 @@ import CharacterCard from '../characters/CharacterCard';
 import Portrait from '../Portrait';
 import { useUser } from '../../contexts/UserContext';
 import EditableExpandableCard from '../../shared/editableComponents/EditableExpandableCard';
+import ExpandableCard from '../../shared/ExpandableCard';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import twitter_logo from '../../assets/twitter_logo.png';
 import youtube_logo from '../../assets/youtube_logo.png';
 import tiktok_logo from '../../assets/tiktok_logo.png';
@@ -72,7 +76,23 @@ function MemberDetail() {
       
       // Get characters for this member
       const characters = getCharactersByMemberId(parseInt(id));
-      setMemberCharacters(characters);
+      
+      // Duplicate the dataset 5 times and add index to character names for testing
+      const duplicatedCharacters = [];
+      for (let i = 0; i < 5; i++) {
+        characters.forEach((character, charIndex) => {
+          duplicatedCharacters.push({
+            ...character,
+            id: `${character.id}_${i}`,
+            name: `${character.name} ${i + 1}`,
+            displayName: character.displayName ? `${character.displayName} ${i + 1}` : `${character.name} ${i + 1}`,
+            image: getCharacterImage(character.name, character.image)
+          });
+        });
+      }
+      
+      setMemberCharacters(duplicatedCharacters);
+      // setMemberCharacters(characters);
     }
     setLoading(false);
   }, [id, getMemberById, getCharactersByMemberId]);
@@ -223,56 +243,37 @@ function MemberDetail() {
               border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
             }}
           >
-            <CardContent sx={{ p: 1 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-                <Portrait 
-                  src={member.image}
-                  alt={member.name}
-                  size={160}
-                />
-              </Box>
-              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
-              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', m: 2 }}>
-                <Grid container spacing={2}>
-                  {member.socials.map((social) => (
-                    <Grid size={{ xs: 3 }} key={social.id}>
-                      <Tooltip title={social.platform}>
-                        <Box component="img" src={getSocialLogo(social.platform)} sx={{ width: 30, height: 30, mx: 1, cursor: 'pointer', borderRadius: '20%' }} onClick={() => window.open(social.url, '_blank')} />
-                      </Tooltip>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
-              <Box sx={{ m: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
-                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                  Join Date:
-                </Typography>
-                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
-                  {member.joinDate}
-                </Typography>
-              </Box>
-              <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF' }} />
-              <Box sx={{ m: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'column' }}>
-                <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                  Characters Played:
-                </Typography>
-                  {memberCharacters.map((character) => (
-                      <Box sx={{ display: 'flex', alignItems: 'center', my: 1, textDecoration: 'underline', cursor: 'pointer' }} key={character.id} onClick={() => navigate(`/characters/${character.id}`)}>
-                        <Avatar 
-                          src={getCharacterImage(character.name, character.image)} 
-                          sx={{ 
-                            width: 56, 
-                            height: 56, 
-                            mr: 2,
-                            border: `2px solid ${theme.palette.primary.main}`
-                          }}
-                        />
-                        <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
-                          {character.displayName || character.name}
-                        </Typography>
-                      </Box>
-                  ))}
+            <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
+
+              <Box sx={{ my:2, p: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Portrait 
+                    src={member.image}
+                    alt={member.name}
+                    size={160}
+                  />
+                </Box>
+                <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', mx: 2 }}>
+                  <Grid container spacing={2}>
+                    {member.socials.map((social) => (
+                      <Grid size={{ xs: 3 }} key={social.id}>
+                        <Tooltip title={social.platform}>
+                          <Box component="img" src={getSocialLogo(social.platform)} sx={{ width: 30, height: 30, mx: 1, cursor: 'pointer', borderRadius: '20%' }} onClick={() => window.open(social.url, '_blank')} />
+                        </Tooltip>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+                <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
+                <Box sx={{ mx: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
+                  <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+                    Join Date:
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary }}>
+                    {member.joinDate}
+                  </Typography>
+                </Box>
               </Box>
 
             </CardContent>
@@ -293,6 +294,107 @@ function MemberDetail() {
           />
         </Grid>
       </Grid>
+
+      {/* Characters Expandable Card */}
+      <Box sx={{ mt: 4 }}>
+        <ExpandableCard 
+          title="Characters Played"
+          defaultExpanded={true}
+        >
+          {memberCharacters.length > 0 ? (
+            <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
+              <Slider
+                dots={true}
+                infinite={true}
+                speed={500}
+                slidesToShow={5}
+                slidesToScroll={5}
+                responsive={[
+                  {
+                    breakpoint: 1200,
+                    settings: {
+                      slidesToShow: 4,
+                      slidesToScroll: 4,
+                    }
+                  },
+                  {
+                    breakpoint: 1024,
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 3,
+                    }
+                  },
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      slidesToShow: 2,
+                      slidesToScroll: 2,
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                    }
+                  }
+                ]}
+              >
+                {memberCharacters.map((character) => (
+                  <Box 
+                    key={character.id}
+                    sx={{ 
+                      width: '100%',
+                      display: 'flex', 
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      p: 2,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        transition: 'transform 0.3s ease-in-out'
+                      }
+                    }}
+                    onClick={() => navigate(`/characters/${character.id}`)}
+                  >
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                      <Avatar 
+                        src={getCharacterImage(character.name, character.image)} 
+                        sx={{ 
+                          width: 80, 
+                          height: 80, 
+                          mb: 1,
+                          border: `3px solid ${theme.palette.primary.main}`,
+                          boxShadow: theme.shadows[4]
+                        }}
+                      />
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                          textAlign: 'center',
+                          fontWeight: 'medium',
+                          maxWidth: '100px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        {character.displayName || character.name}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Slider>
+            </Box>
+          ) : (
+            <Typography variant="body1" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary }}>
+              No characters played yet.
+            </Typography>
+          )}
+        </ExpandableCard>
+      </Box>
 
       {/* Edit Dialog */}
       <Dialog 
