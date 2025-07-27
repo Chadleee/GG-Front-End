@@ -7,8 +7,12 @@ import logo from './assets/tnc_logo.jpg';
 import Home from './components/Home';
 import Characters from './components/characters/Characters';
 import CharacterDetail from './components/characters/CharacterDetail';
+import AllCharacterVideos from './components/characters/AllCharacterVideos';
+import AllCharacterGalleries from './components/characters/AllCharacterGalleries';
 import Members from './components/members/Members';
 import MemberDetail from './components/members/MemberDetail';
+import AllMemberVideos from './components/members/AllMemberVideos';
+import AllMemberGalleries from './components/members/AllMemberGalleries';
 import { useColorMode } from './components/ThemeProvider';
 import { UserProvider } from './contexts/UserContext';
 
@@ -117,8 +121,12 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/characters" element={<Characters />} />
               <Route path="/characters/:id" element={<CharacterDetail />} />
+              <Route path="/characters/:id/videos" element={<AllCharacterVideos />} />
+              <Route path="/characters/:id/galleries" element={<AllCharacterGalleries />} />
               <Route path="/members" element={<Members />} />
               <Route path="/members/:id" element={<MemberDetail />} />
+              <Route path="/members/:id/videos" element={<AllMemberVideos />} />
+              <Route path="/members/:id/galleries" element={<AllMemberGalleries />} />
             </Routes>
           </Box>
         </Container>

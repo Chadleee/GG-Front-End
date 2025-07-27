@@ -5,9 +5,11 @@ import {
   Card, 
   CardContent, 
   IconButton,
+  Button,
   useTheme,
   Chip
 } from '@mui/material';
+import { OpenInNew as OpenInNewIcon } from '@mui/icons-material';
 import { 
   PlayArrow as PlayIcon,
   NavigateNext as NextIcon,
@@ -23,7 +25,8 @@ function ClipsCarousel({
   clips = [], 
   defaultExpanded = false,
   collapsible = true,
-  sx = {}
+  sx = {},
+  seeAllUrl = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
@@ -123,8 +126,16 @@ function ClipsCarousel({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Helper function to extract YouTube video ID
+  // Helper function to extract YouTube video ID (including Shorts)
   const getYouTubeVideoId = (url) => {
+    // Handle YouTube Shorts URLs
+    if (url.includes('/shorts/')) {
+      const regExp = /youtube\.com\/shorts\/([^#&?\/]*)/;
+      const match = url.match(regExp);
+      return (match && match[1].length === 11) ? match[1] : null;
+    }
+    
+    // Handle standard YouTube URLs
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
@@ -345,6 +356,33 @@ function ClipsCarousel({
       defaultExpanded={defaultExpanded}
       collapsible={collapsible}
       sx={sx}
+      headerActions={
+        seeAllUrl && clips.length > 0 ? (
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<OpenInNewIcon />}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(seeAllUrl, '_blank');
+            }}
+            sx={{
+              color: theme.palette.primary.main,
+              borderColor: theme.palette.primary.main,
+              fontSize: '0.75rem',
+              py: 0.5,
+              px: 1,
+              minWidth: 'auto',
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: 'white',
+              }
+            }}
+          >
+            See All
+          </Button>
+        ) : null
+      }
     >
       {renderContent()}
     </ExpandableCard>

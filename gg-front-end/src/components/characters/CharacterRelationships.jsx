@@ -173,8 +173,8 @@ function CharacterRelationships({ character, theme }) {
                       label={relatedCharacter.relationshipType}
                       size="small"
                       sx={{
-                        backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
+                        backgroundColor: '#d3d3d3',
+                        color: '#000000',
                         fontSize: '0.75rem',
                         padding: '2px 8px'
                       }}

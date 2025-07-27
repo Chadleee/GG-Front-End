@@ -126,6 +126,7 @@ function MemberDetail() {
           clips={member.clips || []}
           defaultExpanded={false}
           collapsible={true}
+          seeAllUrl={`/members/${member.id}/videos`}
         />
       </Box>
 
@@ -136,6 +137,7 @@ function MemberDetail() {
           gallery={member.gallery || []}
           defaultExpanded={false}
           collapsible={true}
+          seeAllUrl={`/members/${member.id}/galleries`}
         />
       </Box>
 

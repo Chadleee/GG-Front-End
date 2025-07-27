@@ -143,6 +143,7 @@ function CharacterDetail() {
             clips={character.clips || []}
             defaultExpanded={false}
             collapsible={true}
+            seeAllUrl={`/characters/${character.id}/videos`}
           />
         </Grid>
         
@@ -153,6 +154,7 @@ function CharacterDetail() {
             gallery={character.gallery || []}
             defaultExpanded={false}
             collapsible={true}
+            seeAllUrl={`/characters/${character.id}/galleries`}
           />
         </Grid>
       </Grid>

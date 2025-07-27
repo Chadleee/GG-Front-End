@@ -73,10 +73,9 @@ function CharacterProfileCard({ character }) {
           <Box sx={{ 
             mx: 2, 
             display: 'flex', 
-            alignItems: 'center', 
+            flexDirection: 'column', 
             gap: 1, 
-            justifyContent: 'flex-start', 
-            flexDirection: 'row',
+            justifyContent: 'flex-start',
             minHeight: '40px'
           }}>
             <Typography 
@@ -91,7 +90,7 @@ function CharacterProfileCard({ character }) {
             <Typography 
               variant="h5" 
               sx={{ 
-                color: theme.palette.primary.main,
+                color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary,
                 cursor: 'pointer',
                 textDecoration: 'underline',
                 fontWeight: 'bold',
@@ -117,8 +116,8 @@ function CharacterProfileCard({ character }) {
                 label={affiliation}
                 sx={{ 
                   alignSelf: 'flex-start',
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.primary.contrastText,
+                  backgroundColor: '#d3d3d3',
+                  color: '#000000',
                   fontSize: '1.1rem',
                   padding: '8px 16px'
                 }}

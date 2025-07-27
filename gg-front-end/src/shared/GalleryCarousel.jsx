@@ -5,12 +5,14 @@ import {
   Card, 
   CardContent, 
   IconButton,
+  Button,
   useTheme,
   Chip,
   Dialog,
   DialogContent,
   DialogTitle
 } from '@mui/material';
+import { OpenInNew as OpenInNewIcon } from '@mui/icons-material';
 import { 
   NavigateNext as NextIcon,
   NavigateBefore as PrevIcon,
@@ -27,7 +29,8 @@ function GalleryCarousel({
   gallery = [], 
   defaultExpanded = false,
   collapsible = true,
-  sx = {}
+  sx = {},
+  seeAllUrl = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
@@ -287,11 +290,38 @@ function GalleryCarousel({
 
   return (
     <>
-      <ExpandableCard
+            <ExpandableCard
         title={title}
         defaultExpanded={defaultExpanded}
         collapsible={collapsible}
         sx={sx}
+        headerActions={
+          seeAllUrl && gallery.length > 0 ? (
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<OpenInNewIcon />}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(seeAllUrl, '_blank');
+              }}
+              sx={{
+                color: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+                fontSize: '0.75rem',
+                py: 0.5,
+                px: 1,
+                minWidth: 'auto',
+                '&:hover': {
+                  backgroundColor: theme.palette.primary.main,
+                  color: 'white',
+                }
+              }}
+            >
+              See All
+            </Button>
+          ) : null
+        }
       >
         {renderContent()}
       </ExpandableCard>
