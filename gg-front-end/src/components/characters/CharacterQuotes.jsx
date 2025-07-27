@@ -8,7 +8,7 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
   const { updateCharacter } = useCharacters();
   const theme = useTheme();
   const [isEditing, setIsEditing] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [editValue, setEditValue] = useState('');
 
   const handleQuotesUpdate = async (newQuotes) => {
@@ -64,15 +64,25 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           p: 2,
-          borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
+          borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
+          cursor: 'pointer',
+          '&:hover': {
+            backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)',
+          },
+          borderRadius: '4px 4px 0 0',
+          transition: 'background-color 0.2s ease-in-out'
         }}
+        onClick={() => setIsExpanded(!isExpanded)}
       >
         <Typography variant="h6">Quotes</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           {canEdit && !isEditing && (
             <Button
               startIcon={<EditIcon />}
-              onClick={handleEdit}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent header click when clicking edit button
+                handleEdit();
+              }}
               sx={{
                 color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                 '&:hover': {
@@ -84,7 +94,10 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
             </Button>
           )}
           <IconButton
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent header click when clicking the icon
+              setIsExpanded(!isExpanded);
+            }}
             sx={{ color: theme.palette.text.primary }}
           >
             {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}

@@ -27,7 +27,8 @@ function EditableExpandableCard({
   entityType,
   entityId,
   fieldType,
-  canEdit = false
+  canEdit = false,
+  collapsible = true
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value || '');
@@ -177,6 +178,7 @@ function EditableExpandableCard({
       expanded={isExpanded}
       onExpandedChange={setIsExpanded}
       disableCollapse={isEditing}
+      collapsible={collapsible}
       sx={sx}
       headerActions={
         canEdit && !isEditing ? (

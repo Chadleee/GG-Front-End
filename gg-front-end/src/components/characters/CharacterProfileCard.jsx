@@ -70,16 +70,34 @@ function CharacterProfileCard({ character }) {
             />
           </Box>
           <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
-          <Box sx={{ mx: 2, display: 'flex', alignItems: 'left', gap: 1, justifyContent: 'left', flexDirection: 'row' }}>
-            <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary }}>
+          <Box sx={{ 
+            mx: 2, 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1, 
+            justifyContent: 'flex-start', 
+            flexDirection: 'row',
+            minHeight: '40px'
+          }}>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary,
+                fontSize: '1.2rem'
+              }}
+            >
               Played by:
             </Typography>
             <Typography 
-              variant="h6" 
+              variant="h5" 
               sx={{ 
-                color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                color: theme.palette.primary.main,
                 cursor: 'pointer',
+                textDecoration: 'underline',
+                fontWeight: 'bold',
+                fontSize: '1.3rem',
                 '&:hover': {
+                  opacity: 0.8,
                   textDecoration: 'underline',
                 },
               }}

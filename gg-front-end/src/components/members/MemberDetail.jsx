@@ -14,6 +14,8 @@ import { useUser } from '../../contexts/UserContext';
 import MemberBio from './MemberBio';
 import MemberCharacters from './MemberCharacters';
 import MemberProfileCard from './MemberProfileCard';
+import ClipsCarousel from '../../shared/ClipsCarousel';
+import GalleryCarousel from '../../shared/GalleryCarousel';
 
 function MemberDetail() {
   const theme = useTheme();
@@ -117,6 +119,25 @@ function MemberDetail() {
         theme={theme}
       />
 
+      {/* Member Clips - Full Width */}
+      <Box sx={{ mt: 4 }}>
+        <ClipsCarousel 
+          title={`${member.displayName || member.name}'s Clips`}
+          clips={member.clips || []}
+          defaultExpanded={false}
+          collapsible={true}
+        />
+      </Box>
+
+      {/* Member Gallery - Full Width */}
+      <Box sx={{ mt: 4 }}>
+        <GalleryCarousel 
+          title={`${member.displayName || member.name}'s Gallery`}
+          gallery={member.gallery || []}
+          defaultExpanded={false}
+          collapsible={true}
+        />
+      </Box>
 
     </Box>
   );

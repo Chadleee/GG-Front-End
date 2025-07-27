@@ -28,7 +28,7 @@ function CharacterBackstory({ character, canEdit, onCharacterUpdate }) {
       entityId={character.id}
       fieldType="backstory"
       placeholder="Enter character backstory..."
-      defaultExpanded={false}
+      defaultExpanded={true}
       canEdit={canEdit}
     />
   );

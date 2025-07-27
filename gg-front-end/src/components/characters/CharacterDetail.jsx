@@ -24,6 +24,8 @@ import CharacterDescription from './CharacterDescription';
 import CharacterBackstory from './CharacterBackstory';
 import CharacterQuotes from './CharacterQuotes';
 import CharacterProfileCard from './CharacterProfileCard';
+import ClipsCarousel from '../../shared/ClipsCarousel';
+import GalleryCarousel from '../../shared/GalleryCarousel';
 
 function CharacterDetail() {
   const theme = useTheme();
@@ -164,6 +166,26 @@ function CharacterDetail() {
             character={character}
             canEdit={canEdit}
             onCharacterUpdate={setCharacter}
+          />
+        </Grid>
+        
+        {/* Character Clips - Full Width */}
+        <Grid size={{ xs: 12 }}>
+          <ClipsCarousel 
+            title={`${character.name}'s Clips`}
+            clips={character.clips || []}
+            defaultExpanded={false}
+            collapsible={true}
+          />
+        </Grid>
+        
+        {/* Character Gallery - Full Width */}
+        <Grid size={{ xs: 12 }}>
+          <GalleryCarousel 
+            title={`${character.name}'s Gallery`}
+            gallery={character.gallery || []}
+            defaultExpanded={false}
+            collapsible={true}
           />
         </Grid>
       </Grid>

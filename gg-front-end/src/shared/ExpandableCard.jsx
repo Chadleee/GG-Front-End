@@ -19,6 +19,7 @@ function ExpandableCard({
   expanded,
   onExpandedChange,
   disableCollapse = false,
+  collapsible = true,
   sx = {},
   headerActions = null
 }) {
@@ -30,7 +31,7 @@ function ExpandableCard({
   const setIsExpanded = onExpandedChange || setInternalExpanded;
 
   const handleExpandClick = () => {
-    if (!disableCollapse) {
+    if (!disableCollapse && collapsible) {
       setIsExpanded(!isExpanded);
     }
   };
@@ -45,39 +46,59 @@ function ExpandableCard({
       }}
     >
       <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            cursor: collapsible && !disableCollapse ? 'pointer' : 'default',
+            '&:hover': collapsible && !disableCollapse ? {
+              backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)',
+            } : {},
+            borderRadius: 1,
+            p: 0.5,
+            transition: 'background-color 0.2s ease-in-out'
+          }}
+          onClick={collapsible && !disableCollapse ? handleExpandClick : undefined}
+        >
           <Typography 
             variant="h6" 
             component="h3"
             sx={{ 
-              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary
+              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+              flex: 1
             }}
           >
             {title}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             {headerActions}
-            <IconButton
-              onClick={handleExpandClick}
-              disabled={disableCollapse}
-              sx={{
-                transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.3s ease-in-out',
-                color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
-                opacity: disableCollapse ? 0.5 : 1,
-                cursor: disableCollapse ? 'not-allowed' : 'pointer',
-                '&:hover': {
-                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                }
-              }}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+            {collapsible && (
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent header click when clicking the icon
+                  handleExpandClick();
+                }}
+                disabled={disableCollapse}
+                sx={{
+                  transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease-in-out',
+                  color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                  opacity: disableCollapse ? 0.5 : 1,
+                  cursor: disableCollapse ? 'not-allowed' : 'pointer',
+                  '&:hover': {
+                    backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                  }
+                }}
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            )}
           </Box>
         </Box>
       </CardContent>
 
-      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+      <Collapse in={isExpanded || !collapsible} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ 
             borderTop: `1px solid ${theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
