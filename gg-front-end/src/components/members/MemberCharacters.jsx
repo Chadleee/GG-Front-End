@@ -56,7 +56,6 @@ import marcus from '../../assets/marcus.png';
         return imageUrl;
     }
   };
-  console.log(memberCharacters);
 
   return (
     <Box sx={{ mt: 4 }}>

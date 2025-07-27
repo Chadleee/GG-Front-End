@@ -114,12 +114,22 @@ function CharacterProfileCard({ character }) {
               <Chip 
                 key={affiliation}
                 label={affiliation}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/search?q=${encodeURIComponent(affiliation)}`);
+                }}
                 sx={{ 
                   alignSelf: 'flex-start',
                   backgroundColor: '#d3d3d3',
                   color: '#000000',
                   fontSize: '1.1rem',
-                  padding: '8px 16px'
+                  padding: '8px 16px',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: '#b0b0b0',
+                    transform: 'scale(1.05)',
+                    transition: 'all 0.2s ease-in-out'
+                  }
                 }}
               />
             ))}

@@ -12,12 +12,14 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Button,
   useTheme
 } from '@mui/material';
 import { 
   Search as SearchIcon,
   Close as CloseIcon,
-  Fullscreen as FullscreenIcon
+  Fullscreen as FullscreenIcon,
+  ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -66,6 +68,21 @@ function AllCharacterGalleries() {
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
           {characters.find(c => c.id.toString() === id)?.name || 'Character'} Gallery
         </Typography>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate(`/characters/${id}`)}
+          sx={{
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main,
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: 'white',
+            }
+          }}
+        >
+          Back to Character
+        </Button>
       </Box>
 
       {/* Search Section */}
@@ -102,7 +119,7 @@ function AllCharacterGalleries() {
       {filteredImages.length > 0 ? (
         <Grid container spacing={3}>
           {filteredImages.map((image, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Card 
                 sx={{ 
                   height: '300px',

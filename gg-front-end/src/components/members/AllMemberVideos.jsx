@@ -8,9 +8,10 @@ import {
   TextField, 
   InputAdornment,
   Chip,
+  Button,
   useTheme
 } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { Search as SearchIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useMembers } from '../../contexts/MemberContext';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -46,6 +47,21 @@ function AllMemberVideos() {
         <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
           {members.find(m => m.id.toString() === id)?.displayName || members.find(m => m.id.toString() === id)?.name || 'Member'} Videos
         </Typography>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate(`/members/${id}`)}
+          sx={{
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main,
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: 'white',
+            }
+          }}
+        >
+          Back to Member
+        </Button>
       </Box>
 
       {/* Search Section */}
@@ -82,7 +98,7 @@ function AllMemberVideos() {
       {filteredVideos.length > 0 ? (
         <Grid container spacing={3}>
           {filteredVideos.map((video, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Card 
                 sx={{ 
                   height: '100%',

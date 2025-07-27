@@ -131,7 +131,6 @@ function MuiRichTextEditor({
       const input = textFieldRef.current.querySelector('textarea');
       if (input) {
         const { selectionStart, selectionEnd } = input;
-        console.log('Selection changed:', { selectionStart, selectionEnd });
         setSelection({ start: selectionStart, end: selectionEnd });
       }
     }

@@ -92,8 +92,6 @@ function EditableExpandableCard({
     setEditValue(newValue);
   };
 
-  console.log(isExpanded);
-
   const renderContent = () => {
     if (isEditing) {
       return (

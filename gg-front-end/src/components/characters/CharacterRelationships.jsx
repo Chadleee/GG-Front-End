@@ -62,12 +62,10 @@ function CharacterRelationships({ character, theme }) {
   // Get related characters data
   const getRelatedCharacters = () => {
     if (!character.relationships) return [];
-    console.log("has relationships");
     
     return character.relationships.map(relationship => {
       const relatedCharacter = characters.find(c => c.id == relationship.character_id);
       if (relatedCharacter) {
-        console.log("related character", relatedCharacter);
         return {
           ...relatedCharacter,
           relationshipType: relationship.relationship_type,
