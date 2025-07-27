@@ -11,7 +11,7 @@ import {
   Divider,
   Chip
 } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { Search as SearchIcon, PlayArrow as PlayIcon } from '@mui/icons-material';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useCharacters } from '../contexts/CharacterContext';
 import { useMembers } from '../contexts/MemberContext';
@@ -33,6 +33,55 @@ function SearchResults() {
   });
 
   const query = searchParams.get('q') || '';
+
+  // Video embedding functions
+  const getYouTubeVideoId = (url) => {
+    // Handle YouTube Shorts URLs
+    if (url.includes('/shorts/')) {
+      const regExp = /youtube\.com\/shorts\/([^#&?\/]*)/;
+      const match = url.match(regExp);
+      return (match && match[1].length === 11) ? match[1] : null;
+    }
+    // Handle standard YouTube URLs
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  const getTwitchVideoId = (url) => {
+    const regExp = /twitch\.tv\/videos\/(\d+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  const getTwitchClipId = (url) => {
+    const regExp = /twitch\.tv\/\w+\/clip\/([^?]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  const getEmbedUrl = (video) => {
+    const { url, platform } = video;
+    
+    if (platform === 'YouTube' || url.includes('youtube.com') || url.includes('youtu.be')) {
+      const videoId = getYouTubeVideoId(url);
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+    
+    if (platform === 'Twitch' || url.includes('twitch.tv')) {
+      const videoId = getTwitchVideoId(url);
+      const clipId = getTwitchClipId(url);
+      
+      if (videoId) {
+        return `https://player.twitch.tv/?video=v${videoId}&parent=localhost`;
+      }
+      if (clipId) {
+        return `https://clips.twitch.tv/embed?clip=${clipId}&parent=localhost`;
+      }
+    }
+    
+    return null;
+  };
 
   useEffect(() => {
     setSearchTerm(query);
@@ -81,9 +130,9 @@ function SearchResults() {
              character.avatarDescription?.toLowerCase().includes(lowerTerm);
     });
 
-    // If we found an exact member match, also include all characters played by that member
-    const exactMemberMatch = members.find(member => isExactName(member.displayName || member.name));
-    if (exactMemberMatch) {
+    // If we found exact member matches, also include all characters played by those members
+    const exactMemberMatches = members.filter(member => isExactName(member.displayName || member.name));
+    exactMemberMatches.forEach(exactMemberMatch => {
       const memberName = (exactMemberMatch.displayName || exactMemberMatch.name)?.toLowerCase() || '';
       const additionalCharacters = characters.filter(character => 
         character.member?.toLowerCase() === memberName
@@ -94,7 +143,7 @@ function SearchResults() {
           characterResults.push(character);
         }
       });
-    }
+    });
 
     // Search members
     let memberResults = members.filter(member => {
@@ -120,9 +169,9 @@ function SearchResults() {
              member.socialLinks?.some(link => link?.toLowerCase().includes(lowerTerm));
     });
 
-    // If we found an exact character match, also include the member who plays that character
-    const exactCharacterMatch = characters.find(character => isExactName(character.name));
-    if (exactCharacterMatch) {
+    // If we found exact character matches, also include the members who play those characters
+    const exactCharacterMatches = characters.filter(character => isExactName(character.name));
+    exactCharacterMatches.forEach(exactCharacterMatch => {
       const characterMemberName = exactCharacterMatch.member?.toLowerCase() || '';
       const characterMember = members.find(member => 
         (member.displayName || member.name)?.toLowerCase() === characterMemberName
@@ -133,7 +182,7 @@ function SearchResults() {
           memberResults.push(characterMember);
         }
       }
-    }
+    });
 
         // Search videos
     const videoResults = [];
@@ -154,7 +203,7 @@ function SearchResults() {
           } else {
             // If not an exact name match, search in title and character/member fields
             // But exclude if we're searching for a member and this is a character's video
-            const isMemberSearch = exactMemberMatch && !isExactName(character.name);
+            const isMemberSearch = exactMemberMatches.length > 0 && !isExactName(character.name);
             if (!isMemberSearch && (clip.title?.toLowerCase().includes(lowerTerm) ||
                 characterName.includes(lowerTerm) ||
                 memberName.includes(lowerTerm))) {
@@ -189,7 +238,7 @@ function SearchResults() {
           } else {
             // If not an exact name match, search in description and character/member fields
             // But exclude if we're searching for a member and this is a character's image
-            const isMemberSearch = exactMemberMatch && !isExactName(character.name);
+            const isMemberSearch = exactMemberMatches.length > 0 && !isExactName(character.name);
             if (!isMemberSearch && (image.description?.toLowerCase().includes(lowerTerm) ||
                 characterName.includes(lowerTerm) ||
                 memberName.includes(lowerTerm))) {
@@ -361,80 +410,129 @@ function SearchResults() {
             Videos ({results.videos.length})
           </Typography>
           <Grid container spacing={3}>
-            {results.videos.map((video, index) => (
-              <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                <Card 
-                  sx={{ 
-                    height: '100%',
-                    cursor: 'pointer',
-                    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                      boxShadow: theme.shadows[8],
-                    },
-                    backgroundColor: theme.palette.background.paper,
-                    border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#333333'}`
-                  }}
-                  onClick={() => {
-                    if (video.url) {
-                      window.open(video.url, '_blank');
-                    }
-                  }}
-                >
-                  <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <Typography 
-                      variant="h6" 
-                      sx={{ 
-                        mb: 1,
-                        color: theme.palette.text.primary,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        lineHeight: 1.2
-                      }}
-                    >
-                      {video.title}
-                    </Typography>
-                    
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        mb: 1,
-                        color: theme.palette.text.secondary,
-                        cursor: 'pointer',
-                        '&:hover': {
-                          color: theme.palette.primary.main,
-                        }
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (video.characterId) {
-                          navigate(`/characters/${video.characterId}`);
-                        } else if (video.memberId) {
-                          navigate(`/members/${video.memberId}`);
-                        }
-                      }}
-                    >
-                      {video.characterName || video.memberName}
-                    </Typography>
-                    
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 'auto' }}>
-                      <Chip 
-                        label={video.platform || 'Video'} 
-                        size="small"
-                        sx={{ 
-                          backgroundColor: theme.palette.primary.main,
-                          color: 'white',
-                          fontSize: '0.75rem'
-                        }}
-                      />
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+            {results.videos.map((video, index) => {
+              const embedUrl = getEmbedUrl(video);
+              
+              return (
+                <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                  <Card 
+                    sx={{ 
+                      height: embedUrl ? '300px' : '100%',
+                      cursor: embedUrl ? 'default' : 'pointer',
+                      transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                      '&:hover': {
+                        transform: embedUrl ? 'none' : 'translateY(-4px)',
+                        boxShadow: embedUrl ? theme.shadows[2] : theme.shadows[8],
+                      },
+                      backgroundColor: theme.palette.background.paper,
+                      border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#333333'}`
+                    }}
+                    onClick={() => {
+                      if (!embedUrl && video.url) {
+                        window.open(video.url, '_blank');
+                      }
+                    }}
+                  >
+                    {embedUrl ? (
+                      // Embedded Video
+                      <Box sx={{ 
+                        position: 'relative', 
+                        width: '100%', 
+                        height: '100%',
+                        overflow: 'hidden'
+                      }}>
+                        <iframe
+                          src={embedUrl}
+                          title={video.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            border: 'none'
+                          }}
+                        />
+                      </Box>
+                    ) : (
+                      // Fallback Card
+                      <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                        {/* Play Icon Overlay */}
+                        <Box sx={{ 
+                          display: 'flex', 
+                          justifyContent: 'center', 
+                          alignItems: 'center',
+                          mb: 1
+                        }}>
+                          <Box sx={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: '50%',
+                            backgroundColor: theme.palette.primary.main,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            color: 'white'
+                          }}>
+                            <PlayIcon />
+                          </Box>
+                        </Box>
+                        
+                        <Typography 
+                          variant="h6" 
+                          sx={{ 
+                            mb: 1,
+                            color: theme.palette.text.primary,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            lineHeight: 1.2
+                          }}
+                        >
+                          {video.title}
+                        </Typography>
+                        
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            mb: 1,
+                            color: theme.palette.text.secondary,
+                            cursor: 'pointer',
+                            '&:hover': {
+                              color: theme.palette.primary.main,
+                            }
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (video.characterId) {
+                              navigate(`/characters/${video.characterId}`);
+                            } else if (video.memberId) {
+                              navigate(`/members/${video.memberId}`);
+                            }
+                          }}
+                        >
+                          {video.characterName || video.memberName}
+                        </Typography>
+                        
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 'auto' }}>
+                          <Chip 
+                            label={video.platform || 'Video'} 
+                            size="small"
+                            sx={{ 
+                              backgroundColor: theme.palette.primary.main,
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                        </Box>
+                      </CardContent>
+                    )}
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
         </Box>
       )}

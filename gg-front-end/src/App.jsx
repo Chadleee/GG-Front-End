@@ -34,6 +34,9 @@ function Header() {
     else if (location.pathname.startsWith('/characters')) {
       setValue(2);
     }
+    else if (location.pathname.startsWith('/search')) {
+      setValue(-1); // No tab selected for search page
+    }
   }, [location.pathname]);
 
   const handleChange = (e, newValue) => {
