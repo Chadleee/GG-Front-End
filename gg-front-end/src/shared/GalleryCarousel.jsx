@@ -257,7 +257,7 @@ function GalleryCarousel({
     }
 
     return (
-      <Box sx={{ px: 1 }}>
+      <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
         <Slider 
           ref={sliderRef}
           {...getSliderSettings(currentBreakpoint)}
@@ -320,22 +320,26 @@ function GalleryCarousel({
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ p: 0 }}>
+        <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
           {selectedImage && (
             <Box sx={{ 
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              minHeight: '400px',
-              backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242'
+              width: '100%',
+              height: '70vh',
+              backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242',
+              overflow: 'hidden',
+              pb: 2,
+              px: 2
             }}>
               <Box
                 component="img"
                 src={selectedImage.url}
                 alt={selectedImage.description}
                 sx={{
-                  maxWidth: '100%',
-                  maxHeight: '80vh',
+                  width: '100%',
+                  height: '100%',
                   objectFit: 'contain',
                   borderRadius: 1
                 }}

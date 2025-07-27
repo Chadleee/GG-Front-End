@@ -311,7 +311,7 @@ function ClipsCarousel({
     }
 
     return (
-      <Box sx={{ px: 1 }}>
+      <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
         <Slider 
           ref={sliderRef}
           {...getSliderSettings(currentBreakpoint)}
