@@ -5,6 +5,10 @@ import {
   Typography, 
   Button, 
   useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { ArrowBack as ArrowBackIcon, Delete as DeleteIcon } from '@mui/icons-material';
@@ -28,6 +32,7 @@ function MemberDetail() {
   const [member, setMember] = useState(null);
   const [memberCharacters, setMemberCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const canEdit = user?.id.toString() === member?.id.toString();
   const canDelete = user?.role === 'admin';
 
@@ -50,6 +55,19 @@ function MemberDetail() {
     } catch (err) {
       console.error('Failed to delete member:', err);
     }
+  };
+
+  const handleDeleteClick = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    setDeleteDialogOpen(false);
+    await handleDelete();
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
   };
 
   if (loading) {
@@ -79,7 +97,7 @@ function MemberDetail() {
           {canDelete && (
           <Button 
             startIcon={<DeleteIcon />}
-            onClick={handleDelete}
+            onClick={handleDeleteClick}
             sx={{ ml: 2, color: theme.palette.primary.main }}
           >
             Delete
@@ -140,6 +158,31 @@ function MemberDetail() {
           seeAllUrl={`/members/${member.id}/galleries`}
         />
       </Box>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">
+          Delete Member
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete "{member.displayName || member.name}"? This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </Box>
   );

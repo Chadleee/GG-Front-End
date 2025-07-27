@@ -3,10 +3,12 @@ import {
   Box, 
   Typography, 
   Button, 
-  useTheme
+  useTheme,
+  TextField,
+  InputAdornment
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Add as AddIcon } from '@mui/icons-material';
+import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import { useMembers } from '../../contexts/MemberContext';
 import CharacterCard from './CharacterCard';
@@ -23,6 +25,14 @@ function Characters() {
   const { members } = useMembers();
   
   const [openDialog, setOpenDialog] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter characters based on search term
+  const filteredCharacters = characters.filter(character => {
+    const characterName = character.name?.toLowerCase() || '';
+    const searchLower = searchTerm.toLowerCase();
+    return characterName.includes(searchLower);
+  });
 
   if (loading) {
     return (
@@ -62,8 +72,38 @@ function Characters() {
         </Button>
       </Box>
 
+      {/* Search Section */}
+      <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <TextField
+          placeholder="Search characters..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{
+            minWidth: 300,
+            '& .MuiOutlinedInput-root': {
+              backgroundColor: theme.palette.background.paper,
+              '& fieldset': {
+                borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#333333',
+              },
+            },
+          }}
+        />
+      </Box>
+
+      {/* Results Count */}
+      <Typography variant="body2" sx={{ mb: 2, color: theme.palette.text.secondary }}>
+        {filteredCharacters.length} character{filteredCharacters.length !== 1 ? 's' : ''} found
+      </Typography>
+
       <Grid container spacing={3}>
-        {characters
+        {filteredCharacters
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((character) => (
             <Grid key={character.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
