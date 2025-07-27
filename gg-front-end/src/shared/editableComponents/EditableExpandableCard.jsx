@@ -92,6 +92,8 @@ function EditableExpandableCard({
     setEditValue(newValue);
   };
 
+  console.log(isExpanded);
+
   const renderContent = () => {
     if (isEditing) {
       return (
@@ -120,10 +122,11 @@ function EditableExpandableCard({
               size="small"
               onClick={handleCancel}
               disabled={isSubmitting}
-              sx={{ 
-                color: theme.palette.error.main,
+              sx={{
+                backgroundColor: '#d32f2f',
+                color: '#FFFFFF',
                 '&:hover': {
-                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(244, 67, 54, 0.1)' : 'rgba(244, 67, 54, 0.1)',
+                  backgroundColor: '#b71c1c',
                 }
               }}
             >
@@ -131,18 +134,18 @@ function EditableExpandableCard({
             </Button>
             <Button
               size="small"
-              variant="contained"
               onClick={handleSave}
               disabled={isSubmitting || editValue === value}
               startIcon={<SaveIcon />}
               sx={{
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.primary.contrastText,
+                backgroundColor: '#FFFFFF',
+                color: '#000000',
                 '&:hover': {
-                  backgroundColor: theme.palette.primary.dark,
+                  backgroundColor: '#000000',
+                  color: '#FFFFFF',
                 },
                 '&:disabled': {
-                  backgroundColor: theme.palette.action.disabled,
+                  backgroundColor: '#9e9e9e',
                 }
               }}
             >
@@ -184,7 +187,10 @@ function EditableExpandableCard({
         canEdit && !isEditing ? (
           <Button 
             startIcon={<EditIcon />}
-            onClick={() => handleEdit()}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent header click when clicking edit button
+              handleEdit();
+            }}
             sx={{ 
               mr: 2, 
               color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,

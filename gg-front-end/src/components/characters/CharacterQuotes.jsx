@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Box, Typography, IconButton, TextField, Button, Collapse, useTheme } from '@mui/material';
-import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
+import { Box, Typography, IconButton, Button, Collapse, useTheme, Card, CardContent } from '@mui/material';
+import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import MuiRichTextEditor from '../../shared/editableComponents/MuiRichTextEditor';
 
@@ -46,68 +46,93 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
 
   // Convert quotes array to string for editing
   const quotesString = character.quotes ? character.quotes.join('\n') : '';
+  
+  // Check if there are any changes
+  const hasChanges = editValue !== quotesString;
 
   return (
-    <Box
+    <Card 
       sx={{
         backgroundColor: theme.palette.mode === 'light' ? '#666666' : theme.palette.background.paper,
         color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
-        border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
-        borderRadius: 1,
-        overflow: 'hidden'
+        border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`
       }}
     >
-      {/* Header */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          p: 2,
-          borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
-          cursor: 'pointer',
-          '&:hover': {
-            backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)',
-          },
-          borderRadius: '4px 4px 0 0',
-          transition: 'background-color 0.2s ease-in-out'
-        }}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <Typography variant="h6">Quotes</Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {canEdit && !isEditing && (
-            <Button
-              startIcon={<EditIcon />}
+      <CardContent>
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            cursor: isEditing ? 'default' : 'pointer',
+            '&:hover': isEditing ? {} : {
+              backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)',
+            },
+            borderRadius: 1,
+            p: 0.5,
+            transition: 'background-color 0.2s ease-in-out'
+          }}
+          onClick={isEditing ? undefined : () => setIsExpanded(!isExpanded)}
+        >
+          <Typography 
+            variant="h6" 
+            component="h3"
+            sx={{ 
+              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+              flex: 1
+            }}
+          >
+            Quotes
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            {canEdit && !isEditing && (
+              <Button
+                startIcon={<EditIcon />}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent header click when clicking edit button
+                  handleEdit();
+                }}
+                sx={{
+                  color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                  '&:hover': {
+                    backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                  }
+                }}
+              >
+                Edit
+              </Button>
+            )}
+            <IconButton
               onClick={(e) => {
-                e.stopPropagation(); // Prevent header click when clicking edit button
-                handleEdit();
+                e.stopPropagation(); // Prevent header click when clicking the icon
+                if (!isEditing) {
+                  setIsExpanded(!isExpanded);
+                }
               }}
+              disabled={isEditing}
               sx={{
+                transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease-in-out',
                 color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                opacity: isEditing ? 0.5 : 1,
+                cursor: isEditing ? 'not-allowed' : 'pointer',
                 '&:hover': {
-                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
                 }
               }}
             >
-              Edit
-            </Button>
-          )}
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent header click when clicking the icon
-              setIsExpanded(!isExpanded);
-            }}
-            sx={{ color: theme.palette.text.primary }}
-          >
-            {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
+              <ExpandMoreIcon />
+            </IconButton>
+          </Box>
         </Box>
-      </Box>
+      </CardContent>
 
-      {/* Content */}
       <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-        <Box sx={{ p: 2 }}>
+        <CardContent sx={{ pt: 0 }}>
+          <Box sx={{ 
+            borderTop: `1px solid ${theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
+            pt: 2 
+          }}>
           {isEditing ? (
             <Box>
               <MuiRichTextEditor
@@ -118,24 +143,36 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
               />
               <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
                 <Button
+                  size="small"
                   onClick={handleCancel}
-                  sx={{ color: theme.palette.error.main }}
+                  sx={{ 
+                    backgroundColor: '#d32f2f',
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      backgroundColor: '#b71c1c',
+                    }
+                  }}
                 >
                   Cancel
                 </Button>
                 <Button
+                  size="small"
                   onClick={handleSave}
-                  variant="contained"
+                  disabled={!hasChanges}
                   startIcon={<SaveIcon />}
                   sx={{
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText,
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
                     '&:hover': {
-                      backgroundColor: theme.palette.primary.dark,
+                      backgroundColor: '#000000',
+                      color: '#FFFFFF',
+                    },
+                    '&:disabled': {
+                      backgroundColor: '#9e9e9e',
                     }
                   }}
                 >
-                  Save
+                  Save Changes
                 </Button>
               </Box>
             </Box>
@@ -174,11 +211,12 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                 </Box>
               )}
             </Box>
-                      )}
+          )}
           </Box>
-        </Collapse>
-      </Box>
-    );
-  }
+        </CardContent>
+      </Collapse>
+    </Card>
+  );
+}
 
 export default CharacterQuotes; 
