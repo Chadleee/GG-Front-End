@@ -31,16 +31,6 @@ export class Member {
     }
   }
 
-  async addImageToGallery(imageData) {
-    try {
-      const updatedGallery = [...this.gallery, imageData];
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to add image to member gallery:', error);
-      throw error;
-    }
-  }
-
   async updateImageInGallery(imageIndex, imageData) {
     try {
       const updatedGallery = [...this.gallery];
@@ -78,31 +68,7 @@ export class Member {
     }
   }
 
-  // Clips methods
-  async updateClips(newClips) {
-    try {
-      const updatedMember = { ...this, clips: newClips };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance
-      this.clips = newClips;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member clips:', error);
-      throw error;
-    }
-  }
 
-  async addClipToClips(clipData) {
-    try {
-      const updatedClips = [...this.clips, clipData];
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to add clip to member clips:', error);
-      throw error;
-    }
-  }
 
   async updateClipInClips(clipIndex, clipData) {
     try {
@@ -125,6 +91,22 @@ export class Member {
     }
   }
 
+  // Join date methods
+  async updateJoinDate(newJoinDate) {
+    try {
+      const updatedMember = { ...this, joinDate: newJoinDate };
+      const result = await memberAPI.update(this.id, updatedMember);
+      
+      // Update local instance
+      this.joinDate = newJoinDate;
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to update member join date:', error);
+      throw error;
+    }
+  }
+
   // Socials methods
   async updateSocials(newSocials) {
     try {
@@ -141,15 +123,7 @@ export class Member {
     }
   }
 
-  async addSocialToSocials(socialData) {
-    try {
-      const updatedSocials = [...this.socials, socialData];
-      return await this.updateSocials(updatedSocials);
-    } catch (error) {
-      console.error('Failed to add social to member socials:', error);
-      throw error;
-    }
-  }
+
 
   async updateSocialInSocials(socialIndex, socialData) {
     try {
@@ -208,12 +182,24 @@ export class Member {
     return this.clips.length;
   }
 
+  getSocialsCount() {
+    return this.socials.length;
+  }
+
   hasGallery() {
     return this.gallery.length > 0;
   }
 
   hasClips() {
     return this.clips.length > 0;
+  }
+
+  hasSocials() {
+    return this.socials.length > 0;
+  }
+
+  hasJoinDate() {
+    return this.joinDate && this.joinDate.trim() !== '';
   }
 
   getDisplayName() {

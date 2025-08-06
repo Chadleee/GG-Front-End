@@ -41,15 +41,7 @@ export class Character {
     }
   }
 
-  async addImageToGallery(imageData) {
-    try {
-      const updatedGallery = [...this.gallery, imageData];
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to add image to character gallery:', error);
-      throw error;
-    }
-  }
+
 
   async updateImageInGallery(imageIndex, imageData) {
     try {
@@ -88,15 +80,7 @@ export class Character {
     }
   }
 
-  async addClipToClips(clipData) {
-    try {
-      const updatedClips = [...this.clips, clipData];
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to add clip to character clips:', error);
-      throw error;
-    }
-  }
+
 
   async updateClipInClips(clipIndex, clipData) {
     try {
@@ -135,15 +119,7 @@ export class Character {
     }
   }
 
-  async addSocialToSocials(socialData) {
-    try {
-      const updatedSocials = [...this.socials, socialData];
-      return await this.updateSocials(updatedSocials);
-    } catch (error) {
-      console.error('Failed to add social to character socials:', error);
-      throw error;
-    }
-  }
+
 
   async updateSocialInSocials(socialIndex, socialData) {
     try {
