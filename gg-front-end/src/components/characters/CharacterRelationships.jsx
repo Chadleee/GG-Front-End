@@ -1,10 +1,13 @@
-import { Box, Typography, Avatar, Chip } from '@mui/material';
+import { Box, Typography, Avatar, Chip, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ExpandableCard from '../../shared/ExpandableCard';
+import { Edit as EditIcon } from '@mui/icons-material';
+import ExpandableCard from '../shared/ExpandableCard';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useCharacters } from '../../contexts/CharacterContext';
+import { useState } from 'react';
+import RelationshipsEditDialog from './RelationshipsEditDialog';
 import shabammabop from '../../assets/shabammabop.png';
 import crazyGirl from '../../assets/crazy_girl.png';
 import joeBiden from '../../assets/joe_biden.png';
@@ -14,9 +17,10 @@ import steven from '../../assets/steven.png';
 import gasStationEmployee from '../../assets/gas_station_employee.png';
 import marcus from '../../assets/marcus.png';
 
-function CharacterRelationships({ character, theme }) {
+function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }) {
   const navigate = useNavigate();
   const { characters } = useCharacters();
+  const [relationshipsEditDialogOpen, setRelationshipsEditDialogOpen] = useState(false);
 
   // Function to determine if infinite scrolling should be enabled
   const shouldEnableInfinite = () => {
@@ -83,6 +87,26 @@ function CharacterRelationships({ character, theme }) {
       <ExpandableCard 
         title="Character Relationships"
         defaultExpanded={true}
+        headerActions={
+          canEdit ? (
+            <Button 
+              startIcon={<EditIcon />}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent header click when clicking edit button
+                setRelationshipsEditDialogOpen(true);
+              }}
+              sx={{ 
+                mr: 0, 
+                color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                '&:hover': {
+                  backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                }
+              }}
+            >
+              Edit
+            </Button>
+          ) : null
+        }
       >
         {relatedCharacters.length > 0 ? (
           <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
@@ -159,13 +183,41 @@ function CharacterRelationships({ character, theme }) {
                         textAlign: 'center',
                         fontWeight: 'medium',
                         maxWidth: '100px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        mb: 1
+                        minHeight: '2.5em',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word',
+                        hyphens: 'auto',
+                        fontSize: 'clamp(0.8rem, 2vw, 1.2rem)',
+                        lineHeight: 1.2,
+                        mb: 1,
+                        // Scale down single words to fit on one line
+                        '&:not(:has(span))': {
+                          fontSize: 'clamp(0.6rem, 1.5vw, 1rem)',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }
                       }}
                     >
-                      {relatedCharacter.displayName || relatedCharacter.name}
+                      {(relatedCharacter.displayName || relatedCharacter.name).includes(' ') ? (
+                        // Multi-word names: allow wrapping
+                        relatedCharacter.displayName || relatedCharacter.name
+                      ) : (
+                        // Single words: scale down to fit
+                        <span style={{ 
+                          fontSize: 'clamp(0.6rem, 1.5vw, 1rem)',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: 'block',
+                          width: '100%'
+                        }}>
+                          {relatedCharacter.displayName || relatedCharacter.name}
+                        </span>
+                      )}
                     </Typography>
                     <Chip
                       label={relatedCharacter.relationshipType}
@@ -188,6 +240,24 @@ function CharacterRelationships({ character, theme }) {
           </Typography>
         )}
       </ExpandableCard>
+
+      {/* Relationships Edit Dialog */}
+      <RelationshipsEditDialog
+        open={relationshipsEditDialogOpen}
+        onClose={() => setRelationshipsEditDialogOpen(false)}
+        relationships={character.relationships || []}
+        character={character}
+        onSave={async (updatedRelationships) => {
+          try {
+            const updatedCharacter = { ...character, relationships: updatedRelationships };
+            await character.updateRelationships(updatedRelationships);
+            onCharacterUpdate(updatedCharacter);
+            setRelationshipsEditDialogOpen(false);
+          } catch (error) {
+            console.error('Failed to update character relationships:', error);
+          }
+        }}
+      />
     </Box>
   );
 }

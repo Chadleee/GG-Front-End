@@ -9,9 +9,11 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField
+  TextField,
+  IconButton,
+  Tooltip
 } from '@mui/material';
-import { ArrowBack as ArrowBackIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { ArrowBack as ArrowBackIcon, Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import Grid from '@mui/material/Grid';
 import { useUser } from '../../contexts/UserContext';
@@ -20,8 +22,11 @@ import CharacterBackstory from './CharacterBackstory';
 import CharacterQuotes from './CharacterQuotes';
 import CharacterProfileCard from './CharacterProfileCard';
 import CharacterRelationships from './CharacterRelationships';
-import ClipsCarousel from '../../shared/ClipsCarousel';
-import GalleryCarousel from '../../shared/GalleryCarousel';
+import ClipsCarousel from '../shared/ClipsCarousel';
+import GalleryCarousel from '../shared/GalleryCarousel';
+import AvatarInfo from './AvatarInfo';
+import AvatarEditDialog from './AvatarEditDialog';
+import ExpandableCard from '../shared/ExpandableCard';
 import characterAPI from '../../api/characters';
 
 function CharacterDetail() {
@@ -35,6 +40,7 @@ function CharacterDetail() {
   const [loading, setLoading] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
+  const [avatarEditDialogOpen, setAvatarEditDialogOpen] = useState(false);
   const canEdit = user?.id.toString() === character?.memberId.toString();
   const canDelete = user?.role === 'admin';
 
@@ -125,7 +131,11 @@ function CharacterDetail() {
       {/* Character Details */}
       <Grid container spacing={4}>
         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-          <CharacterProfileCard character={character} />
+          <CharacterProfileCard 
+            character={character} 
+            canEdit={canEdit}
+            onCharacterUpdate={setCharacter}
+          />
         </Grid>
         
         {/* Character Description and Backstory */}
@@ -154,11 +164,44 @@ function CharacterDetail() {
           />
         </Grid>
         
+        {/* Avatar Info - Full Width */}
+        <Grid size={{ xs: 12 }}>
+          <ExpandableCard 
+            title="Avatar Info"
+            defaultExpanded={false}
+            collapsible={true}
+            headerActions={
+              canEdit ? (
+                <Button 
+                  startIcon={<EditIcon />}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent header click when clicking edit button
+                    setAvatarEditDialogOpen(true);
+                  }}
+                  sx={{ 
+                    mr: 0, 
+                    color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                    '&:hover': {
+                      backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                    }
+                  }}
+                >
+                  Edit
+                </Button>
+              ) : null
+            }
+          >
+            <AvatarInfo character={character} />
+          </ExpandableCard>
+        </Grid>
+        
         {/* Character Relationships - Full Width */}
         <Grid size={{ xs: 12 }}>
           <CharacterRelationships 
             character={character}
             theme={theme}
+            canEdit={canEdit}
+            onCharacterUpdate={setCharacter}
           />
         </Grid>
         
@@ -206,6 +249,28 @@ function CharacterDetail() {
           />
         </Grid>
       </Grid>
+
+      {/* Avatar Edit Dialog */}
+      <AvatarEditDialog
+        open={avatarEditDialogOpen}
+        onClose={() => setAvatarEditDialogOpen(false)}
+        avatarData={{
+          avatarName: character.avatarName,
+          avatarDescription: character.avatarDescription,
+          avatarUrl: character.avatarUrl,
+          avatarReferenceImage: character.avatarReferenceImage
+        }}
+        onSave={async (updatedAvatar) => {
+          try {
+            const updatedCharacter = { ...character, ...updatedAvatar };
+            await characterAPI.update(character.id, updatedCharacter);
+            setCharacter(updatedCharacter);
+            setAvatarEditDialogOpen(false);
+          } catch (error) {
+            console.error('Failed to update character avatar:', error);
+          }
+        }}
+      />
 
       {/* Delete Confirmation Dialog */}
       <Dialog

@@ -190,7 +190,7 @@ function EditableExpandableCard({
               handleEdit();
             }}
             sx={{ 
-              mr: 2, 
+              mr: 0, 
               color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
               '&:hover': {
                 backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',

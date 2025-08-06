@@ -1,9 +1,10 @@
 import { Box, Typography, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ExpandableCard from '../../shared/ExpandableCard';
+import ExpandableCard from '../shared/ExpandableCard';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { seasons } from '../../shared/lists/seasons';
 import shabammabop from '../../assets/shabammabop.png';
 import crazyGirl from '../../assets/crazy_girl.png';
 import joeBiden from '../../assets/joe_biden.png';
@@ -31,7 +32,7 @@ import marcus from '../../assets/marcus.png';
         slidesToShow = 4;
       }
       
-      return memberCharacters.length > slidesToShow;
+      return sortedCharacters.length > slidesToShow;
     };
 
     const getCharacterImage = (characterName, imageUrl) => {
@@ -57,13 +58,69 @@ import marcus from '../../assets/marcus.png';
     }
   };
 
+  const getLatestSeason = (characterSeasons) => {
+    if (!characterSeasons || characterSeasons.length === 0) return null;
+    
+    // Find the season that appears furthest down in the seasons list
+    let latestSeason = null;
+    let latestIndex = -1;
+    
+    characterSeasons.forEach(season => {
+      const seasonIndex = seasons.indexOf(season);
+      if (seasonIndex > latestIndex) {
+        latestIndex = seasonIndex;
+        latestSeason = season;
+      }
+    });
+    
+    return latestSeason;
+  };
+
+  const getLatestSeasonIndex = (characterSeasons) => {
+    if (!characterSeasons || characterSeasons.length === 0) return -1;
+    
+    // Find the season that appears furthest down in the seasons list
+    let latestIndex = -1;
+    
+    characterSeasons.forEach(season => {
+      const seasonIndex = seasons.indexOf(season);
+      if (seasonIndex > latestIndex) {
+        latestIndex = seasonIndex;
+      }
+    });
+    
+    return latestIndex;
+  };
+
+  // Sort characters by their latest season (latest seasons first), then alphabetically
+  const sortedCharacters = [...memberCharacters].sort((a, b) => {
+    const aLatestIndex = getLatestSeasonIndex(a.seasons);
+    const bLatestIndex = getLatestSeasonIndex(b.seasons);
+    
+    // Characters with no seasons appear last
+    if (aLatestIndex === -1 && bLatestIndex === -1) {
+      // Both have no seasons - sort alphabetically
+      return (a.displayName || a.name).localeCompare(b.displayName || b.name);
+    }
+    if (aLatestIndex === -1) return 1;
+    if (bLatestIndex === -1) return -1;
+    
+    // If same season, sort alphabetically
+    if (aLatestIndex === bLatestIndex) {
+      return (a.displayName || a.name).localeCompare(b.displayName || b.name);
+    }
+    
+    // Sort by latest season index (descending - latest first)
+    return bLatestIndex - aLatestIndex;
+  });
+
   return (
     <Box sx={{ mt: 4 }}>
       <ExpandableCard 
         title="Characters Played"
         defaultExpanded={false}
       >
-        {memberCharacters.length > 0 ? (
+        {sortedCharacters.length > 0 ? (
           <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
             <Slider
               dots={shouldEnableInfinite()}
@@ -102,7 +159,7 @@ import marcus from '../../assets/marcus.png';
                 }
               ]}
             >
-              {memberCharacters.map((character) => (
+              {sortedCharacters.map((character) => (
                 <Box 
                   key={character.id}
                   sx={{ 
@@ -140,11 +197,28 @@ import marcus from '../../assets/marcus.png';
                         maxWidth: '100px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        mb: 0.5
                       }}
                     >
                       {character.displayName || character.name}
                     </Typography>
+                    {getLatestSeason(character.seasons) && (
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary,
+                          textAlign: 'center',
+                          fontSize: '0.75rem',
+                          maxWidth: '100px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        {getLatestSeason(character.seasons)}
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               ))}

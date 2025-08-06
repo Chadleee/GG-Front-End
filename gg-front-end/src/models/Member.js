@@ -42,15 +42,7 @@ export class Member {
     }
   }
 
-  async deleteImageFromGallery(imageIndex) {
-    try {
-      const updatedGallery = this.gallery.filter((_, index) => index !== imageIndex);
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to delete image from member gallery:', error);
-      throw error;
-    }
-  }
+
 
   // Clips methods
   async updateClips(newClips) {
@@ -81,15 +73,7 @@ export class Member {
     }
   }
 
-  async deleteClipFromClips(clipIndex) {
-    try {
-      const updatedClips = this.clips.filter((_, index) => index !== clipIndex);
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to delete clip from member clips:', error);
-      throw error;
-    }
-  }
+
 
   // Join date methods
   async updateJoinDate(newJoinDate) {
@@ -103,6 +87,22 @@ export class Member {
       return result;
     } catch (error) {
       console.error('Failed to update member join date:', error);
+      throw error;
+    }
+  }
+
+  // Bio methods
+  async updateBio(newBio) {
+    try {
+      const updatedMember = { ...this, bio: newBio };
+      const result = await memberAPI.update(this.id, updatedMember);
+      
+      // Update local instance
+      this.bio = newBio;
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to update member bio:', error);
       throw error;
     }
   }
@@ -136,15 +136,7 @@ export class Member {
     }
   }
 
-  async deleteSocialFromSocials(socialIndex) {
-    try {
-      const updatedSocials = this.socials.filter((_, index) => index !== socialIndex);
-      return await this.updateSocials(updatedSocials);
-    } catch (error) {
-      console.error('Failed to delete social from member socials:', error);
-      throw error;
-    }
-  }
+
 
   // General update method
   async update(updateData) {

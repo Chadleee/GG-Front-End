@@ -14,7 +14,7 @@ import {
 import { Search as SearchIcon, ArrowBack as ArrowBackIcon, PlayArrow as PlayIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import ClipsCarousel from '../../shared/ClipsCarousel';
+import ClipsCarousel from '../shared/ClipsCarousel';
 
 function AllCharacterVideos() {
   const theme = useTheme();

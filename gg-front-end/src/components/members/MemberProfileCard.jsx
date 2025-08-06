@@ -16,7 +16,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Grid from '@mui/material/Grid';
 import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import Portrait from '../Portrait';
-import SocialsEditDialog from '../../shared/SocialsEditDialog';
+import SocialsEditDialog from './SocialsEditDialog';
 import twitter_logo from '../../assets/twitter_logo.png';
 import youtube_logo from '../../assets/youtube_logo.png';
 import tiktok_logo from '../../assets/tiktok_logo.png';
@@ -119,7 +119,9 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
               <Grid container spacing={2}>
                 {member.socials && member.socials.length > 0 ? (
                   <>
-                    {member.socials.map((social) => (
+                    {member.socials
+                      .sort((a, b) => a.platform.localeCompare(b.platform))
+                      .map((social) => (
                       <Grid size={{ xs: 3 }} key={social.platform}>
                         <Tooltip title={social.platform}>
                           <Box component="img" src={getSocialLogo(social.platform)} sx={{ width: 30, height: 30, mx: 1, cursor: 'pointer', borderRadius: '20%' }} onClick={() => window.open(social.url, '_blank')} />

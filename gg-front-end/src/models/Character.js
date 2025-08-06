@@ -21,6 +21,7 @@ export class Character {
     this.avatarName = data.avatarName || '';
     this.avatarDescription = data.avatarDescription || '';
     this.avatarUrl = data.avatarUrl || '';
+    this.avatarReferenceImage = data.avatarReferenceImage || '';
     this.createdAt = data.createdAt || '';
     this.updatedAt = data.updatedAt || '';
   }
@@ -54,15 +55,7 @@ export class Character {
     }
   }
 
-  async deleteImageFromGallery(imageIndex) {
-    try {
-      const updatedGallery = this.gallery.filter((_, index) => index !== imageIndex);
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to delete image from character gallery:', error);
-      throw error;
-    }
-  }
+
 
   // Clips methods
   async updateClips(newClips) {
@@ -93,15 +86,7 @@ export class Character {
     }
   }
 
-  async deleteClipFromClips(clipIndex) {
-    try {
-      const updatedClips = this.clips.filter((_, index) => index !== clipIndex);
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to delete clip from character clips:', error);
-      throw error;
-    }
-  }
+
 
   // Socials methods
   async updateSocials(newSocials) {
@@ -132,15 +117,128 @@ export class Character {
     }
   }
 
-  async deleteSocialFromSocials(socialIndex) {
+  // Played by methods
+  async updatePlayedBy(newMemberId) {
     try {
-      const updatedSocials = this.socials.filter((_, index) => index !== socialIndex);
-      return await this.updateSocials(updatedSocials);
+      const updatedCharacter = { ...this, memberId: newMemberId };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+      
+      // Update local instance
+      this.memberId = newMemberId;
+      
+      return result;
     } catch (error) {
-      console.error('Failed to delete social from character socials:', error);
+      console.error('Failed to update character played by:', error);
       throw error;
     }
   }
+
+  // Affiliations methods
+  async updateAffiliations(newAffiliations) {
+    try {
+      const updatedCharacter = { ...this, affiliations: newAffiliations };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+      
+      // Update local instance
+      this.affiliations = newAffiliations;
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to update character affiliations:', error);
+      throw error;
+    }
+  }
+
+  // Description methods
+  async updateDescription(newDescription) {
+    try {
+      const updatedCharacter = { ...this, description: newDescription };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+      
+      // Update local instance
+      this.description = newDescription;
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to update character description:', error);
+      throw error;
+    }
+  }
+
+  // Backstory methods
+  async updateBackstory(newBackstory) {
+    try {
+      const updatedCharacter = { ...this, backstory: newBackstory };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+      
+      // Update local instance
+      this.backstory = newBackstory;
+      
+      return result;
+    } catch (error) {
+      console.error('Failed to update character backstory:', error);
+      throw error;
+    }
+  }
+
+    // Quotes methods
+  async updateQuotes(newQuotes) {
+    try {
+      const updatedCharacter = { ...this, quotes: newQuotes };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+
+      // Update local instance
+      this.quotes = newQuotes;
+
+      return result;
+    } catch (error) {
+      console.error('Failed to update character quotes:', error);
+      throw error;
+    }
+  }
+
+  // Avatar Info methods
+  async updateAvatarInfo(newAvatarInfo) {
+    try {
+      const updatedCharacter = { 
+        ...this, 
+        avatarName: newAvatarInfo.avatarName || this.avatarName,
+        avatarDescription: newAvatarInfo.avatarDescription || this.avatarDescription,
+        avatarUrl: newAvatarInfo.avatarUrl || this.avatarUrl,
+        avatarReferenceImage: newAvatarInfo.avatarReferenceImage || this.avatarReferenceImage
+      };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+
+      // Update local instance
+      this.avatarName = updatedCharacter.avatarName;
+      this.avatarDescription = updatedCharacter.avatarDescription;
+      this.avatarUrl = updatedCharacter.avatarUrl;
+      this.avatarReferenceImage = updatedCharacter.avatarReferenceImage;
+
+      return result;
+    } catch (error) {
+      console.error('Failed to update character avatar info:', error);
+      throw error;
+    }
+  }
+
+  // Relationships methods
+  async updateRelationships(newRelationships) {
+    try {
+      const updatedCharacter = { ...this, relationships: newRelationships };
+      const result = await characterAPI.update(this.id, updatedCharacter);
+
+      // Update local instance
+      this.relationships = newRelationships;
+
+      return result;
+    } catch (error) {
+      console.error('Failed to update character relationships:', error);
+      throw error;
+    }
+  }
+
+
 
   // General update method
   async update(updateData) {
@@ -215,6 +313,7 @@ export class Character {
       avatarName: this.avatarName,
       avatarDescription: this.avatarDescription,
       avatarUrl: this.avatarUrl,
+      avatarReferenceImage: this.avatarReferenceImage,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     };

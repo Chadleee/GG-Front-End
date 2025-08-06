@@ -7,41 +7,49 @@ import {
   IconButton,
   Button,
   useTheme,
-  Chip,
-  Dialog,
-  DialogContent,
-  DialogTitle
+  Chip
 } from '@mui/material';
 import { OpenInNew as OpenInNewIcon, Edit as EditIcon } from '@mui/icons-material';
 import { 
+  PlayArrow as PlayIcon,
   NavigateNext as NextIcon,
-  NavigateBefore as PrevIcon,
-  Close as CloseIcon,
-  Fullscreen as FullscreenIcon
+  NavigateBefore as PrevIcon
 } from '@mui/icons-material';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandableCard from './ExpandableCard';
-import GalleryEditDialog from './GalleryEditDialog';
+import ClipsEditDialog from './ClipsEditDialog';
 
-function GalleryCarousel({ 
-  title = "Gallery", 
-  gallery = [], 
+function ClipsCarousel({ 
+  title = "Clips", 
+  clips = [], 
   defaultExpanded = false,
   collapsible = true,
   sx = {},
   seeAllUrl = null,
   canEdit = false,
-  onGalleryUpdate = null
+  onClipsUpdate = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const sliderRef = useRef(null);
   const theme = useTheme();
+
+  const handleEditClips = () => {
+    setEditDialogOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditDialogOpen(false);
+  };
+
+  const handleSaveClips = (updatedClips) => {
+    if (onClipsUpdate) {
+      onClipsUpdate(updatedClips);
+    }
+  };
 
   // Function to determine if infinite scrolling should be enabled
   const shouldEnableInfinite = () => {
@@ -56,7 +64,7 @@ function GalleryCarousel({
       slidesToShow = 3;
     }
     
-    return gallery.length > slidesToShow;
+    return clips.length > slidesToShow;
   };
 
   // Responsive settings for different screen sizes
@@ -136,133 +144,187 @@ function GalleryCarousel({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-    setImageDialogOpen(true);
+  // Helper function to extract YouTube video ID (including Shorts)
+  const getYouTubeVideoId = (url) => {
+    // Handle YouTube Shorts URLs
+    if (url.includes('/shorts/')) {
+      const regExp = /youtube\.com\/shorts\/([^#&?\/]*)/;
+      const match = url.match(regExp);
+      return (match && match[1].length === 11) ? match[1] : null;
+    }
+    
+    // Handle standard YouTube URLs
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  const handleCloseImage = () => {
-    setImageDialogOpen(false);
-    setSelectedImage(null);
+  // Helper function to extract Twitch video ID
+  const getTwitchVideoId = (url) => {
+    const regExp = /twitch\.tv\/videos\/(\d+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
   };
 
-  const handleEditGallery = () => {
-    setEditDialogOpen(true);
+  // Helper function to extract Twitch clip ID
+  const getTwitchClipId = (url) => {
+    const regExp = /twitch\.tv\/\w+\/clip\/(\w+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
   };
 
-  const handleCloseEdit = () => {
-    setEditDialogOpen(false);
+  // Helper function to create embed URL
+  const getEmbedUrl = (clip) => {
+    const { url, source } = clip;
+    
+    if (source === 'YouTube' || url.includes('youtube.com') || url.includes('youtu.be')) {
+      const videoId = getYouTubeVideoId(url);
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+    
+    if (source === 'Twitch' || url.includes('twitch.tv')) {
+      const videoId = getTwitchVideoId(url);
+      const clipId = getTwitchClipId(url);
+      
+      if (videoId) {
+        return `https://player.twitch.tv/?video=v${videoId}&parent=localhost`;
+      }
+      if (clipId) {
+        return `https://clips.twitch.tv/embed?clip=${clipId}&parent=localhost`;
+      }
+    }
+    
+    return null;
   };
 
-  const handleSaveGallery = (updatedGallery) => {
-    if (onGalleryUpdate) {
-      onGalleryUpdate(updatedGallery);
+  const handleClipClick = (clip) => {
+    // Fallback to opening in new tab for unsupported platforms
+    const embedUrl = getEmbedUrl(clip);
+    if (!embedUrl) {
+      window.open(clip.url, '_blank');
     }
   };
 
-  const renderImageCard = (image, index) => (
-    <Box key={index} sx={{ p: 1 }}>
-      <Card 
-        sx={{ 
-          height: '250px',
-          cursor: 'pointer',
-          transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-          '&:hover': {
-            transform: 'translateY(-4px)',
-            boxShadow: theme.shadows[8],
-          },
-          backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242',
-          border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#666666'}`
-        }}
-        onClick={() => handleImageClick(image)}
-      >
-        <Box sx={{ 
-          position: 'relative', 
-          width: '100%', 
-          height: '100%',
-          overflow: 'hidden'
-        }}>
-          {/* Image */}
-          <Box
-            component="img"
-            src={image.url}
-            alt={image.description}
-            sx={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              transition: 'transform 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'scale(1.05)',
-              }
-            }}
-          />
-          
-          {/* Overlay with Fullscreen Icon */}
-          <Box sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            opacity: 0,
-            transition: 'opacity 0.3s ease-in-out',
+  const renderClipCard = (clip, index) => {
+    const embedUrl = getEmbedUrl(clip);
+    
+    return (
+      <Box key={index} sx={{ p: 1 }}>
+        <Card 
+          sx={{ 
+            height: embedUrl ? '300px' : '200px',
+            cursor: embedUrl ? 'default' : 'pointer',
+            transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
             '&:hover': {
-              opacity: 1,
-            }
-          }}>
-            <Box sx={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: theme.palette.text.primary
+              transform: embedUrl ? 'none' : 'translateY(-4px)',
+              boxShadow: embedUrl ? theme.shadows[2] : theme.shadows[8],
+            },
+            backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242',
+            border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#666666'}`
+          }}
+          onClick={() => handleClipClick(clip)}
+        >
+          {embedUrl ? (
+            // Embedded Video
+            <Box sx={{ 
+              position: 'relative', 
+              width: '100%', 
+              height: '100%',
+              overflow: 'hidden'
             }}>
-              <FullscreenIcon />
+              <iframe
+                src={embedUrl}
+                title={clip.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
+                }}
+              />
             </Box>
-          </Box>
-
-          {/* Description Overlay at Bottom */}
-          {image.description && (
-            <Box sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              color: 'white',
-              p: 1
+          ) : (
+            // Fallback Card with Play Icon
+            <CardContent sx={{ 
+              p: 2, 
+              height: '100%', 
+              display: 'flex', 
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}>
+              {/* Play Icon Overlay */}
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                mb: 1
+              }}>
+                <Box sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  backgroundColor: theme.palette.primary.main,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'white'
+                }}>
+                  <PlayIcon />
+                </Box>
+              </Box>
+
+              {/* Clip Title */}
               <Typography 
-                variant="caption" 
+                variant="body2" 
                 sx={{ 
-                  fontSize: '0.7rem',
-                  lineHeight: 1.2,
+                  fontWeight: 'bold',
+                  mb: 1,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical'
+                  WebkitBoxOrient: 'vertical',
+                  lineHeight: 1.2,
+                  color: theme.palette.text.primary
                 }}
               >
-                {image.description}
+                {clip.title}
               </Typography>
-            </Box>
+
+              {/* Source and Date */}
+              <Box sx={{ mt: 'auto' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                  <Chip 
+                    label={clip.source} 
+                    size="small" 
+                    sx={{ 
+                      backgroundColor: theme.palette.primary.main,
+                      color: 'white',
+                      fontSize: '0.7rem'
+                    }}
+                  />
+                  <Typography 
+                    variant="caption" 
+                    sx={{ 
+                      color: theme.palette.text.secondary,
+                      fontSize: '0.7rem'
+                    }}
+                  >
+                    {clip.publishedAt}
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
           )}
-        </Box>
-      </Card>
-    </Box>
-  );
+        </Card>
+      </Box>
+    );
+  };
 
   const renderContent = () => {
-    if (!gallery || gallery.length === 0) {
+    if (!clips || clips.length === 0) {
       return (
         <Box sx={{ 
           display: 'flex', 
@@ -271,7 +333,7 @@ function GalleryCarousel({
           py: 4 
         }}>
           <Typography variant="body2" color="text.secondary">
-            No images available
+            No clips available
           </Typography>
         </Box>
       );
@@ -300,7 +362,7 @@ function GalleryCarousel({
             }
           }}
         >
-          {gallery.map((image, index) => renderImageCard(image, index))}
+          {clips.map((clip, index) => renderClipCard(clip, index))}
         </Slider>
       </Box>
     );
@@ -308,17 +370,15 @@ function GalleryCarousel({
 
   return (
     <>
-            <ExpandableCard
+      <ExpandableCard
         title={title}
         defaultExpanded={defaultExpanded}
         collapsible={collapsible}
         sx={sx}
         headerActions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            {seeAllUrl && gallery.length > 0 && (
+            {seeAllUrl && clips.length > 0 && (
               <Button
-                variant="outlined"
-                size="small"
                 startIcon={<OpenInNewIcon />}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -327,7 +387,6 @@ function GalleryCarousel({
                 sx={{
                   color: theme.palette.primary.main,
                   borderColor: theme.palette.primary.main,
-                  fontSize: '0.75rem',
                   py: 0.5,
                   px: 1,
                   minWidth: 'auto',
@@ -342,17 +401,14 @@ function GalleryCarousel({
             )}
             {canEdit && (
               <Button
-                variant="outlined"
-                size="small"
                 startIcon={<EditIcon />}
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleEditGallery();
+                  handleEditClips();
                 }}
                 sx={{
                   color: theme.palette.primary.main,
                   borderColor: theme.palette.primary.main,
-                  fontSize: '0.75rem',
                   py: 0.5,
                   px: 1,
                   minWidth: 'auto',
@@ -371,70 +427,17 @@ function GalleryCarousel({
         {renderContent()}
       </ExpandableCard>
 
-      {/* Edit Gallery Dialog */}
-      <GalleryEditDialog
+      {/* Edit Clips Dialog */}
+      <ClipsEditDialog
         open={editDialogOpen}
         onClose={handleCloseEdit}
-        gallery={gallery}
-        onSave={handleSaveGallery}
+        clips={clips}
+        onSave={handleSaveClips}
         title={`Edit ${title}`}
         canEdit={canEdit}
       />
-
-      {/* Image Dialog */}
-      <Dialog
-        open={imageDialogOpen}
-        onClose={handleCloseImage}
-        maxWidth="lg"
-        fullWidth
-        PaperProps={{
-          sx: {
-            backgroundColor: theme.palette.background.paper,
-            border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#333333'}`
-          }
-        }}
-      >
-        <DialogTitle sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          color: theme.palette.text.primary
-        }}>
-          {selectedImage?.description || 'Gallery Image'}
-          <IconButton onClick={handleCloseImage}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
-          {selectedImage && (
-            <Box sx={{ 
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              height: '70vh',
-              backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242',
-              overflow: 'hidden',
-              pb: 2,
-              px: 2
-            }}>
-              <Box
-                component="img"
-                src={selectedImage.url}
-                alt={selectedImage.description}
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  borderRadius: 1
-                }}
-              />
-            </Box>
-          )}
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
 
-export default GalleryCarousel; 
+export default ClipsCarousel; 

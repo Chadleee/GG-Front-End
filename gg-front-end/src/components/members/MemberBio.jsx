@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import EditableExpandableCard from '../../shared/editableComponents/EditableExpandableCard';
+import EditableExpandableCard from '../shared/editableComponents/EditableExpandableCard';
 import { useMembers } from '../../contexts/MemberContext';
 
 function MemberBio({ member, canEdit, onMemberUpdate }) {

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import EditableExpandableCard from '../../shared/editableComponents/EditableExpandableCard';
+import EditableExpandableCard from '../shared/editableComponents/EditableExpandableCard';
 import { useCharacters } from '../../contexts/CharacterContext';
 
 function CharacterDescription({ character, canEdit, onCharacterUpdate }) {

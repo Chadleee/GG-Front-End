@@ -19,8 +19,8 @@ import { useUser } from '../../contexts/UserContext';
 import MemberBio from './MemberBio';
 import MemberCharacters from './MemberCharacters';
 import MemberProfileCard from './MemberProfileCard';
-import ClipsCarousel from '../../shared/ClipsCarousel';
-import GalleryCarousel from '../../shared/GalleryCarousel';
+import ClipsCarousel from '../shared/ClipsCarousel';
+import GalleryCarousel from '../shared/GalleryCarousel';
 import memberAPI from '../../api/members';
 
 function MemberDetail() {

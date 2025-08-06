@@ -21,13 +21,13 @@ import {
   ListItemSecondaryAction
 } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
-import twitter_logo from '../assets/twitter_logo.png';
-import youtube_logo from '../assets/youtube_logo.png';
-import tiktok_logo from '../assets/tiktok_logo.png';
-import kick_logo from '../assets/kick_logo.png';
-import discord_logo from '../assets/discord_logo.png';
-import instagram_logo from '../assets/instagram_logo.png';
-import twitch_logo from '../assets/twitch_logo.png';
+import twitter_logo from '../../assets/twitter_logo.png';
+import youtube_logo from '../../assets/youtube_logo.png';
+import tiktok_logo from '../../assets/tiktok_logo.png';
+import kick_logo from '../../assets/kick_logo.png';
+import discord_logo from '../../assets/discord_logo.png';
+import instagram_logo from '../../assets/instagram_logo.png';
+import twitch_logo from '../../assets/twitch_logo.png';
 
 const SOCIAL_PLATFORMS = [
   'Twitch',
@@ -146,7 +146,9 @@ function SocialsEditDialog({ open, onClose, onSave, socials = [], title = "Edit 
         {/* Social Links List */}
         <Box>
           <List>
-            {editedSocials.map((social, index) => (
+            {editedSocials
+              .sort((a, b) => a.platform.localeCompare(b.platform))
+              .map((social, index) => (
               <ListItem
                 key={index}
                 sx={{

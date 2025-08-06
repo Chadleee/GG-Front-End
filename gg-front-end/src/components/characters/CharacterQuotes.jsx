@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Typography, IconButton, Button, Collapse, useTheme, Card, CardContent } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
-import MuiRichTextEditor from '../../shared/editableComponents/MuiRichTextEditor';
+import MuiRichTextEditor from '../shared/editableComponents/MuiRichTextEditor';
 
 function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
   const { updateCharacter } = useCharacters();
