@@ -55,13 +55,13 @@ function ClipsEditDialog({
 
   // Source options for dropdown
   const sourceOptions = [
-    'YouTube',
-    'Twitch',
-    'TikTok',
-    'Instagram',
-    'Twitter',
     'Facebook',
-    'Other'
+    'Instagram',
+    'Other',
+    'TikTok',
+    'Twitter',
+    'Twitch',
+    'YouTube'
   ];
 
   // Helper function to extract YouTube video ID

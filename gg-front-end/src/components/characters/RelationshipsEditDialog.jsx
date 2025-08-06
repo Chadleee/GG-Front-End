@@ -239,6 +239,7 @@ function RelationshipsEditDialog({ open, onClose, relationships = [], onSave, ch
                           >
                             {characters
                               .filter(c => c.id !== character?.id) // Exclude current character
+                              .sort((a, b) => a.name.localeCompare(b.name))
                               .map((char) => (
                                 <MenuItem key={char.id} value={char.id}>
                                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -261,7 +262,9 @@ function RelationshipsEditDialog({ open, onClose, relationships = [], onSave, ch
                             onChange={(e) => handleUpdateRelationship(index, 'relationship_type', e.target.value)}
                             label="Relationship Type"
                           >
-                            {relationshipTypes.map((type) => (
+                            {relationshipTypes
+                              .sort((a, b) => a.localeCompare(b))
+                              .map((type) => (
                               <MenuItem key={type} value={type}>
                                 {type}
                               </MenuItem>

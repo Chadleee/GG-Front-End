@@ -201,8 +201,17 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
               Played by:
             </Typography>
             {editingMemberId ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <FormControl size="small" sx={{ minWidth: 200 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: 1,
+                maxWidth: '100%'
+              }}>
+                <FormControl size="small" sx={{ 
+                  minWidth: 150,
+                  maxWidth: 'calc(100% - 100px)', // More space for buttons
+                  flex: 1
+                }}>
                   <Select
                     value={memberIdValue}
                     onChange={(e) => setMemberIdValue(e.target.value)}
@@ -219,39 +228,43 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                       },
                     }}
                   >
-                    {members.map((member) => (
+                    {members
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((member) => (
                       <MenuItem key={member.id} value={member.id}>
                         {member.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-                <IconButton
-                  size="small"
-                  onClick={handleSaveMemberId}
-                  sx={{ 
-                    color: 'success.main',
-                    '&:hover': {
-                      backgroundColor: 'success.main',
-                      color: 'white',
-                    }
-                  }}
-                >
-                  <SaveIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={handleCancelMemberId}
-                  sx={{ 
-                    color: 'error.main',
-                    '&:hover': {
-                      backgroundColor: 'error.main',
-                      color: 'white',
-                    }
-                  }}
-                >
-                  <CancelIcon fontSize="small" />
-                </IconButton>
+                <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
+                  <IconButton
+                    size="small"
+                    onClick={handleSaveMemberId}
+                    sx={{ 
+                      color: 'success.main',
+                      '&:hover': {
+                        backgroundColor: 'success.main',
+                        color: 'white',
+                      }
+                    }}
+                  >
+                    <SaveIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={handleCancelMemberId}
+                    sx={{ 
+                      color: 'error.main',
+                      '&:hover': {
+                        backgroundColor: 'error.main',
+                        color: 'white',
+                      }
+                    }}
+                  >
+                    <CancelIcon fontSize="small" />
+                  </IconButton>
+                </Box>
               </Box>
             ) : (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

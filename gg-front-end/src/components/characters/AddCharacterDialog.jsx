@@ -125,7 +125,9 @@ function AddCharacterDialog({ open, onClose, members }) {
                   },
                 }}
               >
-                {members.map((member) => (
+                {members
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((member) => (
                   <MenuItem key={member.id} value={member.id}>
                     {member.name}
                   </MenuItem>
