@@ -66,7 +66,7 @@ function CharacterDetail() {
   };
 
   const handleDeleteConfirm = async () => {
-    if (deleteConfirmation === 'delete character') {
+    if (deleteConfirmation.toLowerCase() === 'delete character') {
       setDeleteDialogOpen(false);
       setDeleteConfirmation('');
       await handleDelete();
@@ -240,7 +240,7 @@ function CharacterDetail() {
             onClick={handleDeleteConfirm} 
             color="error" 
             variant="contained"
-            disabled={deleteConfirmation !== 'delete character'}
+            disabled={deleteConfirmation.toLowerCase() !== 'delete character'}
           >
             Delete
           </Button>

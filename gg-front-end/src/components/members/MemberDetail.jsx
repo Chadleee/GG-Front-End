@@ -62,15 +62,20 @@ function MemberDetail() {
 
   const handleDeleteClick = () => {
     setDeleteDialogOpen(true);
+    setDeleteConfirmation('');
   };
 
   const handleDeleteConfirm = async () => {
-    setDeleteDialogOpen(false);
-    await handleDelete();
+    if (deleteConfirmation.toLowerCase() === 'delete member') {
+      setDeleteDialogOpen(false);
+      setDeleteConfirmation('');
+      await handleDelete();
+    }
   };
 
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
+    setDeleteConfirmation('');
   };
 
   if (loading) {
@@ -216,15 +221,30 @@ function MemberDetail() {
           Delete Member
         </DialogTitle>
         <DialogContent>
-          <Typography>
+          <Typography sx={{ mb: 2 }}>
             Are you sure you want to delete "{member.displayName || member.name}"? This action cannot be undone.
           </Typography>
+          <Typography sx={{ mb: 1 }}>
+            To confirm deletion, please type "delete member" below:
+          </Typography>
+          <TextField
+            fullWidth
+            value={deleteConfirmation}
+            onChange={(e) => setDeleteConfirmation(e.target.value)}
+            placeholder="Type 'delete member' to confirm"
+            size="small"
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDeleteCancel} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+          <Button 
+            onClick={handleDeleteConfirm} 
+            color="error" 
+            variant="contained"
+            disabled={deleteConfirmation.toLowerCase() !== 'delete member'}
+          >
             Delete
           </Button>
         </DialogActions>
