@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogTitle
 } from '@mui/material';
-import { OpenInNew as OpenInNewIcon } from '@mui/icons-material';
+import { OpenInNew as OpenInNewIcon, Edit as EditIcon } from '@mui/icons-material';
 import { 
   NavigateNext as NextIcon,
   NavigateBefore as PrevIcon,
@@ -23,6 +23,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandableCard from './ExpandableCard';
+import GalleryEditDialog from './GalleryEditDialog';
 
 function GalleryCarousel({ 
   title = "Gallery", 
@@ -30,12 +31,15 @@ function GalleryCarousel({
   defaultExpanded = false,
   collapsible = true,
   sx = {},
-  seeAllUrl = null
+  seeAllUrl = null,
+  canEdit = false,
+  onGalleryUpdate = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const sliderRef = useRef(null);
   const theme = useTheme();
 
@@ -140,6 +144,20 @@ function GalleryCarousel({
   const handleCloseImage = () => {
     setImageDialogOpen(false);
     setSelectedImage(null);
+  };
+
+  const handleEditGallery = () => {
+    setEditDialogOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditDialogOpen(false);
+  };
+
+  const handleSaveGallery = (updatedGallery) => {
+    if (onGalleryUpdate) {
+      onGalleryUpdate(updatedGallery);
+    }
   };
 
   const renderImageCard = (image, index) => (
@@ -296,35 +314,72 @@ function GalleryCarousel({
         collapsible={collapsible}
         sx={sx}
         headerActions={
-          seeAllUrl && gallery.length > 0 ? (
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<OpenInNewIcon />}
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(seeAllUrl, '_blank');
-              }}
-              sx={{
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                fontSize: '0.75rem',
-                py: 0.5,
-                px: 1,
-                minWidth: 'auto',
-                '&:hover': {
-                  backgroundColor: theme.palette.primary.main,
-                  color: 'white',
-                }
-              }}
-            >
-              See All
-            </Button>
-          ) : null
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {seeAllUrl && gallery.length > 0 && (
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<OpenInNewIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(seeAllUrl, '_blank');
+                }}
+                sx={{
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  px: 1,
+                  minWidth: 'auto',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: 'white',
+                  }
+                }}
+              >
+                See All
+              </Button>
+            )}
+            {canEdit && (
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<EditIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditGallery();
+                }}
+                sx={{
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  px: 1,
+                  minWidth: 'auto',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: 'white',
+                  }
+                }}
+              >
+                Edit
+              </Button>
+            )}
+          </Box>
         }
       >
         {renderContent()}
       </ExpandableCard>
+
+      {/* Edit Gallery Dialog */}
+      <GalleryEditDialog
+        open={editDialogOpen}
+        onClose={handleCloseEdit}
+        gallery={gallery}
+        onSave={handleSaveGallery}
+        title={`Edit ${title}`}
+        canEdit={canEdit}
+      />
 
       {/* Image Dialog */}
       <Dialog

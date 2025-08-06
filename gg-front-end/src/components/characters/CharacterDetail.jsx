@@ -8,7 +8,8 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  TextField
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
@@ -21,6 +22,7 @@ import CharacterProfileCard from './CharacterProfileCard';
 import CharacterRelationships from './CharacterRelationships';
 import ClipsCarousel from '../../shared/ClipsCarousel';
 import GalleryCarousel from '../../shared/GalleryCarousel';
+import characterAPI from '../../api/characters';
 
 function CharacterDetail() {
   const theme = useTheme();
@@ -32,6 +34,7 @@ function CharacterDetail() {
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const canEdit = user?.id.toString() === character?.memberId.toString();
   const canDelete = user?.role === 'admin';
 
@@ -59,15 +62,20 @@ function CharacterDetail() {
 
   const handleDeleteClick = () => {
     setDeleteDialogOpen(true);
+    setDeleteConfirmation('');
   };
 
   const handleDeleteConfirm = async () => {
-    setDeleteDialogOpen(false);
-    await handleDelete();
+    if (deleteConfirmation === 'delete character') {
+      setDeleteDialogOpen(false);
+      setDeleteConfirmation('');
+      await handleDelete();
+    }
   };
 
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
+    setDeleteConfirmation('');
   };
 
   if (loading) {
@@ -162,6 +170,17 @@ function CharacterDetail() {
             defaultExpanded={false}
             collapsible={true}
             seeAllUrl={`/characters/${character.id}/videos`}
+            canEdit={canEdit}
+            onClipsUpdate={async (updatedClips) => {
+              try {
+                const updatedCharacter = { ...character, clips: updatedClips };
+                await characterAPI.update(character.id, updatedCharacter);
+                setCharacter(updatedCharacter);
+              } catch (error) {
+                console.error('Failed to update character clips:', error);
+                // You might want to show an error message to the user here
+              }
+            }}
           />
         </Grid>
         
@@ -173,6 +192,17 @@ function CharacterDetail() {
             defaultExpanded={false}
             collapsible={true}
             seeAllUrl={`/characters/${character.id}/galleries`}
+            canEdit={canEdit}
+            onGalleryUpdate={async (updatedGallery) => {
+              try {
+                const updatedCharacter = { ...character, gallery: updatedGallery };
+                await characterAPI.update(character.id, updatedCharacter);
+                setCharacter(updatedCharacter);
+              } catch (error) {
+                console.error('Failed to update character gallery:', error);
+                // You might want to show an error message to the user here
+              }
+            }}
           />
         </Grid>
       </Grid>
@@ -188,15 +218,30 @@ function CharacterDetail() {
           Delete Character
         </DialogTitle>
         <DialogContent>
-          <Typography>
+          <Typography sx={{ mb: 2 }}>
             Are you sure you want to delete "{character.name}"? This action cannot be undone.
           </Typography>
+          <Typography sx={{ mb: 1 }}>
+            To confirm deletion, please type "delete character" below:
+          </Typography>
+          <TextField
+            fullWidth
+            value={deleteConfirmation}
+            onChange={(e) => setDeleteConfirmation(e.target.value)}
+            placeholder="Type 'delete character' to confirm"
+            size="small"
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDeleteCancel} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+          <Button 
+            onClick={handleDeleteConfirm} 
+            color="error" 
+            variant="contained"
+            disabled={deleteConfirmation !== 'delete character'}
+          >
             Delete
           </Button>
         </DialogActions>

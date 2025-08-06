@@ -9,7 +9,7 @@ import {
   useTheme,
   Chip
 } from '@mui/material';
-import { OpenInNew as OpenInNewIcon } from '@mui/icons-material';
+import { OpenInNew as OpenInNewIcon, Edit as EditIcon } from '@mui/icons-material';
 import { 
   PlayArrow as PlayIcon,
   NavigateNext as NextIcon,
@@ -19,6 +19,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandableCard from './ExpandableCard';
+import ClipsEditDialog from './ClipsEditDialog';
 
 function ClipsCarousel({ 
   title = "Clips", 
@@ -26,12 +27,29 @@ function ClipsCarousel({
   defaultExpanded = false,
   collapsible = true,
   sx = {},
-  seeAllUrl = null
+  seeAllUrl = null,
+  canEdit = false,
+  onClipsUpdate = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const sliderRef = useRef(null);
   const theme = useTheme();
+
+  const handleEditClips = () => {
+    setEditDialogOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditDialogOpen(false);
+  };
+
+  const handleSaveClips = (updatedClips) => {
+    if (onClipsUpdate) {
+      onClipsUpdate(updatedClips);
+    }
+  };
 
   // Function to determine if infinite scrolling should be enabled
   const shouldEnableInfinite = () => {
@@ -351,41 +369,80 @@ function ClipsCarousel({
   };
 
   return (
-    <ExpandableCard
-      title={title}
-      defaultExpanded={defaultExpanded}
-      collapsible={collapsible}
-      sx={sx}
-      headerActions={
-        seeAllUrl && clips.length > 0 ? (
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<OpenInNewIcon />}
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(seeAllUrl, '_blank');
-            }}
-            sx={{
-              color: theme.palette.primary.main,
-              borderColor: theme.palette.primary.main,
-              fontSize: '0.75rem',
-              py: 0.5,
-              px: 1,
-              minWidth: 'auto',
-              '&:hover': {
-                backgroundColor: theme.palette.primary.main,
-                color: 'white',
-              }
-            }}
-          >
-            See All
-          </Button>
-        ) : null
-      }
-    >
-      {renderContent()}
-    </ExpandableCard>
+    <>
+      <ExpandableCard
+        title={title}
+        defaultExpanded={defaultExpanded}
+        collapsible={collapsible}
+        sx={sx}
+        headerActions={
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {seeAllUrl && clips.length > 0 && (
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<OpenInNewIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(seeAllUrl, '_blank');
+                }}
+                sx={{
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  px: 1,
+                  minWidth: 'auto',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: 'white',
+                  }
+                }}
+              >
+                See All
+              </Button>
+            )}
+            {canEdit && (
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<EditIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditClips();
+                }}
+                sx={{
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  px: 1,
+                  minWidth: 'auto',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: 'white',
+                  }
+                }}
+              >
+                Edit
+              </Button>
+            )}
+          </Box>
+        }
+      >
+        {renderContent()}
+      </ExpandableCard>
+
+      {/* Edit Clips Dialog */}
+      <ClipsEditDialog
+        open={editDialogOpen}
+        onClose={handleCloseEdit}
+        clips={clips}
+        onSave={handleSaveClips}
+        title={`Edit ${title}`}
+        canEdit={canEdit}
+      />
+    </>
   );
 }
 

@@ -61,7 +61,7 @@ import marcus from '../../assets/marcus.png';
     <Box sx={{ mt: 4 }}>
       <ExpandableCard 
         title="Characters Played"
-        defaultExpanded={true}
+        defaultExpanded={false}
       >
         {memberCharacters.length > 0 ? (
           <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>

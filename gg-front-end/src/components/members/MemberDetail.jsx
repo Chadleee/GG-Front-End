@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  TextField
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { ArrowBack as ArrowBackIcon, Delete as DeleteIcon } from '@mui/icons-material';
@@ -20,12 +21,13 @@ import MemberCharacters from './MemberCharacters';
 import MemberProfileCard from './MemberProfileCard';
 import ClipsCarousel from '../../shared/ClipsCarousel';
 import GalleryCarousel from '../../shared/GalleryCarousel';
+import memberAPI from '../../api/members';
 
 function MemberDetail() {
   const theme = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getMemberById, updateMember, deleteMember } = useMembers();
+  const { getMemberById, updateMember, deleteMember, updateMemberSocials } = useMembers();
   const { getCharactersByMemberId } = useCharacters();
   const { user } = useUser();
 
@@ -33,6 +35,7 @@ function MemberDetail() {
   const [memberCharacters, setMemberCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const canEdit = user?.id.toString() === member?.id.toString();
   const canDelete = user?.role === 'admin';
 
@@ -120,6 +123,27 @@ function MemberDetail() {
         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <MemberProfileCard 
             member={member}
+            canEdit={canEdit}
+            onSocialsUpdate={async (updatedSocials) => {
+              try {
+                await updateMemberSocials(member.id, updatedSocials);
+                const updatedMember = { ...member, socials: updatedSocials };
+                setMember(updatedMember);
+              } catch (error) {
+                console.error('Failed to update member socials:', error);
+                // You might want to show an error message to the user here
+              }
+            }}
+            onJoinDateUpdate={async (updatedJoinDate) => {
+              try {
+                const updatedMember = { ...member, joinDate: updatedJoinDate };
+                await memberAPI.update(member.id, updatedMember);
+                setMember(updatedMember);
+              } catch (error) {
+                console.error('Failed to update member join date:', error);
+                // You might want to show an error message to the user here
+              }
+            }}
           />
         </Grid>
         
@@ -145,6 +169,17 @@ function MemberDetail() {
           defaultExpanded={false}
           collapsible={true}
           seeAllUrl={`/members/${member.id}/videos`}
+          canEdit={canEdit}
+          onClipsUpdate={async (updatedClips) => {
+            try {
+              const updatedMember = { ...member, clips: updatedClips };
+              await memberAPI.update(member.id, updatedMember);
+              setMember(updatedMember);
+            } catch (error) {
+              console.error('Failed to update member clips:', error);
+              // You might want to show an error message to the user here
+            }
+          }}
         />
       </Box>
 
@@ -156,6 +191,17 @@ function MemberDetail() {
           defaultExpanded={false}
           collapsible={true}
           seeAllUrl={`/members/${member.id}/galleries`}
+          canEdit={canEdit}
+          onGalleryUpdate={async (updatedGallery) => {
+            try {
+              const updatedMember = { ...member, gallery: updatedGallery };
+              await memberAPI.update(member.id, updatedMember);
+              setMember(updatedMember);
+            } catch (error) {
+              console.error('Failed to update member gallery:', error);
+              // You might want to show an error message to the user here
+            }
+          }}
         />
       </Box>
 
