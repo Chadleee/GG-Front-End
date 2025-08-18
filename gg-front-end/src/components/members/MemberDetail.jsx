@@ -54,7 +54,7 @@ function MemberDetail() {
       setMember(memberData);
       
       // Get characters for this member
-      const characters = getCharactersByMemberId(parseInt(id));
+      const characters = getCharactersByMemberId(id);
       setMemberCharacters(characters);
     }
     setLoading(false);

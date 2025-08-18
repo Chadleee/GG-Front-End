@@ -21,7 +21,7 @@ import marcus from '../../assets/marcus.png';
 
 function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }) {
   const navigate = useNavigate();
-  const { characters, fetchCharacters, getCharacterById } = useCharacters();
+  const { characters, loading, fetchCharacters, getCharacterById } = useCharacters();
   const { getChangeRequestsByCharacterId } = useChangeRequests();
   const [relationshipsEditDialogOpen, setRelationshipsEditDialogOpen] = useState(false);
 
@@ -79,10 +79,10 @@ function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }
 
   // Get related characters data
   const getRelatedCharacters = () => {
-    if (!character.relationships) return [];
+    if (!character.relationships || !characters || characters.length === 0) return [];
     
     return character.relationships.map(relationship => {
-      const relatedCharacter = characters.find(c => c.id == relationship.character_id);
+      const relatedCharacter = characters.find(c => c.id === relationship.character_id);
       if (relatedCharacter) {
         return {
           ...relatedCharacter,
@@ -122,7 +122,11 @@ function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }
           ) : null
         }
       >
-        {relatedCharacters.length > 0 ? (
+                 {loading ? (
+           <Typography variant="body1" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary }}>
+             Loading relationships...
+           </Typography>
+         ) : relatedCharacters.length > 0 ? (
           <Box sx={{ px: 2, py: 1, '& .slick-dots li button:before': { color: '#FFFFFF !important' }, '& .slick-dots li.slick-active button:before': { color: '#FFFFFF !important' } }}>
             <Slider
               dots={shouldEnableInfinite()}

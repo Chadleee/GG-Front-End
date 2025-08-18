@@ -52,7 +52,7 @@ export const CharacterProvider = ({ children }) => {
 
   // Get character by ID
   const getCharacterById = (id) => {
-    return characters.find(char => char.id == id);
+    return characters.find(char => char.id === id);
   };
 
   // Get characters by member ID
