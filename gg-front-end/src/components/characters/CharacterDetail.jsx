@@ -27,13 +27,17 @@ import GalleryCarousel from '../shared/GalleryCarousel';
 import AvatarInfo from './AvatarInfo';
 import AvatarEditDialog from './AvatarEditDialog';
 import ExpandableCard from '../shared/ExpandableCard';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
 import characterAPI from '../../api/characters';
+import { getPendingChanges, formatValue } from '../../utils/changeDetection';
+import { Collapse, Chip } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 
 function CharacterDetail() {
   const theme = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getCharacterById, deleteCharacter } = useCharacters();
+  const { getCharacterById, deleteCharacter, fetchCharacters } = useCharacters();
   const { user } = useUser();
   
   const [character, setCharacter] = useState(null);
@@ -41,8 +45,24 @@ function CharacterDetail() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const [avatarEditDialogOpen, setAvatarEditDialogOpen] = useState(false);
-  const canEdit = user?.id.toString() === character?.memberId.toString();
+  const [showAvatarChanges, setShowAvatarChanges] = useState(false);
+  const canEdit = user?.id.toString() === character?.memberId.toString() || user?.role === 'admin';
   const canDelete = user?.role === 'admin';
+  
+  // Check if there are pending changes for this character
+  const { getChangeRequestsByCharacterId } = useChangeRequests();
+  const hasPendingChanges = (() => {
+    if (!character?.id) return false;
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return requests.filter(req => req.status === 'pending').length > 0;
+  })();
+
+  // Get pending changes for avatar info
+  const avatarPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'avatarInfo');
+  })();
 
 
   useEffect(() => {
@@ -82,6 +102,49 @@ function CharacterDetail() {
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
     setDeleteConfirmation('');
+  };
+
+  const renderAvatarPendingChanges = () => {
+    if (avatarPendingChanges.length === 0) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowAvatarChanges(!showAvatarChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showAvatarChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes ({avatarPendingChanges.length})
+        </Button>
+
+        <Collapse in={showAvatarChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+                         {avatarPendingChanges.map((change, index) => (
+               <Box key={change.id || index} sx={{ mb: index < avatarPendingChanges.length - 1 ? 1 : 0 }}>
+                 <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                   {formatValue(change.newValue)}
+                 </Typography>
+               </Box>
+             ))}
+          </Box>
+        </Collapse>
+      </Box>
+    );
   };
 
   if (loading) {
@@ -180,7 +243,7 @@ function CharacterDetail() {
                   }}
                   sx={{ 
                     mr: 0, 
-                    color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                    color: avatarPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                     '&:hover': {
                       backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
                     }
@@ -192,6 +255,7 @@ function CharacterDetail() {
             }
           >
             <AvatarInfo character={character} />
+            {renderAvatarPendingChanges()}
           </ExpandableCard>
         </Grid>
         
@@ -204,6 +268,8 @@ function CharacterDetail() {
             onCharacterUpdate={setCharacter}
           />
         </Grid>
+
+
         
         {/* Character Clips - Full Width */}
         <Grid size={{ xs: 12 }}>
@@ -214,10 +280,13 @@ function CharacterDetail() {
             collapsible={true}
             seeAllUrl={`/characters/${character.id}/videos`}
             canEdit={canEdit}
+            entityType="character"
+            entityId={character.id}
             onClipsUpdate={async (updatedClips) => {
               try {
-                const updatedCharacter = { ...character, clips: updatedClips };
-                await characterAPI.update(character.id, updatedCharacter);
+                await character.update(updatedClips, 'clips');
+                await fetchCharacters();
+                const updatedCharacter = getCharacterById(character.id);
                 setCharacter(updatedCharacter);
               } catch (error) {
                 console.error('Failed to update character clips:', error);
@@ -236,10 +305,13 @@ function CharacterDetail() {
             collapsible={true}
             seeAllUrl={`/characters/${character.id}/galleries`}
             canEdit={canEdit}
+            entityType="character"
+            entityId={character.id}
             onGalleryUpdate={async (updatedGallery) => {
               try {
-                const updatedCharacter = { ...character, gallery: updatedGallery };
-                await characterAPI.update(character.id, updatedCharacter);
+                await character.update(updatedGallery, 'gallery');
+                await fetchCharacters();
+                const updatedCharacter = getCharacterById(character.id);
                 setCharacter(updatedCharacter);
               } catch (error) {
                 console.error('Failed to update character gallery:', error);
@@ -262,8 +334,9 @@ function CharacterDetail() {
         }}
         onSave={async (updatedAvatar) => {
           try {
-            const updatedCharacter = { ...character, ...updatedAvatar };
-            await characterAPI.update(character.id, updatedCharacter);
+            await character.update(updatedAvatar, 'avatarInfo');
+            await fetchCharacters();
+            const updatedCharacter = getCharacterById(character.id);
             setCharacter(updatedCharacter);
             setAvatarEditDialogOpen(false);
           } catch (error) {

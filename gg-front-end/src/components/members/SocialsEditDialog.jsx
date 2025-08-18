@@ -75,7 +75,8 @@ function SocialsEditDialog({ open, onClose, onSave, socials = [], title = "Edit 
 
   const handleAddSocial = () => {
     if (newSocial.platform && newSocial.url) {
-      setEditedSocials([...editedSocials, { ...newSocial }]);
+      const tempId = `temp_id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      setEditedSocials([...editedSocials, { ...newSocial, id: tempId }]);
       setNewSocial({ platform: '', url: '' });
     }
   };
@@ -150,7 +151,7 @@ function SocialsEditDialog({ open, onClose, onSave, socials = [], title = "Edit 
               .sort((a, b) => a.platform.localeCompare(b.platform))
               .map((social, index) => (
               <ListItem
-                key={index}
+                key={social.id || index}
                 sx={{
                   border: '1px solid',
                   borderColor: 'divider',

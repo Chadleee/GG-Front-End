@@ -21,13 +21,14 @@ import MemberCharacters from './MemberCharacters';
 import MemberProfileCard from './MemberProfileCard';
 import ClipsCarousel from '../shared/ClipsCarousel';
 import GalleryCarousel from '../shared/GalleryCarousel';
-import memberAPI from '../../api/members';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+
 
 function MemberDetail() {
   const theme = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getMemberById, updateMember, deleteMember, updateMemberSocials } = useMembers();
+  const { getMemberById, updateMember, deleteMember, updateMemberSocials, fetchMembers } = useMembers();
   const { getCharactersByMemberId } = useCharacters();
   const { user } = useUser();
 
@@ -36,8 +37,16 @@ function MemberDetail() {
   const [loading, setLoading] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
-  const canEdit = user?.id.toString() === member?.id.toString();
+  const canEdit = user?.id.toString() === member?.id.toString() || user?.role === 'admin';
   const canDelete = user?.role === 'admin';
+  
+  // Check if there are pending changes for this member
+  const { getChangeRequestsByMemberId } = useChangeRequests();
+  const hasPendingChanges = (() => {
+    if (!member?.id) return false;
+    const requests = getChangeRequestsByMemberId(member.id);
+    return requests.filter(req => req.status === 'pending').length > 0;
+  })();
 
   useEffect(() => {
     const memberData = getMemberById(id);
@@ -131,8 +140,9 @@ function MemberDetail() {
             canEdit={canEdit}
             onSocialsUpdate={async (updatedSocials) => {
               try {
-                await updateMemberSocials(member.id, updatedSocials);
-                const updatedMember = { ...member, socials: updatedSocials };
+                await member.update(updatedSocials, 'socials');
+                await fetchMembers();
+                const updatedMember = getMemberById(member.id);
                 setMember(updatedMember);
               } catch (error) {
                 console.error('Failed to update member socials:', error);
@@ -141,8 +151,9 @@ function MemberDetail() {
             }}
             onJoinDateUpdate={async (updatedJoinDate) => {
               try {
-                const updatedMember = { ...member, joinDate: updatedJoinDate };
-                await memberAPI.update(member.id, updatedMember);
+                await member.update(updatedJoinDate, 'joinDate');
+                await fetchMembers();
+                const updatedMember = getMemberById(member.id);
                 setMember(updatedMember);
               } catch (error) {
                 console.error('Failed to update member join date:', error);
@@ -166,6 +177,8 @@ function MemberDetail() {
         theme={theme}
       />
 
+
+
       {/* Member Clips - Full Width */}
       <Box sx={{ mt: 4 }}>
         <ClipsCarousel 
@@ -175,10 +188,13 @@ function MemberDetail() {
           collapsible={true}
           seeAllUrl={`/members/${member.id}/videos`}
           canEdit={canEdit}
+          entityType="member"
+          entityId={member.id}
           onClipsUpdate={async (updatedClips) => {
             try {
-              const updatedMember = { ...member, clips: updatedClips };
-              await memberAPI.update(member.id, updatedMember);
+              await member.update(updatedClips, 'clips');
+              await fetchMembers();
+              const updatedMember = getMemberById(member.id);
               setMember(updatedMember);
             } catch (error) {
               console.error('Failed to update member clips:', error);
@@ -197,10 +213,13 @@ function MemberDetail() {
           collapsible={true}
           seeAllUrl={`/members/${member.id}/galleries`}
           canEdit={canEdit}
+          entityType="member"
+          entityId={member.id}
           onGalleryUpdate={async (updatedGallery) => {
             try {
-              const updatedMember = { ...member, gallery: updatedGallery };
-              await memberAPI.update(member.id, updatedMember);
+              await member.update(updatedGallery, 'gallery');
+              await fetchMembers();
+              const updatedMember = getMemberById(member.id);
               setMember(updatedMember);
             } catch (error) {
               console.error('Failed to update member gallery:', error);

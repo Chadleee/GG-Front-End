@@ -10,9 +10,10 @@ import {
   Chip,
   Dialog,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Collapse
 } from '@mui/material';
-import { OpenInNew as OpenInNewIcon, Edit as EditIcon } from '@mui/icons-material';
+import { OpenInNew as OpenInNewIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { 
   NavigateNext as NextIcon,
   NavigateBefore as PrevIcon,
@@ -24,6 +25,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandableCard from './ExpandableCard';
 import GalleryEditDialog from './GalleryEditDialog';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, compareArrays, getArrayChangeText, hasArrayChanges, aggregateArrayChanges } from '../../utils/changeDetection';
 
 function GalleryCarousel({ 
   title = "Gallery", 
@@ -33,15 +36,27 @@ function GalleryCarousel({
   sx = {},
   seeAllUrl = null,
   canEdit = false,
-  onGalleryUpdate = null
+  onGalleryUpdate = null,
+  entityType = null,
+  entityId = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [showChanges, setShowChanges] = useState(false);
   const sliderRef = useRef(null);
   const theme = useTheme();
+  
+  // Get pending changes for gallery
+  const { changeRequests } = useChangeRequests();
+  const pendingChanges = getPendingChanges(changeRequests, entityType, entityId, 'gallery');
+  const hasPendingChanges = pendingChanges.length > 0;
+
+  // Aggregate all pending changes for gallery
+  const arrayChanges = pendingChanges.length > 0 ? aggregateArrayChanges(pendingChanges) : null;
+  const hasChanges = arrayChanges ? hasArrayChanges(arrayChanges) : false;
 
   // Function to determine if infinite scrolling should be enabled
   const shouldEnableInfinite = () => {
@@ -154,10 +169,89 @@ function GalleryCarousel({
     setEditDialogOpen(false);
   };
 
-  const handleSaveGallery = (updatedGallery) => {
+  const handleSaveGallery = async (updatedGallery) => {
     if (onGalleryUpdate) {
-      onGalleryUpdate(updatedGallery);
+      await onGalleryUpdate(updatedGallery);
     }
+  };
+
+  const renderPendingChanges = () => {
+    if (!hasPendingChanges || !arrayChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowChanges(!showChanges)}
+          startIcon={<ExpandMoreIcon sx={{ 
+            transform: showChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{ 
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes: {getArrayChangeText(arrayChanges)}
+        </Button>
+        
+        <Collapse in={showChanges}>
+          <Box sx={{ 
+            mt: 1, 
+            p: 1, 
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {arrayChanges.added.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Added ({arrayChanges.added.length}):
+                </Typography>
+                {arrayChanges.added.map((image, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                    • {image.description || 'Untitled image'}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {arrayChanges.removed.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Removed ({arrayChanges.removed.length}):
+                </Typography>
+                {arrayChanges.removed.map((image, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                    • {image.description || 'Untitled image'}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {arrayChanges.modified.length > 0 && (
+              <Box>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Modified ({arrayChanges.modified.length}):
+                </Typography>
+                {arrayChanges.modified.map((change, index) => (
+                  <Box key={index} sx={{ ml: 2, mb: 1 }}>
+                    <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                      • {change.old.description || 'Untitled image'}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                      → {change.new.description || 'Untitled image'}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Collapse>
+      </Box>
+    );
   };
 
   const renderImageCard = (image, index) => (
@@ -302,13 +396,14 @@ function GalleryCarousel({
         >
           {gallery.map((image, index) => renderImageCard(image, index))}
         </Slider>
+        {renderPendingChanges()}
       </Box>
     );
   };
 
   return (
     <>
-            <ExpandableCard
+      <ExpandableCard
         title={title}
         defaultExpanded={defaultExpanded}
         collapsible={collapsible}
@@ -345,13 +440,13 @@ function GalleryCarousel({
                   handleEditGallery();
                 }}
                 sx={{
-                  color: theme.palette.primary.main,
-                  borderColor: theme.palette.primary.main,
+                  color: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
+                  borderColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
                   py: 0.5,
                   px: 1,
                   minWidth: 'auto',
                   '&:hover': {
-                    backgroundColor: theme.palette.primary.main,
+                    backgroundColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
                     color: 'white',
                   }
                 }}

@@ -25,6 +25,10 @@ import discord_logo from '../../assets/discord_logo.png';
 import instagram_logo from '../../assets/instagram_logo.png';
 import twitch_logo from '../../assets/twitch_logo.png';
 import { useState } from 'react';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, formatValue, compareArrays, getArrayChangeText, aggregateArrayChanges } from '../../utils/changeDetection';
+import { Collapse, Button } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 
 function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDateUpdate }) {
   const theme = useTheme();
@@ -32,6 +36,24 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
   const [editingJoinDate, setEditingJoinDate] = useState(false);
   const [joinDateValue, setJoinDateValue] = useState(member.joinDate ? new Date(member.joinDate) : null);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [showSocialsChanges, setShowSocialsChanges] = useState(false);
+  const [showJoinDateChanges, setShowJoinDateChanges] = useState(false);
+
+  // Get pending changes for this member
+  const { getChangeRequestsByMemberId } = useChangeRequests();
+  const socialsPendingChanges = (() => {
+    if (!member?.id) return [];
+    const requests = getChangeRequestsByMemberId(member.id);
+    return getPendingChanges(requests, 'member', member.id, 'socials');
+  })();
+  const joinDatePendingChanges = (() => {
+    if (!member?.id) return [];
+    const requests = getChangeRequestsByMemberId(member.id);
+    return getPendingChanges(requests, 'member', member.id, 'joinDate');
+  })();
+
+  // Aggregate all pending changes for socials array
+  const socialsArrayChanges = socialsPendingChanges.length > 0 ? aggregateArrayChanges(socialsPendingChanges) : null;
 
   const getSocialLogo = (socialName) => {
     switch (socialName) {
@@ -95,6 +117,128 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
     setCalendarOpen(false);
   };
 
+  const renderSocialsPendingChanges = () => {
+    if (socialsPendingChanges.length === 0 || !socialsArrayChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1, mx: 2 }}>
+        <Button
+          size="small"
+          onClick={() => setShowSocialsChanges(!showSocialsChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showSocialsChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes: {getArrayChangeText(socialsArrayChanges)}
+        </Button>
+        
+        <Collapse in={showSocialsChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {socialsArrayChanges.added.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Added ({socialsArrayChanges.added.length}):
+                </Typography>
+                                 {socialsArrayChanges.added.map((social, index) => (
+                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                     • {social.platform}
+                   </Typography>
+                 ))}
+              </Box>
+            )}
+            
+            {socialsArrayChanges.removed.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Removed ({socialsArrayChanges.removed.length}):
+                </Typography>
+                                 {socialsArrayChanges.removed.map((social, index) => (
+                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                     • {social.platform}
+                   </Typography>
+                 ))}
+              </Box>
+            )}
+            
+            {socialsArrayChanges.modified.length > 0 && (
+              <Box>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Modified ({socialsArrayChanges.modified.length}):
+                </Typography>
+                                 {socialsArrayChanges.modified.map((change, index) => (
+                   <Box key={index} sx={{ ml: 2, mb: 1 }}>
+                     <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                       • {change.old.platform}
+                     </Typography>
+                     <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                       → {change.new.platform}
+                     </Typography>
+                   </Box>
+                 ))}
+              </Box>
+            )}
+          </Box>
+        </Collapse>
+      </Box>
+    );
+  };
+
+  const renderJoinDatePendingChanges = () => {
+    if (joinDatePendingChanges.length === 0) return null;
+
+    return (
+      <Box sx={{ mt: 1, mx: 2 }}>
+        <Button
+          size="small"
+          onClick={() => setShowJoinDateChanges(!showJoinDateChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showJoinDateChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes ({joinDatePendingChanges.length})
+        </Button>
+
+        <Collapse in={showJoinDateChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+                         {joinDatePendingChanges.map((change, index) => (
+               <Box key={change.id || index} sx={{ mb: index < joinDatePendingChanges.length - 1 ? 1 : 0 }}>
+                 <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                   {formatValue(change.newValue)}
+                 </Typography>
+               </Box>
+             ))}
+          </Box>
+        </Collapse>
+      </Box>
+    );
+  };
+
   return (
     <>
       <Card 
@@ -138,7 +282,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                               width: 30, 
                               height: 30, 
                               mx: 1,
-                              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                              color: socialsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                               border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
                               borderRadius: '20%'
                             }}
@@ -161,7 +305,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                             size="small"
                             onClick={handleEditSocials}
                             sx={{ 
-                              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                              color: socialsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                               border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
                               borderRadius: '20%'
                             }}
@@ -175,6 +319,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                 )}
               </Grid>
             </Box>
+            {renderSocialsPendingChanges()}
             <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
             <Typography variant="h6" sx={{ color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : theme.palette.text.secondary, mx: 2, mb: 1 }}>
               Join Date:
@@ -239,7 +384,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                       size="small"
                       onClick={handleEditJoinDate}
                       sx={{ 
-                        color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                        color: joinDatePendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                       }}
                     >
                       <EditIcon fontSize="small" />
@@ -248,6 +393,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                 )}
               </Box>
             )}
+            {renderJoinDatePendingChanges()}
           </Box>
 
         </CardContent>

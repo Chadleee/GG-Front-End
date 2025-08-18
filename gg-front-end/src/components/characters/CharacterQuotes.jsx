@@ -2,14 +2,30 @@ import { useState } from 'react';
 import { Box, Typography, IconButton, Button, Collapse, useTheme, Card, CardContent } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useCharacters } from '../../contexts/CharacterContext';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, compareArrays, getArrayChangeText } from '../../utils/changeDetection';
 import MuiRichTextEditor from '../shared/editableComponents/MuiRichTextEditor';
 
 function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
   const { updateCharacter } = useCharacters();
+  const { getChangeRequestsByCharacterId } = useChangeRequests();
   const theme = useTheme();
   const [isEditing, setIsEditing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [editValue, setEditValue] = useState('');
+  const [showPendingChanges, setShowPendingChanges] = useState(false);
+
+  // Get pending changes for quotes
+  const quotesPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'quotes');
+  })();
+
+  // Get the latest change request for quotes
+  const latestQuotesChange = quotesPendingChanges.length > 0 ? quotesPendingChanges[quotesPendingChanges.length - 1] : null;
+  const quotesArrayChanges = latestQuotesChange ? compareArrays(latestQuotesChange.oldValue, latestQuotesChange.newValue) : null;
+  const hasPendingChanges = quotesArrayChanges ? (quotesArrayChanges.added.length > 0 || quotesArrayChanges.removed.length > 0 || quotesArrayChanges.modified.length > 0) : false;
 
   const handleQuotesUpdate = async (newQuotes) => {
     try {
@@ -93,7 +109,7 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                   handleEdit();
                 }}
                 sx={{
-                  color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                  color: hasPendingChanges ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                   '&:hover': {
                     backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
                   }
@@ -208,6 +224,82 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                       </Typography>
                     </Box>
                   ))}
+                </Box>
+              )}
+
+              {/* Pending Changes Display */}
+              {hasPendingChanges && (
+                <Box sx={{ mt: 2 }}>
+                  <Button
+                    size="small"
+                    onClick={() => setShowPendingChanges(!showPendingChanges)}
+                    startIcon={<ExpandMoreIcon sx={{
+                      transform: showPendingChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.2s'
+                    }} />}
+                    sx={{
+                      color: '#FFD700',
+                      textTransform: 'none',
+                      p: 0,
+                      minWidth: 'auto'
+                    }}
+                  >
+                    Pending Changes: {getArrayChangeText(quotesArrayChanges)}
+                  </Button>
+                  
+                  <Collapse in={showPendingChanges}>
+                    <Box sx={{
+                      mt: 1,
+                      p: 1,
+                      backgroundColor: '#3d2c02',
+                      border: `1px solid #FFD700`,
+                      borderRadius: 1
+                    }}>
+                      {quotesArrayChanges.added.length > 0 && (
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                            Added ({quotesArrayChanges.added.length}):
+                          </Typography>
+                          {quotesArrayChanges.added.map((quote, index) => (
+                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                              • "{quote}"
+                            </Typography>
+                          ))}
+                        </Box>
+                      )}
+                      
+                      {quotesArrayChanges.removed.length > 0 && (
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                            Removed ({quotesArrayChanges.removed.length}):
+                          </Typography>
+                          {quotesArrayChanges.removed.map((quote, index) => (
+                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                              • "{quote}"
+                            </Typography>
+                          ))}
+                        </Box>
+                      )}
+                      
+                      {quotesArrayChanges.modified.length > 0 && (
+                        <Box>
+                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                            Modified ({quotesArrayChanges.modified.length}):
+                          </Typography>
+                          {quotesArrayChanges.modified.map((change, index) => (
+                            <Box key={index} sx={{ ml: 2, mb: 1 }}>
+                              <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                                • "{change.old}"
+                              </Typography>
+                              <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                                → "{change.new}"
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                  </Collapse>
                 </Box>
               )}
             </Box>

@@ -1,8 +1,8 @@
 {
   "characters": [
     {
-      "id": 1,
-      "memberId": 2,
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "memberId": "550e8400-e29b-41d4-a716-446655440002",
       "name": "Shabammabop",
       "affiliations": ["Gator"],
       "image": "https://via.placeholder.com/150",
@@ -15,7 +15,8 @@
       ],
       "relationships": [
         {
-          "character_id": 3,
+          "id": "550e8400-e29b-41d4-a716-446655440201",
+          "character_id": "550e8400-e29b-41d4-a716-446655440004",
           "relationship_type": "Friend",
           "description": "Shabammabop and Joe Biden are friends."
         }
@@ -24,43 +25,45 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440301",
           "url": "https://pbs.twimg.com/media/GsJfP8sasAAqdHa?format=jpg&name=medium",
           "description": "Anyone Has Sitting Arrangements?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440302",
           "url": "https://pbs.twimg.com/media/GrxRC5DXEAAv1qf?format=jpg&name=small",
           "description": "Is this Wallpaper Worthy for you?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440303",
           "url": "https://pbs.twimg.com/media/GrZD59Ra4AAWTzt?format=jpg&name=small",
           "description": "Looking for Hearts, Holding Hearts <3"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440501",
           "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
           "publishedAt": "1 month ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440502",
           "title": "I spent 3 days cooking in the lab to show this",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
           "publishedAt": "3 months ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440503",
           "title": "if you don't raid me... you don't love me",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
           "publishedAt": "3 months ago"
         }
       ],
-      "avatarInfo": {
-        "name": "Shabammabop",
-        "description": "Shabammabop is a gator who is friends with Joe Biden.",
-        "url": "https://via.placeholder.com/150"
-      },
+
       "avatarName": "Shabammabop",
       "avatarDescription": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon.",
       "avatarUrl": "http://localhost:5173",
@@ -69,8 +72,8 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 2,
-      "memberId": 2,
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "memberId": "550e8400-e29b-41d4-a716-446655440002",
       "name": "Crazy Girl",
       "affiliations": ["Human"],
       "image": "https://via.placeholder.com/150",
@@ -78,12 +81,13 @@
       "backstory": "Crazy Girl's origins are shrouded in mystery, with rumors suggesting she emerged from the depths of the city's underground scene. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Her chaotic personality developed as a survival mechanism in a world that didn't understand her unique perspective. Despite her wild nature, Crazy Girl has a heart of gold and will fiercely protect those she considers friends, even if her methods are unconventional.",
       "quotes": [
         "You are never too old to set another goal or to dream a new dream.",
-        "It always seems impossible until it’s done.",
+        "It always seems impossible until it's done.",
         "Start where you are. Use what you have. Do what you can."
       ],
       "relationships": [
         {
-          "character_id": 4,
+          "id": "550e8400-e29b-41d4-a716-446655440202",
+          "character_id": "550e8400-e29b-41d4-a716-446655440006",
           "relationship_type": "Rival",
           "description": "Competes for Rob's attention"
         }
@@ -92,32 +96,38 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440304",
           "url": "https://pbs.twimg.com/media/GsJfP8sasAAqdHa?format=jpg&name=medium",
           "description": "Anyone Has Sitting Arrangements?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440305",
           "url": "https://pbs.twimg.com/media/GrxRC5DXEAAv1qf?format=jpg&name=small",
           "description": "Is this Wallpaper Worthy for you?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440306",
           "url": "https://pbs.twimg.com/media/GrZD59Ra4AAWTzt?format=jpg&name=small",
           "description": "Looking for Hearts, Holding Hearts <3"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440504",
           "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
           "publishedAt": "1 month ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440505",
           "title": "I spent 3 days cooking in the lab to show this",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
           "publishedAt": "3 months ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440506",
           "title": "if you don't raid me... you don't love me",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
@@ -132,8 +142,8 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 3,
-      "memberId": 1,
+      "id": "550e8400-e29b-41d4-a716-446655440004",
+      "memberId": "550e8400-e29b-41d4-a716-446655440005",
       "name": "Joe Biden",
       "affiliations": ["Human"],
       "image": "https://via.placeholder.com/150",
@@ -146,41 +156,48 @@
       ],
       "relationships": [
         {
-          "character_id": 1,
+          "id": "550e8400-e29b-41d4-a716-446655440204",
+          "character_id": "550e8400-e29b-41d4-a716-446655440001",
           "relationship_type": "Friend",
           "description": "Shabammabop and Joe Biden are friends."
-        }],
+        }
+      ],
       "characterType": "Human",
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440316",
           "url": "https://pbs.twimg.com/media/GwVMjhmWEAsV2Q9?format=jpg&name=small",
           "description": "henblo :3"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440317",
           "url": "https://pbs.twimg.com/media/Gupae8PXwAAjcSD?format=jpg&name=small",
           "description": "hru today?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440318",
           "url": "https://pbs.twimg.com/media/GthmA23WAAA0urG?format=jpg&name=small",
           "description": "henlo :3 (say it back)"
         }
-      ]
-      ,
+      ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440511",
           "title": "A Scared Jouffa",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
           "publishedAt": "2023"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440512",
           "title": "jouffa gf experience",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
           "publishedAt": "2022"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440513",
           "title": "ALL NEW JOUFFA BUCKET",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
@@ -195,8 +212,8 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 4,
-      "memberId": 1,
+      "id": "550e8400-e29b-41d4-a716-446655440006",
+      "memberId": "550e8400-e29b-41d4-a716-446655440005",
       "name": "Marcus",
       "affiliations": ["Worm"],
       "image": "https://via.placeholder.com/150",
@@ -209,7 +226,8 @@
       ],
       "relationships": [
         {
-          "character_id": 2,
+          "id": "550e8400-e29b-41d4-a716-446655440203",
+          "character_id": "550e8400-e29b-41d4-a716-446655440003",
           "relationship_type": "Rival",
           "description": "Competes for Rob's attention"
         }
@@ -218,33 +236,38 @@
       "seasons": ["Season 2"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440319",
           "url": "https://pbs.twimg.com/media/GwVMjhmWEAsV2Q9?format=jpg&name=small",
           "description": "henblo :3"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440320",
           "url": "https://pbs.twimg.com/media/Gupae8PXwAAjcSD?format=jpg&name=small",
           "description": "hru today?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440321",
           "url": "https://pbs.twimg.com/media/GthmA23WAAA0urG?format=jpg&name=small",
           "description": "henlo :3 (say it back)"
         }
-      ]
-      ,
+      ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440514",
           "title": "A Scared Jouffa",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
           "publishedAt": "2023"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440515",
           "title": "jouffa gf experience",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
           "publishedAt": "2022"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440516",
           "title": "ALL NEW JOUFFA BUCKET",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
@@ -259,21 +282,22 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 5,
-      "memberId": 3,
+      "id": "550e8400-e29b-41d4-a716-446655440007",
+      "memberId": "550e8400-e29b-41d4-a716-446655440008",
       "name": "Roflgator",
       "affiliations": ["Gator"],
       "image": "https://via.placeholder.com/150",
       "description": "Roflgator is a gator who is friends with Shabammabop. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His infectious laughter and laid-back attitude make him the perfect comic relief in tense situations, while his strength and resilience provide reliable backup when things get serious.",
       "backstory": "Roflgator's story begins in the Florida Everglades, where he developed his signature sense of humor as a coping mechanism for the harsh realities of swamp life. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His journey from the swamps to the city was marked by countless adventures and misadventures, each one adding to his repertoire of jokes and stories. Roflgator's ability to find humor in any situation has made him a beloved figure among his friends, and his genuine care for others often manifests through his playful teasing and supportive nature.",
       "quotes": [
-        "Success doesn’t just find you. You have to go out and get it.",
+        "Success doesn't just find you. You have to go out and get it.",
         "The harder you work for something, the greater you'll feel when you achieve it.",
-        "Don’t limit your challenges—challenge your limits."
+        "Don't limit your challenges—challenge your limits."
       ],
       "relationships": [
         {
-          "character_id": 7,
+          "id": "550e8400-e29b-41d4-a716-446655440208",
+          "character_id": "550e8400-e29b-41d4-a716-446655440010",
           "relationship_type": "Acquaintance",
           "description": "Roflgator and Steven are acquaintances."
         }
@@ -282,20 +306,24 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440322",
           "url": "https://pbs.twimg.com/media/Go5rju5XwAAbn6C?format=jpg&name=small",
           "description": "Are you going to keep me waiting?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440323",
           "url": "https://pbs.twimg.com/media/GoGDIicXoAA8D1T?format=jpg&name=medium",
           "description": "Are you busy tonight?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440324",
           "url": "https://pbs.twimg.com/media/Gj6XMNUXYAABTWk?format=jpg&name=medium",
           "description": "What would you do if I were yours for one night?"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440517",
           "title": "Neat by MoonBuVr VRChat Toggle Showcase",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
@@ -310,8 +338,8 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 6,
-      "memberId": 3,
+      "id": "550e8400-e29b-41d4-a716-446655440009",
+      "memberId": "550e8400-e29b-41d4-a716-446655440008",
       "name": "Jigsaw",
       "affiliations": ["Puppet"],
       "image": "https://via.placeholder.com/150",
@@ -324,7 +352,8 @@
       ],
       "relationships": [
         {
-          "character_id": 8,
+          "id": "550e8400-e29b-41d4-a716-446655440205",
+          "character_id": "550e8400-e29b-41d4-a716-446655440012",
           "relationship_type": "Acquaintance",
           "description": "Interacted with each other at the gas station"
         }
@@ -333,20 +362,24 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440325",
           "url": "https://pbs.twimg.com/media/Go5rju5XwAAbn6C?format=jpg&name=small",
           "description": "Are you going to keep me waiting?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440326",
           "url": "https://pbs.twimg.com/media/GoGDIicXoAA8D1T?format=jpg&name=medium",
           "description": "Are you busy tonight?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440327",
           "url": "https://pbs.twimg.com/media/Gj6XMNUXYAABTWk?format=jpg&name=medium",
           "description": "What would you do if I were yours for one night?"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440518",
           "title": "Neat by MoonBuVr VRChat Toggle Showcase",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
@@ -361,21 +394,22 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 7,
-      "memberId": 4,  
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "memberId": "550e8400-e29b-41d4-a716-446655440011",
       "name": "Steven",
       "affiliations": ["Worm"],
       "image": "https://via.placeholder.com/150",
       "description": "Steven is a worm who is friends with Shabammabop. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His gentle nature and philosophical outlook on life make him the perfect mediator in conflicts, while his ability to navigate tight spaces provides unique tactical advantages.",
       "backstory": "Steven was born in the fertile soil of a community garden, where he spent his formative years learning the delicate balance of ecosystems and the interconnectedness of all living things. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His natural curiosity led him to explore the world above ground, where he discovered the complex social dynamics of humans and other creatures. Steven's experiences in both the underground and surface worlds have given him a unique perspective on cooperation, survival, and the importance of maintaining harmony between different communities.",
       "quotes": [
-        "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+        "Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.",
         "Act as if what you do makes a difference. It does.",
         "Doubt kills more dreams than failure ever will."
       ],
       "relationships": [
         {
-          "character_id": 5,
+          "id": "550e8400-e29b-41d4-a716-446655440206",
+          "character_id": "550e8400-e29b-41d4-a716-446655440009",
           "relationship_type": "Acquaintance",
           "description": "Roflgator and Steven are acquaintances."
         }
@@ -384,20 +418,24 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440334",
           "url": "https://pbs.twimg.com/media/Gtj6Je4WEAA-S4n?format=jpg&name=small",
-          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+          "description": "Shhh… no thoughts now. Just obey. That's it~ Let go for me."
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440335",
           "url": "https://pbs.twimg.com/media/GsjLYvAXYAAOtFQ?format=jpg&name=small",
           "description": "has your lap always been this comfy?~"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440336",
           "url": "https://pbs.twimg.com/media/GsKQG31XsAAEw_6?format=jpg&name=medium",
           "description": "how can i please you?~"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440524",
           "title": "Stephen and the rat",
           "source": "YouTube",
           "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
@@ -412,8 +450,8 @@
       "updatedAt": "2024-01-15"
     },
     {
-      "id": 8,
-      "memberId": 4,
+      "id": "550e8400-e29b-41d4-a716-446655440012",
+      "memberId": "550e8400-e29b-41d4-a716-446655440011",
       "name": "Gas Station Employee",
       "affiliations": ["Human"],
       "image": "https://via.placeholder.com/150",
@@ -421,12 +459,13 @@
       "backstory": "The Gas Station Employee's story begins in the heart of the city, where the neon lights of the station serve as a beacon for travelers and locals alike. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His daily interactions with customers from all walks of life have given him a unique perspective on the city's social fabric and the hidden connections that bind its inhabitants together. The gas station serves as more than just a refueling stop—it's a hub of information, gossip, and unexpected alliances that often prove crucial to the success of various missions and adventures.",
       "quotes": [
         "Make your life a masterpiece; imagine no limitations on what you can be, have or do.",
-        "You don’t have to be perfect to be amazing.",
+        "You don't have to be perfect to be amazing.",
         "Strive for progress, not perfection."
       ],
       "relationships": [
         {
-          "character_id": 6,
+          "id": "550e8400-e29b-41d4-a716-446655440207",
+          "character_id": "550e8400-e29b-41d4-a716-446655440012",
           "relationship_type": "Acquaintance",
           "description": "Interacted with each other at the gas station"
         }
@@ -435,20 +474,24 @@
       "seasons": ["Season 1"],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440337",
           "url": "https://pbs.twimg.com/media/Gtj6Je4WEAA-S4n?format=jpg&name=small",
-          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+          "description": "Shhh… no thoughts now. Just obey. That's it~ Let go for me."
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440338",
           "url": "https://pbs.twimg.com/media/GsjLYvAXYAAOtFQ?format=jpg&name=small",
           "description": "has your lap always been this comfy?~"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440339",
           "url": "https://pbs.twimg.com/media/GsKQG31XsAAEw_6?format=jpg&name=medium",
           "description": "how can i please you?~"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440523",
           "title": "Stephen and the rat",
           "source": "YouTube",
           "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
@@ -465,50 +508,83 @@
   ],
   "members": [
     {
-      "id": 1,
+      "id": "550e8400-e29b-41d4-a716-446655440005",
       "name": "Jouffa",
       "displayName": "Jouffa",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/ef3f5c17-c4de-4a48-a16b-d921402de104-profile_image-70x70.png",
       "joinDate": "2024-01-15",
-      "bio": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Jouffa is not just sizzling on stream—she’s braising in charisma and grilled reactions.\n\nFrom VRChat to epic Twitch moments, Jouffa smokes every entrance like bacon in a cast iron skillet. Shoulder alcatra short loin, with a side of chicken fried joy. Whether you’re laughing or spooked, it’s all medium rare vibes and crispy entertainment. She’s got style, sass, and sausage. Bacon bits and best vibes only.",
+      "bio": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Jouffa is not just sizzling on stream—she's braising in charisma and grilled reactions.\n\nFrom VRChat to epic Twitch moments, Jouffa smokes every entrance like bacon in a cast iron skillet. Shoulder alcatra short loin, with a side of chicken fried joy. Whether you're laughing or spooked, it's all medium rare vibes and crispy entertainment. She's got style, sass, and sausage. Bacon bits and best vibes only.",
       "socials": [
-        { "platform": "Twitch", "url": "https://www.twitch.tv/jouffa" },
-        { "platform": "YouTube", "url": "https://www.youtube.com/@jouffas" },
-        { "platform": "YouTube Archives", "url": "https://www.youtube.com/@jouffaArchives" },
-        { "platform": "TikTok", "url": "https://www.tiktok.com/@jouffas" },
-        { "platform": "X", "url": "https://twitter.com/jouffas" },
-        { "platform": "Kick", "url": "https://kick.com/jouffa" },
-        { "platform": "Discord", "url": "https://discord.gg/jouffa" }
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440416",
+          "platform": "Twitch",
+          "url": "https://www.twitch.tv/jouffa"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440417",
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/@jouffas"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440418",
+          "platform": "YouTube Archives",
+          "url": "https://www.youtube.com/@jouffaArchives"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440419",
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/@jouffas"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440420",
+          "platform": "X",
+          "url": "https://twitter.com/jouffas"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440421",
+          "platform": "Kick",
+          "url": "https://kick.com/jouffa"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440422",
+          "platform": "Discord",
+          "url": "https://discord.gg/jouffa"
+        }
       ],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440331",
           "url": "https://pbs.twimg.com/media/GwVMjhmWEAsV2Q9?format=jpg&name=small",
           "description": "henblo :3"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440332",
           "url": "https://pbs.twimg.com/media/Gupae8PXwAAjcSD?format=jpg&name=small",
           "description": "hru today?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440333",
           "url": "https://pbs.twimg.com/media/GthmA23WAAA0urG?format=jpg&name=small",
           "description": "henlo :3 (say it back)"
         }
-      ]
-      ,
+      ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440520",
           "title": "A Scared Jouffa",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
           "publishedAt": "2023"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440521",
           "title": "jouffa gf experience",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
           "publishedAt": "2022"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440522",
           "title": "ALL NEW JOUFFA BUCKET",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=OJUgsiuLqtM",
@@ -519,47 +595,73 @@
       "updatedAt": "2025-07-26"
     },
     {
-      "id": 2,
+      "id": "550e8400-e29b-41d4-a716-446655440002",
       "name": "MementosMori",
       "displayName": "MementosMori",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/35b2fdb6-5dca-4b8a-8c83-37293718fbc6-profile_image-70x70.png",
       "joinDate": "2024-02-20",
-      "bio": "Pork loin pastrami pancetta frankfurter kevin. Salami shoulder short ribs, meatloaf picanha landjaeger strip steak turducken. MementosMori brings the deep-fried drama with a pan-seared personality and a knack for meat-tier memes. Rump brisket cow pancetta, ham tongue burgdoggen jerky. Sausage bacon turkey, meatball porchetta strip steak t-bone chislic. This isn't just a stream—it’s a full-course smokehouse of chaos and charm. From Just Chatting to VRChatting, Mori serves it all like a hog roast under moonlight.\n\nFatback short loin ribeye brisket drumstick pig. No fluff, all gristle. Followers leave full—on laughter and existential vibes. Sizzle included.",
+      "bio": "Pork loin pastrami pancetta frankfurter kevin. Salami shoulder short ribs, meatloaf picanha landjaeger strip steak turducken. MementosMori brings the deep-fried drama with a pan-seared personality and a knack for meat-tier memes. Rump brisket cow pancetta, ham tongue burgdoggen jerky. Sausage bacon turkey, meatball porchetta strip steak t-bone chislic. This isn't just a stream—it's a full-course smokehouse of chaos and charm. From Just Chatting to VRChatting, Mori serves it all like a hog roast under moonlight.\n\nFatback short loin ribeye brisket drumstick pig. No fluff, all gristle. Followers leave full—on laughter and existential vibes. Sizzle included.",
       "socials": [
-        { "platform": "Twitch", "url": "https://www.twitch.tv/mementosmori" },
-        { "platform": "X", "url": "https://twitter.com/_MementosMori" },
-        { "platform": "Kick", "url": "https://kick.com/mementosmori" },
-        { "platform": "YouTube VODs", "url": "https://www.youtube.com/@MementosMoriVODS" },
-        { "platform": "Discord", "url": "https://discord.com/invite/tXf6AvpAvh" }
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440401",
+          "platform": "Twitch",
+          "url": "https://www.twitch.tv/mementosmori"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440402",
+          "platform": "X",
+          "url": "https://twitter.com/_MementosMori"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440403",
+          "platform": "Kick",
+          "url": "https://kick.com/mementosmori"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440404",
+          "platform": "YouTube VODs",
+          "url": "https://www.youtube.com/@MementosMoriVODS"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440405",
+          "platform": "Discord",
+          "url": "https://discord.com/invite/tXf6AvpAvh"
+        }
       ],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440307",
           "url": "https://pbs.twimg.com/media/GsJfP8sasAAqdHa?format=jpg&name=medium",
           "description": "Anyone Has Sitting Arrangements?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440308",
           "url": "https://pbs.twimg.com/media/GrxRC5DXEAAv1qf?format=jpg&name=small",
           "description": "Is this Wallpaper Worthy for you?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440309",
           "url": "https://pbs.twimg.com/media/GrZD59Ra4AAWTzt?format=jpg&name=small",
           "description": "Looking for Hearts, Holding Hearts <3"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440507",
           "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
           "publishedAt": "1 month ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440508",
           "title": "I spent 3 days cooking in the lab to show this",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
           "publishedAt": "3 months ago"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440509",
           "title": "if you don't raid me... you don't love me",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=_A-KwGTGPf0",
@@ -570,36 +672,64 @@
       "updatedAt": "2025-07-26"
     },
     {
-      "id": 3,
+      "id": "550e8400-e29b-41d4-a716-446655440008",
       "name": "Moonbu",
       "displayName": "Moonbu",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/9d049255-fcac-4b19-9df7-6befd60e7cde-profile_image-70x70.png",
       "joinDate": "2024-03-10",
-      "bio": "Chuck ham doner cow brisket. Moonbu marinates in mystery and grills up good vibes nightly. Flank jowl pig alcatra salami picanha. Landjaeger chislic rump meatloaf kielbasa turkey pork belly. Shoulder tenderloin cow, spare ribs pig turducken. Her stream is like bacon: you didn’t know you needed it until it’s 3AM and you’re all in.\n\nWith sausage-slicked style and immersive flavor, Moonbu pan-fries every stream moment. Strip steak vibes, meatball reactions. She’s not moonlight—she’s moon-meat.",
+      "bio": "Chuck ham doner cow brisket. Moonbu marinates in mystery and grills up good vibes nightly. Flank jowl pig alcatra salami picanha. Landjaeger chislic rump meatloaf kielbasa turkey pork belly. Shoulder tenderloin cow, spare ribs pig turducken. Her stream is like bacon: you didn't know you needed it until it's 3AM and you're all in.\n\nWith sausage-slicked style and immersive flavor, Moonbu pan-fries every stream moment. Strip steak vibes, meatball reactions. She's not moonlight—she's moon-meat.",
       "socials": [
-        { "platform": "Twitch", "url": "https://www.twitch.tv/moonbuvr" },
-        { "platform": "YouTube", "url": "https://www.youtube.com/@moonbuvr" },
-        { "platform": "TikTok", "url": "https://www.tiktok.com/@moonbuvr" },
-        { "platform": "X", "url": "https://twitter.com/MoonBuVR" },
-        { "platform": "Kick", "url": "https://kick.com/moonbuvr" },
-        { "platform": "Discord", "url": "https://discord.com/invite/yhJZ3Hy2H9" }
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440406",
+          "platform": "Twitch",
+          "url": "https://www.twitch.tv/moonbuvr"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440407",
+          "platform": "YouTube",
+          "url": "https://www.youtube.com/@moonbuvr"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440408",
+          "platform": "TikTok",
+          "url": "https://www.tiktok.com/@moonbuvr"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440409",
+          "platform": "X",
+          "url": "https://twitter.com/MoonBuVR"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440410",
+          "platform": "Kick",
+          "url": "https://kick.com/moonbuvr"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440411",
+          "platform": "Discord",
+          "url": "https://discord.com/invite/yhJZ3Hy2H9"
+        }
       ],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440310",
           "url": "https://pbs.twimg.com/media/Go5rju5XwAAbn6C?format=jpg&name=small",
           "description": "Are you going to keep me waiting?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440311",
           "url": "https://pbs.twimg.com/media/GoGDIicXoAA8D1T?format=jpg&name=medium",
           "description": "Are you busy tonight?"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440312",
           "url": "https://pbs.twimg.com/media/Gj6XMNUXYAABTWk?format=jpg&name=medium",
           "description": "What would you do if I were yours for one night?"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440510",
           "title": "Neat by MoonBuVr VRChat Toggle Showcase",
           "source": "YouTube",
           "url": "https://www.youtube.com/watch?v=GQOKfmD1PxM",
@@ -610,34 +740,54 @@
       "updatedAt": "2025-07-26"
     },
     {
-      "id": 4,
+      "id": "550e8400-e29b-41d4-a716-446655440011",
       "name": "itskxtlyn",
       "displayName": "itskxtlyn",
       "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/f3e897a6-c86b-4d1a-9cb9-b4f9676d8b48-profile_image-70x70.png",
       "joinDate": "2024-04-10",
-      "bio": "Drumstick tail ribeye, chislic turkey ham hock chuck corned beef. Itskxtlyn isn’t just cooking—she’s flambéing. Pancetta bacon frankfurter kevin t-bone ham. Her stream is like brisket: low and slow, then BAM—flavor punch. Bacon chislic tri-tip alcatra sausage. T-bone prosciutto jowl, meatball burgdoggen salami. She’s your digital grillmaster of good vibes, comedy, and chaos.\n\nIn a sea of tofu, she’s the sizzle. And yes, her laugh is crispy.",
+      "bio": "Drumstick tail ribeye, chislic turkey ham hock chuck corned beef. Itskxtlyn isn't just cooking—she's flambéing. Pancetta bacon frankfurter kevin t-bone ham. Her stream is like brisket: low and slow, then BAM—flavor punch. Bacon chislic tri-tip alcatra sausage. T-bone prosciutto jowl, meatball burgdoggen salami. She's your digital grillmaster of good vibes, comedy, and chaos.\n\nIn a sea of tofu, she's the sizzle. And yes, her laugh is crispy.",
       "socials": [
-        { "platform": "Twitch", "url": "https://www.twitch.tv/itskxtlyn" },
-        { "platform": "X", "url": "https://twitter.com/itskxtlyn" },
-        { "platform": "Kick", "url": "https://kick.com/itskxtlyn" },
-        { "platform": "Discord", "url": "https://discord.com/invite/k2Dj8S43Af" }
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440412",
+          "platform": "Twitch",
+          "url": "https://www.twitch.tv/itskxtlyn"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440413",
+          "platform": "X",
+          "url": "https://twitter.com/itskxtlyn"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440414",
+          "platform": "Kick",
+          "url": "https://kick.com/itskxtlyn"
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440415",
+          "platform": "Discord",
+          "url": "https://discord.com/invite/k2Dj8S43Af"
+        }
       ],
       "gallery": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440340",
           "url": "https://pbs.twimg.com/media/Gtj6Je4WEAA-S4n?format=jpg&name=small",
-          "description": "Shhh… no thoughts now. Just obey. That’s it~ Let go for me."
+          "description": "Shhh… no thoughts now. Just obey. That's it~ Let go for me."
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440341",
           "url": "https://pbs.twimg.com/media/GsjLYvAXYAAOtFQ?format=jpg&name=small",
           "description": "has your lap always been this comfy?~"
         },
         {
+          "id": "550e8400-e29b-41d4-a716-446655440342",
           "url": "https://pbs.twimg.com/media/GsKQG31XsAAEw_6?format=jpg&name=medium",
           "description": "how can i please you?~"
         }
       ],
       "clips": [
         {
+          "id": "550e8400-e29b-41d4-a716-446655440525",
           "title": "Stephen and the rat",
           "source": "YouTube",
           "url": "https://www.youtube.com/shorts/JY4c24Jrzqo",
@@ -648,308 +798,481 @@
       "updatedAt": "2025-07-26"
     }
   ],
-      "change_requests": [
-      {
-        "id": 1,
+  "change_requests": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440101",
       "entity": "character",
-      "entityId": 1,
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
       "fieldType": "image",
-      "action": "update",
-      "oldValue": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Character+Avatar",
-      "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Avatar"
-          },
-      {
-        "id": 2,
+      "oldValue": "https://via.placeholder.com/150",
+      "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Avatar",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440102",
       "entity": "character",
-      "entityId": 1,
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
       "fieldType": "description",
-      "action": "update",
-      "oldValue": "A mysterious character with a dark past who seeks redemption through acts of kindness.",
-      "newValue": "A reformed villain turned hero, now dedicated to protecting the innocent and fighting for justice."
-          },
-      {
-        "id": 3,
+      "oldValue": "Shabammabop is a gator and the best crime solver. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Shabammabop's detective skills are as sharp as a butcher's knife, slicing through mysteries with the precision of a master chef.",
+      "newValue": "A reformed villain turned hero, now dedicated to protecting the innocent and fighting for justice.",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440103",
       "entity": "character",
-      "entityId": 1,
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
       "fieldType": "name",
-      "action": "update",
-      "oldValue": "Shadow Walker",
-      "newValue": "The Shadow Walker"
-          },
-      {
-        "id": 4,
-      "entity": "character",
-      "entityId": 1,
-      "fieldType": "joinDate",
-      "action": "update",
-      "oldValue": "2024-01-15",
-      "newValue": "2024-02-01"
-          },
-
-          {
-        "id": 5,
-      "entity": "character",
-      "entityId": 1,
-      "fieldType": "socials",
-      "action": "update",
-      "oldValue": [
-        { "platform": "twitch", "url": "https://www.twitch.tv/character" },
-        { "platform": "youtube", "url": "https://www.youtube.com/@character" },
-        { "platform": "x", "url": "https://twitter.com/character" }
-      ],
-      "newValue": [
-        { "platform": "twitch", "url": "https://www.twitch.tv/updatedcharacter" },
-        { "platform": "discord", "url": "https://discord.gg/character" }
-      ]
+      "oldValue": "Shabammabop",
+      "newValue": "The Shadow Walker",
+      "status": "pending",
+      "action": "update"
     },
+
     {
-      "id": 6,
+      "id": "550e8400-e29b-41d4-a716-446655440109",
       "entity": "character",
-      "entityId": 1,
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
       "fieldType": "gallery",
-      "action": "update",
-      "oldValue": [
-        {
-          "url": "https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Gallery+Image+1",
-          "description": "Character in action scene"
-        },
-        {
-          "url": "https://via.placeholder.com/400x300/9C27B0/FFFFFF?text=Gallery+Image+2",
-          "description": "Character portrait"
-        }
-      ],
-      "newValue": [
-        {
-          "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Gallery+1",
-          "description": "Updated action scene"
-        }
-      ]
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440301",
+        "url": "https://pbs.twimg.com/media/GsJfP8sasAAqdHa?format=jpg&name=medium",
+        "description": "Anyone Has Sitting Arrangements?"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440701",
+        "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Gallery+1",
+        "description": "Updated action scene"
+      },
+      "status": "pending",
+      "action": "update"
     },
     {
-      "id": 7,
+      "id": "550e8400-e29b-41d4-a716-446655440110",
       "entity": "character",
-      "entityId": 1,
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "gallery",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440302",
+        "url": "https://pbs.twimg.com/media/GrxRC5DXEAAv1qf?format=jpg&name=small",
+        "description": "Is this Wallpaper Worthy for you?"
+      },
+      "newValue": null,
+      "status": "pending",
+      "action": "delete"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440111",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
       "fieldType": "clips",
-      "action": "update",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440501",
+        "title": "IM GOING TO DO A 12 HOUR STREAM THIS FRIDAY WITH GOALS COOL GOALS",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=dKoxg80wYe0",
+        "publishedAt": "1 month ago"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440801",
+        "title": "Updated Character Moments",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=updated1",
+        "publishedAt": "2024-02-01"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440112",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "clips",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440502",
+        "title": "I spent 3 days cooking in the lab to show this",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=VUmClWBld8A",
+        "publishedAt": "3 months ago"
+      },
+      "newValue": null,
+      "status": "pending",
+      "action": "delete"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440113",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "backstory",
+      "oldValue": "Born in the murky swamps of Louisiana, Shabammabop's journey from a simple gator to the city's most feared crime solver is a tale of determination and grit. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. His early days were spent in the bayou, learning the ways of the swamp and developing an uncanny ability to read people's intentions. When crime began to rise in the city, Shabammabop emerged from the shadows, bringing justice with the force of a hurricane and the stealth of a night predator.",
+      "newValue": "A former street urchin who rose to become a legendary hero, this character's journey from darkness to light inspires all who hear their tale.",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440114",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "seasons",
+      "oldValue": ["Season 1"],
+      "newValue": ["Season 3"],
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440115",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "relationships",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440201",
+        "character_id": "550e8400-e29b-41d4-a716-446655440004",
+        "relationship_type": "Friend",
+        "description": "Shabammabop and Joe Biden are friends."
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440901",
+        "character_id": "550e8400-e29b-41d4-a716-446655440003",
+        "relationship_type": "Best Friend",
+        "description": "Inseparable companions who share everything"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440116",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "relationships",
+      "oldValue": null,
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440902",
+        "character_id": "550e8400-e29b-41d4-a716-446655440006",
+        "relationship_type": "Mentor",
+        "description": "Guides and teaches the character"
+      },
+      "status": "pending",
+      "action": "add"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440117",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "quotes",
       "oldValue": [
-          {
-            "title": "Character's Best Moments",
-            "source": "YouTube",
-            "url": "https://www.youtube.com/watch?v=example1",
-            "publishedAt": "2024-01-15"
-          },
-          {
-            "title": "Epic Battle Scene",
-            "source": "Twitch",
-            "url": "https://www.twitch.tv/videos/example2",
-            "publishedAt": "2024-01-20"
-          }
+        "Believe you can and you're halfway there.",
+        "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+        "Don't watch the clock; do what it does. Keep going."
       ],
       "newValue": [
-          {
-            "title": "Updated Character Moments",
-            "source": "YouTube",
-            "url": "https://www.youtube.com/watch?v=updated1",
-            "publishedAt": "2024-02-01"
-          }
-              ]
+        "Believe you can and you're halfway there.",
+        "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+        "Don't watch the clock; do what it does. Keep going.",
+        "Heroes aren't born, they're made through choice and sacrifice.",
+        "The greatest power is the power to choose your own path."
+      ],
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440119",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "characterType",
+      "oldValue": "Gator",
+      "newValue": "Hero",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440120",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "image",
+      "oldValue": "https://static-cdn.jtvnw.net/jtv_user_pictures/ef3f5c17-c4de-4a48-a16b-d921402de104-profile_image-70x70.png",
+      "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Member+Avatar",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440121",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "bio",
+      "oldValue": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon. Jouffa is not just sizzling on stream—she's braising in charisma and grilled reactions.\n\nFrom VRChat to epic Twitch moments, Jouffa smokes every entrance like bacon in a cast iron skillet. Shoulder alcatra short loin, with a side of chicken fried joy. Whether you're laughing or spooked, it's all medium rare vibes and crispy entertainment. She's got style, sass, and sausage. Bacon bits and best vibes only.",
+      "newValue": "A legendary guild member whose leadership and strategic thinking have saved countless missions.",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440122",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "displayName",
+      "oldValue": "Jouffa",
+      "newValue": "The GuildMaster",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440123",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "joinDate",
+      "oldValue": "2024-01-15",
+      "newValue": "2023-01-10",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440124",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "socials",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440416",
+        "platform": "Twitch",
+        "url": "https://www.twitch.tv/jouffa"
       },
-      {
-        "id": 8,
-        "entity": "character",
-        "entityId": 1,
-        "fieldType": "backstory",
-        "action": "update",
-        "oldValue": "Born in the shadows of the city, this character learned to survive through cunning and stealth. Their mysterious past is filled with both triumph and tragedy.",
-        "newValue": "A former street urchin who rose to become a legendary hero, this character's journey from darkness to light inspires all who hear their tale."
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440605",
+        "platform": "Twitch",
+        "url": "https://www.twitch.tv/updatedmember"
       },
-      {
-        "id": 9,
-        "entity": "character",
-        "entityId": 1,
-        "fieldType": "seasons",
-        "action": "update",
-        "oldValue": ["2"],
-        "newValue": ["3"]
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440125",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "socials",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440417",
+        "platform": "YouTube",
+        "url": "https://www.youtube.com/@jouffas"
       },
-      {
-        "id": 10,
-        "entity": "character",
-        "entityId": 1,
-        "fieldType": "relationships",
-        "action": "update",
-        "oldValue": [
-          {
-            "character_id": 2,
-            "relationship_type": "Friend",
-            "description": "Close allies who have fought side by side"
-          }
-        ],
-        "newValue": [
-          {
-            "character_id": 2,
-            "relationship_type": "Best Friend",
-            "description": "Inseparable companions who share everything"
-          },
-          {
-            "character_id": 4,
-            "relationship_type": "Mentor",
-            "description": "Guides and teaches the character"
-          }
-        ]
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440606",
+        "platform": "YouTube",
+        "url": "https://www.youtube.com/@updatedmember"
       },
-      {
-        "id": 11,
-        "entity": "character",
-        "entityId": 1,
-        "fieldType": "quotes",
-        "action": "update",
-        "oldValue": [
-          "The shadows are my home, but the light is my choice.",
-          "Every step forward is a step away from who I used to be."
-        ],
-        "newValue": [
-          "The shadows are my home, but the light is my choice.",
-          "Every step forward is a step away from who I used to be.",
-          "Heroes aren't born, they're made through choice and sacrifice.",
-          "The greatest power is the power to choose your own path."
-        ]
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440126",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "socials",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440422",
+        "platform": "Discord",
+        "url": "https://discord.gg/jouffa"
       },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440607",
+        "platform": "Discord",
+        "url": "https://discord.gg/updatedmember"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440127",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "socials",
+      "oldValue": null,
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440608",
+        "platform": "X",
+        "url": "https://twitter.com/updatedmember"
+      },
+      "status": "pending",
+      "action": "add"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440128",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "gallery",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440331",
+        "url": "https://pbs.twimg.com/media/GwVMjhmWEAsV2Q9?format=jpg&name=small",
+        "description": "henblo :3"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440703",
+        "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Member+1",
+        "description": "Updated action scene"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440129",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "gallery",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440332",
+        "url": "https://pbs.twimg.com/media/Gupae8PXwAAjcSD?format=jpg&name=small",
+        "description": "hru today?"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440704",
+        "url": "https://via.placeholder.com/400x300/795548/FFFFFF?text=Updated+Member+2",
+        "description": "Updated portrait"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440130",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "gallery",
+      "oldValue": null,
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440705",
+        "url": "https://via.placeholder.com/400x300/8BC34A/FFFFFF?text=New+Member+3",
+        "description": "New achievement"
+      },
+      "status": "pending",
+      "action": "add"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440131",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "clips",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440520",
+        "title": "A Scared Jouffa",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=huU0DJtFX4s",
+        "publishedAt": "2023"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440803",
+        "title": "Updated Member Moments",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=updatedmember1",
+        "publishedAt": "2024-02-01"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440132",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "clips",
+      "oldValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440521",
+        "title": "jouffa gf experience",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=5mBDUoOWjZo",
+        "publishedAt": "2022"
+      },
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440804",
+        "title": "Legendary Guild Battle",
+        "source": "Twitch",
+        "url": "https://www.twitch.tv/videos/updatedmember2",
+        "publishedAt": "2024-02-15"
+      },
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440133",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "clips",
+      "oldValue": null,
+      "newValue": {
+        "id": "550e8400-e29b-41d4-a716-446655440805",
+        "title": "New Achievement Unlocked",
+        "source": "YouTube",
+        "url": "https://www.youtube.com/watch?v=newmember3",
+        "publishedAt": "2024-03-01"
+      },
+      "status": "pending",
+      "action": "add"
+    },
 
-      {
-        "id": 12,
-        "entity": "character",
-        "entityId": 1,
-        "fieldType": "characterType",
-        "action": "update",
-        "oldValue": "Anti-Hero",
-        "newValue": "Hero"
-      },
-      {
-        "id": 13,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "image",
-        "action": "update",
-        "oldValue": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Member+Avatar",
-        "newValue": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Updated+Member+Avatar"
-      },
-      {
-        "id": 14,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "bio",
-        "action": "update",
-        "oldValue": "A dedicated guild member who brings wisdom and experience to every adventure.",
-        "newValue": "A legendary guild member whose leadership and strategic thinking have saved countless missions."
-      },
-      {
-        "id": 15,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "displayName",
-        "action": "update",
-        "oldValue": "GuildMaster",
-        "newValue": "The GuildMaster"
-      },
-      {
-        "id": 16,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "joinDate",
-        "action": "update",
-        "oldValue": "2023-01-15",
-        "newValue": "2023-01-10"
-      },
-      {
-        "id": 17,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "socials",
-        "action": "update",
-        "oldValue": [
-          { "platform": "Twitch", "url": "https://www.twitch.tv/member" },
-          { "platform": "YouTube", "url": "https://www.youtube.com/@member" },
-          { "platform": "Discord", "url": "https://discord.gg/member" }
-        ],
-        "newValue": [
-          { "platform": "Twitch", "url": "https://www.twitch.tv/updatedmember" },
-          { "platform": "YouTube", "url": "https://www.youtube.com/@updatedmember" },
-          { "platform": "Discord", "url": "https://discord.gg/updatedmember" },
-          { "platform": "X", "url": "https://twitter.com/updatedmember" }
-        ]
-      },
-      {
-        "id": 18,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "gallery",
-        "action": "update",
-        "oldValue": [
-          {
-            "url": "https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Member+Image+1",
-            "description": "Member in action"
-          },
-          {
-            "url": "https://via.placeholder.com/400x300/9C27B0/FFFFFF?text=Member+Image+2",
-            "description": "Member portrait"
-          }
-        ],
-        "newValue": [
-          {
-            "url": "https://via.placeholder.com/400x300/607D8B/FFFFFF?text=Updated+Member+1",
-            "description": "Updated action scene"
-          },
-          {
-            "url": "https://via.placeholder.com/400x300/795548/FFFFFF?text=Updated+Member+2",
-            "description": "Updated portrait"
-          },
-          {
-            "url": "https://via.placeholder.com/400x300/8BC34A/FFFFFF?text=New+Member+3",
-            "description": "New achievement"
-          }
-        ]
-      },
-      {
-        "id": 19,
-        "entity": "member",
-        "entityId": 1,
-        "fieldType": "clips",
-        "action": "update",
-        "oldValue": [
-          {
-            "title": "Member's Best Moments",
-            "source": "YouTube",
-            "url": "https://www.youtube.com/watch?v=member1",
-            "publishedAt": "2023-01-15"
-          },
-          {
-            "title": "Epic Guild Battle",
-            "source": "Twitch",
-            "url": "https://www.twitch.tv/videos/member2",
-            "publishedAt": "2023-01-20"
-          }
-        ],
-        "newValue": [
-          {
-            "title": "Updated Member Moments",
-            "source": "YouTube",
-            "url": "https://www.youtube.com/watch?v=updatedmember1",
-            "publishedAt": "2024-02-01"
-          },
-          {
-            "title": "Legendary Guild Battle",
-            "source": "Twitch",
-            "url": "https://www.twitch.tv/videos/updatedmember2",
-            "publishedAt": "2024-02-15"
-          },
-          {
-            "title": "New Achievement Unlocked",
-            "source": "YouTube",
-            "url": "https://www.youtube.com/watch?v=newmember3",
-            "publishedAt": "2024-03-01"
-          }
-        ]
-      }
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440135",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "avatarName",
+      "oldValue": "Shabammabop",
+      "newValue": "Detective Shabammabop",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440136",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "avatarDescription",
+      "oldValue": "Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon.",
+      "newValue": "A legendary gator detective with a heart of gold and a nose for justice. Bacon ipsum dolor amet kielbasa frankfurter strip steak, porchetta pancetta tri-tip leberkas sausage. Ham hock andouille short loin meatloaf t-bone, burgdoggen venison bresaola turkey beef ribs cow landjaeger. Tail short ribs turducken chislic rump drumstick fatback. Jerky turducken cow pork belly, tri-tip shankle capicola strip steak. Spare ribs doner flank shoulder, porchetta cow picanha ribeye chislic bacon.",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440137",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "avatarUrl",
+      "oldValue": "http://localhost:5173",
+      "newValue": "https://avatars.example.com/shabammabop",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440138",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "avatarReferenceImage",
+      "oldValue": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2a415bee-cacd-4cec-82f6-d119edd014fd/dhlenqe-6550364e-10b2-4864-8b2a-3b817b67b20c.png/v1/fill/w_979,h_816,q_70,strp/vrchat_male_vault_dweller_reference_sheet_by_drwilsonscp19_dhlenqe-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA2NyIsInBwdGgiOiJcL2ZcLzJhNDE1YmVlLWNhY2QtNGNlYy04MmY2LWQxMTllZGQwMTRmZFwvZGhsZW5xZS02NTUwMzY0ZS0xMGIyLTQ4NjQtOGIyYS0zYjgxN2I2N2IyMGMucG5nIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.jJOyXrR_g6h8eY8Ky1zcZQ09wZegzPbdxtoJ3griEh0",
+      "newValue": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2a415bee-cacd-4cec-82f6-d119edd014fd/updated-reference.png/v1/fill/w_979,h_816,q_70,strp/updated_vrchat_reference_sheet.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA2NyIsInBwdGgiOiJcL2ZcLzJhNDE1YmVlLWNhY2QtNGNlYy04MmY2LWQxMTllZGQwMTRmZFwvZGhsZW5xZS02NTUwMzY0ZS0xMGIyLTQ4NjQtOGIyYS0zYjgxN2I2N2IyMGMucG5nIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.updatedToken",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440139",
+      "entity": "member",
+      "entityId": "550e8400-e29b-41d4-a716-446655440005",
+      "fieldType": "name",
+      "oldValue": "Jouffa",
+      "newValue": "JouffaTheGreat",
+      "status": "pending",
+      "action": "update"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440140",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "affiliations",
+      "oldValue": ["Gator"],
+      "newValue": ["Gator", "Detective"],
+      "status": "pending",
+      "action": "add"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440141",
+      "entity": "character",
+      "entityId": "550e8400-e29b-41d4-a716-446655440001",
+      "fieldType": "affiliations",
+      "oldValue": ["Gator"],
+      "newValue": ["Gator", "Hero"],
+      "status": "pending",
+      "action": "add"
+    }
   ]
 }

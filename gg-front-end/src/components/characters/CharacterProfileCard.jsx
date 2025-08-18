@@ -17,12 +17,15 @@ import {
   Button,
   TextField,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  Collapse
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMembers } from '../../contexts/MemberContext';
 import { useCharacters } from '../../contexts/CharacterContext';
-import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, formatValue, compareArrays, getArrayChangeText, aggregateArrayChanges } from '../../utils/changeDetection';
+import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useState } from 'react';
 import Portrait from '../Portrait';
 import shabammabop from '../../assets/shabammabop.png';
@@ -40,6 +43,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
   const navigate = useNavigate();
   const { members } = useMembers();
   const { updateCharacter } = useCharacters();
+  const { getChangeRequestsByCharacterId } = useChangeRequests();
   const [editingMemberId, setEditingMemberId] = useState(false);
   const [memberIdValue, setMemberIdValue] = useState(character.memberId);
   const [affiliationsDialogOpen, setAffiliationsDialogOpen] = useState(false);
@@ -47,6 +51,31 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
   const [newAffiliation, setNewAffiliation] = useState('');
   const [seasonsDialogOpen, setSeasonsDialogOpen] = useState(false);
   const [editedSeasons, setEditedSeasons] = useState(character.seasons || []);
+  const [showMemberIdChanges, setShowMemberIdChanges] = useState(false);
+  const [showAffiliationsChanges, setShowAffiliationsChanges] = useState(false);
+  const [showSeasonsChanges, setShowSeasonsChanges] = useState(false);
+
+  // Get pending changes for this character
+  const memberIdPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'memberId');
+  })();
+  const affiliationsPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'affiliations');
+  })();
+  const seasonsPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'seasons');
+  })();
+
+  // Aggregate all pending changes for arrays
+  const affiliationsArrayChanges = affiliationsPendingChanges.length > 0 ? aggregateArrayChanges(affiliationsPendingChanges) : null;
+  const latestSeasonsChange = seasonsPendingChanges.length > 0 ? seasonsPendingChanges[seasonsPendingChanges.length - 1] : null;
+  const seasonsArrayChanges = latestSeasonsChange ? compareArrays(latestSeasonsChange.oldValue, latestSeasonsChange.newValue) : null;
 
   const getCharacterImage = (characterName, imageUrl) => {
     switch (characterName) {
@@ -163,6 +192,171 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
       ? editedSeasons.filter(s => s !== season)
       : [...editedSeasons, season];
     setEditedSeasons(updatedSeasons);
+  };
+
+  const renderMemberIdPendingChanges = () => {
+    if (memberIdPendingChanges.length === 0) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowMemberIdChanges(!showMemberIdChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showMemberIdChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes ({memberIdPendingChanges.length})
+        </Button>
+
+        <Collapse in={showMemberIdChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {memberIdPendingChanges.map((change, index) => (
+              <Box key={change.id || index} sx={{ mb: index < memberIdPendingChanges.length - 1 ? 1 : 0 }}>
+                <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                  {formatValue(change.newValue)}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Collapse>
+      </Box>
+    );
+  };
+
+  const renderAffiliationsPendingChanges = () => {
+    if (affiliationsPendingChanges.length === 0 || !affiliationsArrayChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowAffiliationsChanges(!showAffiliationsChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showAffiliationsChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes: {getArrayChangeText(affiliationsArrayChanges)}
+        </Button>
+        
+        <Collapse in={showAffiliationsChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {affiliationsArrayChanges.added.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Added ({affiliationsArrayChanges.added.length}):
+                </Typography>
+                {affiliationsArrayChanges.added.map((affiliation, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                    • {affiliation}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {affiliationsArrayChanges.removed.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Removed ({affiliationsArrayChanges.removed.length}):
+                </Typography>
+                {affiliationsArrayChanges.removed.map((affiliation, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                    • {affiliation}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Collapse>
+      </Box>
+    );
+  };
+
+  const renderSeasonsPendingChanges = () => {
+    if (seasonsPendingChanges.length === 0 || !seasonsArrayChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowSeasonsChanges(!showSeasonsChanges)}
+          startIcon={<ExpandMoreIcon sx={{
+            transform: showSeasonsChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes: {getArrayChangeText(seasonsArrayChanges)}
+        </Button>
+        
+        <Collapse in={showSeasonsChanges}>
+          <Box sx={{
+            mt: 1,
+            p: 1,
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {seasonsArrayChanges.added.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Added ({seasonsArrayChanges.added.length}):
+                </Typography>
+                {seasonsArrayChanges.added.map((season, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                    • {season}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {seasonsArrayChanges.removed.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Removed ({seasonsArrayChanges.removed.length}):
+                </Typography>
+                {seasonsArrayChanges.removed.map((season, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                    • {season}
+                  </Typography>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Collapse>
+      </Box>
+    );
   };
 
   return (
@@ -290,7 +484,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                     size="small"
                     onClick={handleEditMemberId}
                     sx={{ 
-                      color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary,
+                      color: memberIdPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                       '&:hover': {
                         color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                       }
@@ -301,6 +495,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                 )}
               </Box>
             )}
+            {renderMemberIdPendingChanges()}
           </Box>
           <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
           <Box sx={{ mx: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -313,7 +508,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                   size="small"
                   onClick={handleEditAffiliations}
                   sx={{ 
-                    color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary,
+                    color: affiliationsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                     '&:hover': {
                       color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                     }
@@ -348,6 +543,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                 }}
               />
             ))}
+            {renderAffiliationsPendingChanges()}
           </Box>
           
           <Divider sx={{ borderWidth: 1, borderColor: theme.palette.mode === 'light' ? '#888888' : '#FFF', my: 2 }} />
@@ -361,7 +557,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                   size="small"
                   onClick={handleEditSeasons}
                   sx={{ 
-                    color: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary,
+                    color: seasonsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                     '&:hover': {
                       color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                     }
@@ -396,6 +592,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                 No seasons assigned
               </Typography>
             )}
+            {renderSeasonsPendingChanges()}
           </Box>
           
 

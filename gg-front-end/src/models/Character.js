@@ -26,233 +26,98 @@ export class Character {
     this.updatedAt = data.updatedAt || '';
   }
 
-  // Gallery methods
-  async updateGallery(newGallery) {
+  // Dynamic update method
+  async update(newValue, fieldName) {
+    await this.createChangeRequests(newValue, fieldName);
     try {
-      const updatedCharacter = { ...this, gallery: newGallery };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.gallery = newGallery;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character gallery:', error);
-      throw error;
-    }
-  }
+      // Handle special cases for avatar info
+      if (fieldName === 'avatarInfo' && typeof newValue === 'object') {
+        const updatedCharacter = { 
+          ...this, 
+          avatarName: newValue.avatarName || this.avatarName,
+          avatarDescription: newValue.avatarDescription || this.avatarDescription,
+          avatarUrl: newValue.avatarUrl || this.avatarUrl,
+          avatarReferenceImage: newValue.avatarReferenceImage || this.avatarReferenceImage
+        };
 
+        // Update local instance
+        this.avatarName = updatedCharacter.avatarName;
+        this.avatarDescription = updatedCharacter.avatarDescription;
+        this.avatarUrl = updatedCharacter.avatarUrl;
+        this.avatarReferenceImage = updatedCharacter.avatarReferenceImage;
+        return updatedCharacter;
+      }
 
-
-  async updateImageInGallery(imageIndex, imageData) {
-    try {
-      const updatedGallery = [...this.gallery];
-      updatedGallery[imageIndex] = imageData;
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to update image in character gallery:', error);
-      throw error;
-    }
-  }
-
-
-
-  // Clips methods
-  async updateClips(newClips) {
-    try {
-      const updatedCharacter = { ...this, clips: newClips };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.clips = newClips;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character clips:', error);
-      throw error;
-    }
-  }
-
-
-
-  async updateClipInClips(clipIndex, clipData) {
-    try {
-      const updatedClips = [...this.clips];
-      updatedClips[clipIndex] = clipData;
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to update clip in character clips:', error);
-      throw error;
-    }
-  }
-
-
-
-  // Socials methods
-  async updateSocials(newSocials) {
-    try {
-      const updatedCharacter = { ...this, socials: newSocials };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.socials = newSocials;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character socials:', error);
-      throw error;
-    }
-  }
-
-
-
-  async updateSocialInSocials(socialIndex, socialData) {
-    try {
-      const updatedSocials = [...this.socials];
-      updatedSocials[socialIndex] = socialData;
-      return await this.updateSocials(updatedSocials);
-    } catch (error) {
-      console.error('Failed to update social in character socials:', error);
-      throw error;
-    }
-  }
-
-  // Played by methods
-  async updatePlayedBy(newMemberId) {
-    try {
-      const updatedCharacter = { ...this, memberId: newMemberId };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.memberId = newMemberId;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character played by:', error);
-      throw error;
-    }
-  }
-
-  // Affiliations methods
-  async updateAffiliations(newAffiliations) {
-    try {
-      const updatedCharacter = { ...this, affiliations: newAffiliations };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.affiliations = newAffiliations;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character affiliations:', error);
-      throw error;
-    }
-  }
-
-  // Description methods
-  async updateDescription(newDescription) {
-    try {
-      const updatedCharacter = { ...this, description: newDescription };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.description = newDescription;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character description:', error);
-      throw error;
-    }
-  }
-
-  // Backstory methods
-  async updateBackstory(newBackstory) {
-    try {
-      const updatedCharacter = { ...this, backstory: newBackstory };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance
-      this.backstory = newBackstory;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character backstory:', error);
-      throw error;
-    }
-  }
-
-    // Quotes methods
-  async updateQuotes(newQuotes) {
-    try {
-      const updatedCharacter = { ...this, quotes: newQuotes };
-      const result = await characterAPI.update(this.id, updatedCharacter);
+      // Handle simple field updates
+      const updatedCharacter = { ...this, [fieldName]: newValue };
 
       // Update local instance
-      this.quotes = newQuotes;
+      this[fieldName] = newValue;
 
-      return result;
+      return updatedCharacter;
     } catch (error) {
-      console.error('Failed to update character quotes:', error);
+      console.error(`Failed to update character ${fieldName}:`, error);
       throw error;
     }
   }
 
-  // Avatar Info methods
-  async updateAvatarInfo(newAvatarInfo) {
-    try {
-      const updatedCharacter = { 
-        ...this, 
-        avatarName: newAvatarInfo.avatarName || this.avatarName,
-        avatarDescription: newAvatarInfo.avatarDescription || this.avatarDescription,
-        avatarUrl: newAvatarInfo.avatarUrl || this.avatarUrl,
-        avatarReferenceImage: newAvatarInfo.avatarReferenceImage || this.avatarReferenceImage
-      };
-      const result = await characterAPI.update(this.id, updatedCharacter);
+  async createChangeRequests(newValue, fieldName) {
+    const changeRequests = [];
+    if (fieldName === 'avatarInfo' && typeof newValue === 'object') {
+      changeRequests.push({
+        id: this.id,
+        entity: 'character',
+        entityId: this.id,
+        fieldType: 'avatarName',
+        oldValue: this.avatarName,
+        newValue: newValue.avatarName
+      });
+      changeRequests.push({
+        id: this.id,
+        entity: 'character',
+        entityId: this.id,
+        fieldType: 'avatarDescription',
+        oldValue: this.avatarDescription,
+        newValue: newValue.avatarDescription
+      });
+      changeRequests.push({
+        id: this.id,
+        entity: 'character',
+        entityId: this.id,
+        fieldType: 'avatarUrl',
+        oldValue: this.avatarUrl,
+        newValue: newValue.avatarUrl
+      });
+      changeRequests.push({
+        id: this.id,
+        entity: 'character',
+        entityId: this.id,
+        fieldType: 'avatarReferenceImage',
+        oldValue: this.avatarReferenceImage,
+        newValue: newValue.avatarReferenceImage
+      });
 
-      // Update local instance
-      this.avatarName = updatedCharacter.avatarName;
-      this.avatarDescription = updatedCharacter.avatarDescription;
-      this.avatarUrl = updatedCharacter.avatarUrl;
-      this.avatarReferenceImage = updatedCharacter.avatarReferenceImage;
-
-      return result;
-    } catch (error) {
-      console.error('Failed to update character avatar info:', error);
-      throw error;
+      await this.sendUpdateRequests(changeRequests);
+      return true;
     }
+
+    changeRequests.push({
+      id: this.id,
+      entity: 'character',
+      entityId: this.id,
+      fieldType: fieldName,
+      oldValue: this[fieldName],
+      newValue: newValue
+    });
+
+    await this.sendUpdateRequests(changeRequests);
+    return true;
   }
 
-  // Relationships methods
-  async updateRelationships(newRelationships) {
-    try {
-      const updatedCharacter = { ...this, relationships: newRelationships };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-
-      // Update local instance
-      this.relationships = newRelationships;
-
-      return result;
-    } catch (error) {
-      console.error('Failed to update character relationships:', error);
-      throw error;
-    }
-  }
-
-
-
-  // General update method
-  async update(updateData) {
-    try {
-      const updatedCharacter = { ...this, ...updateData };
-      const result = await characterAPI.update(this.id, updatedCharacter);
-      
-      // Update local instance with new data
-      Object.assign(this, result);
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update character:', error);
-      throw error;
+  // take in update requests and send to api
+  async sendUpdateRequests(updateRequests) {
+    for (const request of updateRequests) {
+      await characterAPI.update(this.id, request);
     }
   }
 
@@ -322,6 +187,44 @@ export class Character {
   // Static factory method
   static fromData(data) {
     return new Character(data);
+  }
+
+  // Static create method
+  static async create(name, memberId) {
+    try {
+      const characterData = {
+        name: name,
+        memberId: memberId,
+        description: '',
+        backstory: '',
+        quotes: [],
+        relationships: [],
+        affiliations: [],
+        image: '',
+        gallery: [],
+        clips: [],
+        socials: [],
+        characterType: '',
+        seasons: [],
+        avatarInfo: {
+          name: name,
+          description: '',
+          url: ''
+        },
+        avatarName: name,
+        avatarDescription: '',
+        avatarUrl: '',
+        avatarReferenceImage: '',
+        createdAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString().split('T')[0]
+      };
+
+      const result = await characterAPI.create(characterData);
+      return new Character(result);
+    } catch (error) {
+      console.error('Failed to create character:', error);
+      throw error;
+    }
   }
 }
 

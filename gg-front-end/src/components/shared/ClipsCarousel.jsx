@@ -7,9 +7,10 @@ import {
   IconButton,
   Button,
   useTheme,
-  Chip
+  Chip,
+  Collapse
 } from '@mui/material';
-import { OpenInNew as OpenInNewIcon, Edit as EditIcon } from '@mui/icons-material';
+import { OpenInNew as OpenInNewIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { 
   PlayArrow as PlayIcon,
   NavigateNext as NextIcon,
@@ -20,6 +21,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandableCard from './ExpandableCard';
 import ClipsEditDialog from './ClipsEditDialog';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, compareArrays, getArrayChangeText, hasArrayChanges, aggregateArrayChanges } from '../../utils/changeDetection';
 
 function ClipsCarousel({ 
   title = "Clips", 
@@ -29,13 +32,25 @@ function ClipsCarousel({
   sx = {},
   seeAllUrl = null,
   canEdit = false,
-  onClipsUpdate = null
+  onClipsUpdate = null,
+  entityType = null,
+  entityId = null
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState('default');
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [showChanges, setShowChanges] = useState(false);
   const sliderRef = useRef(null);
   const theme = useTheme();
+  
+  // Get pending changes for clips
+  const { changeRequests } = useChangeRequests();
+  const pendingChanges = getPendingChanges(changeRequests, entityType, entityId, 'clips');
+  const hasPendingChanges = pendingChanges.length > 0;
+
+  // Aggregate all pending changes for clips
+  const arrayChanges = pendingChanges.length > 0 ? aggregateArrayChanges(pendingChanges) : null;
+  const hasChanges = arrayChanges ? hasArrayChanges(arrayChanges) : false;
 
   const handleEditClips = () => {
     setEditDialogOpen(true);
@@ -45,9 +60,9 @@ function ClipsCarousel({
     setEditDialogOpen(false);
   };
 
-  const handleSaveClips = (updatedClips) => {
+  const handleSaveClips = async (updatedClips) => {
     if (onClipsUpdate) {
-      onClipsUpdate(updatedClips);
+      await onClipsUpdate(updatedClips);
     }
   };
 
@@ -323,6 +338,85 @@ function ClipsCarousel({
     );
   };
 
+  const renderPendingChanges = () => {
+    if (!hasPendingChanges || !arrayChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowChanges(!showChanges)}
+          startIcon={<ExpandMoreIcon sx={{ 
+            transform: showChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{ 
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes: {getArrayChangeText(arrayChanges)}
+        </Button>
+        
+        <Collapse in={showChanges}>
+          <Box sx={{ 
+            mt: 1, 
+            p: 1, 
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {arrayChanges.added.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Added ({arrayChanges.added.length}):
+                </Typography>
+                {arrayChanges.added.map((clip, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                    • {clip.title} ({clip.source})
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {arrayChanges.removed.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Removed ({arrayChanges.removed.length}):
+                </Typography>
+                {arrayChanges.removed.map((clip, index) => (
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                    • {clip.title} ({clip.source})
+                  </Typography>
+                ))}
+              </Box>
+            )}
+            
+            {arrayChanges.modified.length > 0 && (
+              <Box>
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                  Modified ({arrayChanges.modified.length}):
+                </Typography>
+                {arrayChanges.modified.map((change, index) => (
+                  <Box key={index} sx={{ ml: 2, mb: 1 }}>
+                    <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                      • {change.old.title} ({change.old.source})
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                      → {change.new.title} ({change.new.source})
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Collapse>
+      </Box>
+    );
+  };
+
   const renderContent = () => {
     if (!clips || clips.length === 0) {
       return (
@@ -364,6 +458,7 @@ function ClipsCarousel({
         >
           {clips.map((clip, index) => renderClipCard(clip, index))}
         </Slider>
+        {renderPendingChanges()}
       </Box>
     );
   };
@@ -407,13 +502,13 @@ function ClipsCarousel({
                   handleEditClips();
                 }}
                 sx={{
-                  color: theme.palette.primary.main,
-                  borderColor: theme.palette.primary.main,
+                  color: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
+                  borderColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
                   py: 0.5,
                   px: 1,
                   minWidth: 'auto',
                   '&:hover': {
-                    backgroundColor: theme.palette.primary.main,
+                    backgroundColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
                     color: 'white',
                   }
                 }}

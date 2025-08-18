@@ -3,17 +3,14 @@ import EditableExpandableCard from '../shared/editableComponents/EditableExpanda
 import { useCharacters } from '../../contexts/CharacterContext';
 
 function CharacterDescription({ character, canEdit, onCharacterUpdate }) {
-  const { updateCharacter } = useCharacters();
+  const { fetchCharacters, getCharacterById } = useCharacters();
 
   const handleDescriptionUpdate = async (newDescription) => {
     try {
-      const updatedCharacter = {
-        ...character,
-        description: newDescription
-      };
-      
-      await updateCharacter(character.id, updatedCharacter);
-      onCharacterUpdate(updatedCharacter);
+          await character.update(newDescription, 'description');
+    await fetchCharacters();
+    const updatedCharacter = getCharacterById(character.id);
+    onCharacterUpdate(updatedCharacter);
     } catch (err) {
       console.error('Failed to update character description:', err);
     }

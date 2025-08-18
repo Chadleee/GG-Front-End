@@ -15,143 +15,42 @@ export class Member {
     this.updatedAt = data.updatedAt || '';
   }
 
-  // Gallery methods
-  async updateGallery(newGallery) {
+  // Dynamic update method
+  async update(newValue, fieldName) {
+    await this.createChangeRequests(newValue, fieldName);
     try {
-      const updatedMember = { ...this, gallery: newGallery };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
+      // Handle simple field updates
+      const updatedMember = { ...this, [fieldName]: newValue };
+
       // Update local instance
-      this.gallery = newGallery;
-      
-      return result;
+      this[fieldName] = newValue;
+
+      return updatedMember;
     } catch (error) {
-      console.error('Failed to update member gallery:', error);
+      console.error(`Failed to update member ${fieldName}:`, error);
       throw error;
     }
   }
 
-  async updateImageInGallery(imageIndex, imageData) {
-    try {
-      const updatedGallery = [...this.gallery];
-      updatedGallery[imageIndex] = imageData;
-      return await this.updateGallery(updatedGallery);
-    } catch (error) {
-      console.error('Failed to update image in member gallery:', error);
-      throw error;
-    }
+  async createChangeRequests(newValue, fieldName) {
+    const changeRequests = [];
+    changeRequests.push({
+      id: this.id,
+      entity: 'member',
+      entityId: this.id,
+      fieldType: fieldName,
+      oldValue: this[fieldName],
+      newValue: newValue
+    });
+
+    await this.sendUpdateRequests(changeRequests);
+    return true;
   }
 
-
-
-  // Clips methods
-  async updateClips(newClips) {
-    try {
-      const updatedMember = { ...this, clips: newClips };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance
-      this.clips = newClips;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member clips:', error);
-      throw error;
-    }
-  }
-
-
-
-  async updateClipInClips(clipIndex, clipData) {
-    try {
-      const updatedClips = [...this.clips];
-      updatedClips[clipIndex] = clipData;
-      return await this.updateClips(updatedClips);
-    } catch (error) {
-      console.error('Failed to update clip in member clips:', error);
-      throw error;
-    }
-  }
-
-
-
-  // Join date methods
-  async updateJoinDate(newJoinDate) {
-    try {
-      const updatedMember = { ...this, joinDate: newJoinDate };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance
-      this.joinDate = newJoinDate;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member join date:', error);
-      throw error;
-    }
-  }
-
-  // Bio methods
-  async updateBio(newBio) {
-    try {
-      const updatedMember = { ...this, bio: newBio };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance
-      this.bio = newBio;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member bio:', error);
-      throw error;
-    }
-  }
-
-  // Socials methods
-  async updateSocials(newSocials) {
-    try {
-      const updatedMember = { ...this, socials: newSocials };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance
-      this.socials = newSocials;
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member socials:', error);
-      throw error;
-    }
-  }
-
-
-
-  async updateSocialInSocials(socialIndex, socialData) {
-    try {
-      const updatedSocials = [...this.socials];
-      updatedSocials[socialIndex] = socialData;
-      return await this.updateSocials(updatedSocials);
-    } catch (error) {
-      console.error('Failed to update social in member socials:', error);
-      throw error;
-    }
-  }
-
-
-
-  // General update method
-  async update(updateData) {
-    try {
-      const updatedMember = { ...this, ...updateData };
-      const result = await memberAPI.update(this.id, updatedMember);
-      
-      // Update local instance with new data
-      Object.assign(this, result);
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to update member:', error);
-      throw error;
-    }
+  // take in update requests and send to api
+  async sendUpdateRequests(updateRequests) {
+    const result = await memberAPI.update(this.id, updateRequests);
+    return result;
   }
 
   // Delete method
@@ -218,6 +117,30 @@ export class Member {
   // Static factory method
   static fromData(data) {
     return new Member(data);
+  }
+
+  // Static create method
+  static async create(name) {
+    try {
+      const memberData = {
+        name: name,
+        displayName: name, // Copy name to displayName
+        bio: '',
+        image: '',
+        joinDate: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+        socials: [],
+        gallery: [],
+        clips: [],
+        createdAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString().split('T')[0]
+      };
+
+      const result = await memberAPI.create(memberData);
+      return new Member(result);
+    } catch (error) {
+      console.error('Failed to create member:', error);
+      throw error;
+    }
   }
 }
 

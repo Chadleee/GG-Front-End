@@ -4,15 +4,20 @@ import {
   Typography, 
   IconButton, 
   Button,
-  useTheme 
+  useTheme,
+  Chip,
+  Collapse
 } from '@mui/material';
 import { 
   Save as SaveIcon, 
   Cancel as CancelIcon,
-  Edit as EditIcon 
+  Edit as EditIcon,
+  ExpandMore as ExpandMoreIcon
 } from '@mui/icons-material';
 import ExpandableCard from '../ExpandableCard';
 import EditableText from './EditableText';
+import { useChangeRequests } from '../../../contexts/ChangeRequestContext';
+import { getPendingChanges, formatValue } from '../../../utils/changeDetection';
 
 function EditableExpandableCard({ 
   title, 
@@ -34,7 +39,13 @@ function EditableExpandableCard({
   const [editValue, setEditValue] = useState(value || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [showChanges, setShowChanges] = useState(false);
   const theme = useTheme();
+  
+  // Get pending changes for this specific field
+  const { changeRequests } = useChangeRequests();
+  const pendingChanges = getPendingChanges(changeRequests, entityType, entityId, fieldType);
+  const hasPendingChanges = pendingChanges.length > 0;
 
   const handleEdit = () => {
     setEditValue(value || '');
@@ -43,111 +54,104 @@ function EditableExpandableCard({
   };
 
   const handleSave = async () => {
-    setIsSubmitting(true);
-    try {
-      // Create change request
-      const changeRequest = {
-        entity: entityType,
-        entityId: entityId,
-        fieldType: fieldType,
-        action: "update",
-        oldValue: value || null,
-        newValue: editValue
-      };
-
-      // Submit change request
-      const response = await fetch('http://localhost:3001/change_requests', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(changeRequest),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit change request');
-      }
-
-      // Call the onSave callback with the new value
-      if (onSave) {
+    if (editValue !== value) {
+      setIsSubmitting(true);
+      try {
         await onSave(editValue);
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Failed to save:', error);
+      } finally {
+        setIsSubmitting(false);
       }
-
+    } else {
       setIsEditing(false);
-    } catch (error) {
-      console.error('Error submitting change request:', error);
-      // You might want to show an error message to the user here
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   const handleCancel = () => {
-    setEditValue(value || '');
     setIsEditing(false);
-    // Keep expanded when canceling - don't collapse
+    setEditValue(value || '');
   };
 
-  const handleTextSave = (newValue) => {
-    setEditValue(newValue);
+  const handleExpandToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const renderPendingChanges = () => {
+    if (!hasPendingChanges) return null;
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Button
+          size="small"
+          onClick={() => setShowChanges(!showChanges)}
+          startIcon={<ExpandMoreIcon sx={{ 
+            transform: showChanges ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s'
+          }} />}
+          sx={{ 
+            color: theme.palette.warning.main,
+            textTransform: 'none',
+            p: 0,
+            minWidth: 'auto'
+          }}
+        >
+          Pending Changes ({pendingChanges.length})
+        </Button>
+        
+        <Collapse in={showChanges}>
+          <Box sx={{ 
+            mt: 1, 
+            p: 1, 
+            backgroundColor: '#3d2c02',
+            border: `1px solid ${theme.palette.warning.main}`,
+            borderRadius: 1
+          }}>
+            {pendingChanges.map((change, index) => (
+              <Box key={change.id || index} sx={{ mb: index < pendingChanges.length - 1 ? 1 : 0 }}>
+                <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                  {formatValue(change.newValue)}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Collapse>
+      </Box>
+    );
   };
 
   const renderContent = () => {
     if (isEditing) {
       return (
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{ p: 2 }}>
           <EditableText
-            value={value}
-            editValue={editValue}
-            onSave={handleTextSave}
-            onEdit={handleEdit}
-            onCancel={handleCancel}
-            onEditValueChange={handleTextSave}
+            value={editValue}
+            onChange={setEditValue}
             placeholder={placeholder}
-            variant={variant}
             multiline={multiline}
             maxLength={maxLength}
-            isEditing={isEditing}
-            sx={{ mb: 2 }}
+            variant={variant}
+            autoFocus
           />
-          <Box sx={{ 
-            display: 'flex', 
-            gap: 1, 
-            justifyContent: 'flex-end',
-            mt: 2
-          }}>
+          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
             <Button
               size="small"
-              onClick={handleCancel}
+              variant="contained"
+              startIcon={<SaveIcon />}
+              onClick={handleSave}
               disabled={isSubmitting}
-              sx={{
-                backgroundColor: '#d32f2f',
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor: '#b71c1c',
-                }
-              }}
             >
-              Cancel
+              Save
             </Button>
             <Button
               size="small"
-              onClick={handleSave}
-              disabled={isSubmitting || editValue === value}
-              startIcon={<SaveIcon />}
-              sx={{
-                backgroundColor: '#FFFFFF',
-                color: '#000000',
-                '&:hover': {
-                  backgroundColor: '#000000',
-                  color: '#FFFFFF',
-                },
-                '&:disabled': {
-                  backgroundColor: '#9e9e9e',
-                }
-              }}
+              variant="outlined"
+              startIcon={<CancelIcon />}
+              onClick={handleCancel}
+              disabled={isSubmitting}
             >
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
+              Cancel
             </Button>
           </Box>
         </Box>
@@ -155,19 +159,11 @@ function EditableExpandableCard({
     }
 
     return (
-      <Box sx={{ position: 'relative' }}>
-        <EditableText
-          value={value}
-          editValue={editValue}
-          onSave={handleTextSave}
-          onEdit={handleEdit}
-          onCancel={handleCancel}
-          placeholder={placeholder}
-          variant={variant}
-          multiline={multiline}
-          maxLength={maxLength}
-          isEditing={isEditing}
-        />
+      <Box sx={{ p: 2 }}>
+        <Typography variant={variant} sx={{ whiteSpace: 'pre-wrap' }}>
+          {value || placeholder}
+        </Typography>
+        {renderPendingChanges()}
       </Box>
     );
   };
@@ -175,23 +171,20 @@ function EditableExpandableCard({
   return (
     <ExpandableCard
       title={title}
-      defaultExpanded={defaultExpanded}
-      expanded={isExpanded}
-      onExpandedChange={setIsExpanded}
-      disableCollapse={isEditing}
+      defaultExpanded={isExpanded}
       collapsible={collapsible}
       sx={sx}
       headerActions={
-        canEdit && !isEditing ? (
-          <Button 
+        canEdit && (
+          <Button
             startIcon={<EditIcon />}
             onClick={(e) => {
-              e.stopPropagation(); // Prevent header click when clicking edit button
+              e.stopPropagation();
               handleEdit();
             }}
-            sx={{ 
-              mr: 0, 
-              color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+            sx={{
+              mr: 0,
+              color: hasPendingChanges ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
               '&:hover': {
                 backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
               }
@@ -199,7 +192,7 @@ function EditableExpandableCard({
           >
             Edit
           </Button>
-        ) : null
+        )
       }
     >
       {renderContent()}

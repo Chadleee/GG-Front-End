@@ -68,7 +68,9 @@ function RelationshipsEditDialog({ open, onClose, relationships = [], onSave, ch
   }, [open, relationships]);
 
   const handleAddRelationship = () => {
+    const tempId = `temp_id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const newRelationship = {
+      id: tempId,
       character_id: '',
       relationship_type: 'Friend',
       description: ''
@@ -215,7 +217,7 @@ function RelationshipsEditDialog({ open, onClose, relationships = [], onSave, ch
           <List sx={{ p: 0 }}>
             {editedRelationships.map((relationship, index) => (
               <ListItem
-                key={index}
+                key={relationship.id || index}
                 sx={{
                   border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 1,

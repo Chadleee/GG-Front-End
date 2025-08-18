@@ -3,17 +3,14 @@ import EditableExpandableCard from '../shared/editableComponents/EditableExpanda
 import { useMembers } from '../../contexts/MemberContext';
 
 function MemberBio({ member, canEdit, onMemberUpdate }) {
-  const { updateMember } = useMembers();
+  const { fetchMembers, getMemberById } = useMembers();
 
   const handleBioUpdate = async (newBio) => {
     try {
-      const updatedMember = {
-        ...member,
-        bio: newBio
-      };
-      
-      await updateMember(member.id, updatedMember);
-      onMemberUpdate(updatedMember);
+          await member.update(newBio, 'bio');
+    await fetchMembers();
+    const updatedMember = getMemberById(member.id);
+    onMemberUpdate(updatedMember);
     } catch (err) {
       console.error('Failed to update member bio:', err);
     }

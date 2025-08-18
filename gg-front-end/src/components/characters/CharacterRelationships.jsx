@@ -6,6 +6,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useCharacters } from '../../contexts/CharacterContext';
+import { useChangeRequests } from '../../contexts/ChangeRequestContext';
+import { getPendingChanges, aggregateArrayChanges, getArrayChangeText } from '../../utils/changeDetection';
 import { useState } from 'react';
 import RelationshipsEditDialog from './RelationshipsEditDialog';
 import shabammabop from '../../assets/shabammabop.png';
@@ -19,8 +21,20 @@ import marcus from '../../assets/marcus.png';
 
 function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }) {
   const navigate = useNavigate();
-  const { characters } = useCharacters();
+  const { characters, fetchCharacters, getCharacterById } = useCharacters();
+  const { getChangeRequestsByCharacterId } = useChangeRequests();
   const [relationshipsEditDialogOpen, setRelationshipsEditDialogOpen] = useState(false);
+
+  // Get pending changes for relationships
+  const relationshipsPendingChanges = (() => {
+    if (!character?.id) return [];
+    const requests = getChangeRequestsByCharacterId(character.id);
+    return getPendingChanges(requests, 'character', character.id, 'relationships');
+  })();
+
+  // Aggregate all pending changes for relationships
+  const relationshipsArrayChanges = relationshipsPendingChanges.length > 0 ? aggregateArrayChanges(relationshipsPendingChanges) : null;
+  const hasPendingChanges = relationshipsArrayChanges ? (relationshipsArrayChanges.added.length > 0 || relationshipsArrayChanges.removed.length > 0 || relationshipsArrayChanges.modified.length > 0) : false;
 
   // Function to determine if infinite scrolling should be enabled
   const shouldEnableInfinite = () => {
@@ -97,7 +111,7 @@ function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }
               }}
               sx={{ 
                 mr: 0, 
-                color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
+                color: hasPendingChanges ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                 '&:hover': {
                   backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
                 }
@@ -249,9 +263,10 @@ function CharacterRelationships({ character, theme, canEdit, onCharacterUpdate }
         character={character}
         onSave={async (updatedRelationships) => {
           try {
-            const updatedCharacter = { ...character, relationships: updatedRelationships };
-            await character.updateRelationships(updatedRelationships);
-            onCharacterUpdate(updatedCharacter);
+                  await character.update(updatedRelationships, 'relationships');
+      await fetchCharacters();
+      const updatedCharacter = getCharacterById(character.id);
+      onCharacterUpdate(updatedCharacter);
             setRelationshipsEditDialogOpen(false);
           } catch (error) {
             console.error('Failed to update character relationships:', error);

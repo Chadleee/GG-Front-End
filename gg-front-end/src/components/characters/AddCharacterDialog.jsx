@@ -14,38 +14,32 @@ import {
   useTheme
 } from '@mui/material';
 import { useCharacters } from '../../contexts/CharacterContext';
+import { Character } from '../../models/Character';
 
 function AddCharacterDialog({ open, onClose, members }) {
   const theme = useTheme();
-  const { createCharacter } = useCharacters();
+  const { fetchCharacters } = useCharacters();
   
-  const [newCharacter, setNewCharacter] = useState({
-    name: '',
-    affiliations: [],
-    memberId: '',
-    image: 'https://via.placeholder.com/150'
-  });
+  const [characterName, setCharacterName] = useState('');
+  const [selectedMemberId, setSelectedMemberId] = useState('');
 
   const handleAddCharacter = async () => {
-    if (newCharacter.name && newCharacter.affiliations && newCharacter.memberId) {
+    if (characterName.trim() && selectedMemberId) {
       try {
-        const characterData = {
-          ...newCharacter,
-          memberId: parseInt(newCharacter.memberId)
-        };
-        
-        await createCharacter(characterData);
-        setNewCharacter({ name: '', affiliations: [], memberId: '', image: 'https://via.placeholder.com/150' });
+        await Character.create(characterName.trim(), parseInt(selectedMemberId));
+        await fetchCharacters(); // Refresh the characters list
+        setCharacterName('');
+        setSelectedMemberId('');
         onClose();
       } catch (err) {
-        // Error is handled by the context
         console.error('Failed to create character:', err);
       }
     }
   };
 
   const handleClose = () => {
-    setNewCharacter({ name: '', affiliations: '', memberId: '', image: 'https://via.placeholder.com/150' });
+    setCharacterName('');
+    setSelectedMemberId('');
     onClose();
   };
 
@@ -69,9 +63,10 @@ function AddCharacterDialog({ open, onClose, members }) {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
           <TextField
             label="Character Name"
-            value={newCharacter.name}
-            onChange={(e) => setNewCharacter({...newCharacter, name: e.target.value})}
+            value={characterName}
+            onChange={(e) => setCharacterName(e.target.value)}
             fullWidth
+            required
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -86,59 +81,12 @@ function AddCharacterDialog({ open, onClose, members }) {
               },
             }}
           />
-          <TextField
-            label="Affiliations"
-            value={newCharacter.affiliations}
-            onChange={(e) => setNewCharacter({...newCharacter, affiliations: e.target.value})}
-            fullWidth
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#333333',
-                },
-                '&:hover fieldset': {
-                  borderColor: theme.palette.primary.main,
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: theme.palette.primary.main,
-                },
-              },
-            }}
-          />
-                      <FormControl fullWidth>
-              <InputLabel>Member</InputLabel>
-              <Select
-                value={newCharacter.memberId}
-                label="Member"
-                onChange={(e) => setNewCharacter({...newCharacter, memberId: e.target.value})}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#333333',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: theme.palette.primary.main,
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: theme.palette.primary.main,
-                    },
-                  },
-                }}
-              >
-                {members
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((member) => (
-                  <MenuItem key={member.id} value={member.id}>
-                    {member.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Image URL"
-              value={newCharacter.image}
-              onChange={(e) => setNewCharacter({...newCharacter, image: e.target.value})}
-              fullWidth
+          <FormControl fullWidth required>
+            <InputLabel>Member</InputLabel>
+            <Select
+              value={selectedMemberId}
+              label="Member"
+              onChange={(e) => setSelectedMemberId(e.target.value)}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
@@ -152,8 +100,17 @@ function AddCharacterDialog({ open, onClose, members }) {
                   },
                 },
               }}
-            />
-          </Box>
+            >
+              {members
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((member) => (
+                <MenuItem key={member.id} value={member.id}>
+                  {member.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button 

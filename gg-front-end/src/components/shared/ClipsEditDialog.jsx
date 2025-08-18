@@ -135,8 +135,9 @@ function ClipsEditDialog({
         setIsEditing(false);
         setEditingIndex(null);
       } else {
-        // Add new item
-        setEditedClips([...editedClips, { ...formItem }]);
+        // Add new item with temporary ID
+        const tempId = `temp_id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        setEditedClips([...editedClips, { ...formItem, id: tempId }]);
       }
       setFormItem({ title: '', source: '', url: '', publishedAt: '' });
     }
@@ -408,7 +409,7 @@ function ClipsEditDialog({
 
         <Grid container spacing={2}>
           {editedClips.map((item, index) => (
-            <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Grid key={item.id || index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Card sx={{
                 backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#424242',
                 border: `1px solid ${theme.palette.mode === 'light' ? '#e0e0e0' : '#666666'}`

@@ -10,36 +10,29 @@ import {
   useTheme
 } from '@mui/material';
 import { useMembers } from '../../contexts/MemberContext';
+import { Member } from '../../models/Member';
 
 function AddMemberDialog({ open, onClose }) {
   const theme = useTheme();
-  const { createMember } = useMembers();
+  const { fetchMembers } = useMembers();
   
-  const [newMember, setNewMember] = useState({
-    name: '',
-    image: 'https://via.placeholder.com/150'
-  });
+  const [memberName, setMemberName] = useState('');
 
   const handleAddMember = async () => {
-    if (newMember.name) {
+    if (memberName.trim()) {
       try {
-        const memberData = {
-          ...newMember,
-          joinDate: new Date().toISOString().split('T')[0]
-        };
-        
-        await createMember(memberData);
-        setNewMember({ name: '', image: 'https://via.placeholder.com/150' });
+        await Member.create(memberName.trim());
+        await fetchMembers(); // Refresh the members list
+        setMemberName('');
         onClose();
       } catch (err) {
-        // Error is handled by the context
         console.error('Failed to create member:', err);
       }
     }
   };
 
   const handleClose = () => {
-    setNewMember({ name: '', image: 'https://via.placeholder.com/150' });
+    setMemberName('');
     onClose();
   };
 
@@ -63,28 +56,10 @@ function AddMemberDialog({ open, onClose }) {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
           <TextField
             label="Member Name"
-            value={newMember.name}
-            onChange={(e) => setNewMember({...newMember, name: e.target.value})}
+            value={memberName}
+            onChange={(e) => setMemberName(e.target.value)}
             fullWidth
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#333333',
-                },
-                '&:hover fieldset': {
-                  borderColor: theme.palette.primary.main,
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: theme.palette.primary.main,
-                },
-              },
-            }}
-          />
-          <TextField
-            label="Image URL"
-            value={newMember.image}
-            onChange={(e) => setNewMember({...newMember, image: e.target.value})}
-            fullWidth
+            required
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
