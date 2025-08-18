@@ -109,7 +109,7 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                   handleEdit();
                 }}
                 sx={{
-                  color: hasPendingChanges ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
+                  color: hasPendingChanges ? theme.palette.warning.main : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                   '&:hover': {
                     backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
                   }
@@ -238,7 +238,7 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                       transition: 'transform 0.2s'
                     }} />}
                     sx={{
-                      color: '#FFD700',
+                      color: '#3d2c02',
                       textTransform: 'none',
                       p: 0,
                       minWidth: 'auto'
@@ -252,16 +252,16 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                       mt: 1,
                       p: 1,
                       backgroundColor: '#3d2c02',
-                      border: `1px solid #FFD700`,
+                      border: `1px solid #3d2c02`,
                       borderRadius: 1
                     }}>
                       {quotesArrayChanges.added.length > 0 && (
                         <Box sx={{ mb: 2 }}>
-                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                             Added ({quotesArrayChanges.added.length}):
                           </Typography>
                           {quotesArrayChanges.added.map((quote, index) => (
-                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#3d2c02' }}>
                               • "{quote}"
                             </Typography>
                           ))}
@@ -270,11 +270,11 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                       
                       {quotesArrayChanges.removed.length > 0 && (
                         <Box sx={{ mb: 2 }}>
-                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                             Removed ({quotesArrayChanges.removed.length}):
                           </Typography>
                           {quotesArrayChanges.removed.map((quote, index) => (
-                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                            <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#3d2c02' }}>
                               • "{quote}"
                             </Typography>
                           ))}
@@ -283,15 +283,15 @@ function CharacterQuotes({ character, canEdit, onCharacterUpdate }) {
                       
                       {quotesArrayChanges.modified.length > 0 && (
                         <Box>
-                          <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                             Modified ({quotesArrayChanges.modified.length}):
                           </Typography>
                           {quotesArrayChanges.modified.map((change, index) => (
                             <Box key={index} sx={{ ml: 2, mb: 1 }}>
-                              <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                              <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#3d2c02' }}>
                                 • "{change.old}"
                               </Typography>
-                              <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                              <Typography variant="body2" sx={{ color: '#3d2c02' }}>
                                 → "{change.new}"
                               </Typography>
                             </Box>

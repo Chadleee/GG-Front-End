@@ -343,7 +343,7 @@ function RelationshipsEditDialog({ open, onClose, relationships = [], onSave, ch
                           size="small"
                           onClick={() => handleEditRelationship(index)}
                           sx={{
-                            color: theme.palette.primary.main,
+                            color: theme.palette.warning.main,
                             '&:hover': {
                               backgroundColor: 'rgba(25, 118, 210, 0.1)',
                             }

@@ -136,9 +136,9 @@ function CharacterDetail() {
           }}>
                          {avatarPendingChanges.map((change, index) => (
                <Box key={change.id || index} sx={{ mb: index < avatarPendingChanges.length - 1 ? 1 : 0 }}>
-                 <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
-                   {formatValue(change.newValue)}
-                 </Typography>
+                                 <Typography variant="body2" sx={{ color: '#3d2c02', fontWeight: 'medium' }}>
+                  {formatValue(change.newValue)}
+                </Typography>
                </Box>
              ))}
           </Box>
@@ -243,7 +243,7 @@ function CharacterDetail() {
                   }}
                   sx={{ 
                     mr: 0, 
-                    color: avatarPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
+                    color: avatarPendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                     '&:hover': {
                       backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
                     }

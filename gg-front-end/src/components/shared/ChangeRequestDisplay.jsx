@@ -105,7 +105,7 @@ function ChangeRequestDisplay({ entityType, entityId, canEdit }) {
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <EditIcon sx={{ color: theme.palette.primary.main }} />
+            <EditIcon sx={{ color: theme.palette.warning.main }} />
             <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
               Pending Changes ({pendingRequests.length})
             </Typography>

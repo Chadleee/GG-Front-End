@@ -110,7 +110,7 @@ function EditableExpandableCard({
           }}>
             {pendingChanges.map((change, index) => (
               <Box key={change.id || index} sx={{ mb: index < pendingChanges.length - 1 ? 1 : 0 }}>
-                <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                <Typography variant="body2" sx={{ color: '#3d2c02', fontWeight: 'medium' }}>
                   {formatValue(change.newValue)}
                 </Typography>
               </Box>
@@ -184,7 +184,7 @@ function EditableExpandableCard({
             }}
             sx={{
               mr: 0,
-              color: hasPendingChanges ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
+              color: hasPendingChanges ? theme.palette.warning.main : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
               '&:hover': {
                 backgroundColor: theme.palette.mode === 'light' ? 'rgba(25, 118, 210, 0.1)' : 'rgba(25, 118, 210, 0.1)',
               }

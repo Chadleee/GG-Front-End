@@ -226,7 +226,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
           }}>
             {memberIdPendingChanges.map((change, index) => (
               <Box key={change.id || index} sx={{ mb: index < memberIdPendingChanges.length - 1 ? 1 : 0 }}>
-                <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                <Typography variant="body2" sx={{ color: '#3d2c02', fontWeight: 'medium' }}>
                   {formatValue(change.newValue)}
                 </Typography>
               </Box>
@@ -269,11 +269,11 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
           }}>
             {affiliationsArrayChanges.added.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Added ({affiliationsArrayChanges.added.length}):
                 </Typography>
                 {affiliationsArrayChanges.added.map((affiliation, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#3d2c02' }}>
                     • {affiliation}
                   </Typography>
                 ))}
@@ -282,11 +282,11 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
             
             {affiliationsArrayChanges.removed.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Removed ({affiliationsArrayChanges.removed.length}):
                 </Typography>
                 {affiliationsArrayChanges.removed.map((affiliation, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#3d2c02' }}>
                     • {affiliation}
                   </Typography>
                 ))}
@@ -330,11 +330,11 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
           }}>
             {seasonsArrayChanges.added.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Added ({seasonsArrayChanges.added.length}):
                 </Typography>
                 {seasonsArrayChanges.added.map((season, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#3d2c02' }}>
                     • {season}
                   </Typography>
                 ))}
@@ -343,11 +343,11 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
             
             {seasonsArrayChanges.removed.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Removed ({seasonsArrayChanges.removed.length}):
                 </Typography>
                 {seasonsArrayChanges.removed.map((season, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#3d2c02' }}>
                     • {season}
                   </Typography>
                 ))}
@@ -484,7 +484,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                     size="small"
                     onClick={handleEditMemberId}
                     sx={{ 
-                      color: memberIdPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
+                      color: memberIdPendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                       '&:hover': {
                         color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                       }
@@ -508,7 +508,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                   size="small"
                   onClick={handleEditAffiliations}
                   sx={{ 
-                    color: affiliationsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
+                    color: affiliationsPendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                     '&:hover': {
                       color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                     }
@@ -557,7 +557,7 @@ function CharacterProfileCard({ character, canEdit = false, onCharacterUpdate })
                   size="small"
                   onClick={handleEditSeasons}
                   sx={{ 
-                    color: seasonsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
+                    color: seasonsPendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : theme.palette.text.secondary),
                     '&:hover': {
                       color: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary,
                     }

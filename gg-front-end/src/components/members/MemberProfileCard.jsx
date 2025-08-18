@@ -149,11 +149,11 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
           }}>
             {socialsArrayChanges.added.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Added ({socialsArrayChanges.added.length}):
                 </Typography>
                                  {socialsArrayChanges.added.map((social, index) => (
-                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#3d2c02' }}>
                      • {social.platform}
                    </Typography>
                  ))}
@@ -162,11 +162,11 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
             
             {socialsArrayChanges.removed.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Removed ({socialsArrayChanges.removed.length}):
                 </Typography>
                                  {socialsArrayChanges.removed.map((social, index) => (
-                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                   <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#3d2c02' }}>
                      • {social.platform}
                    </Typography>
                  ))}
@@ -175,15 +175,15 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
             
             {socialsArrayChanges.modified.length > 0 && (
               <Box>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Modified ({socialsArrayChanges.modified.length}):
                 </Typography>
                                  {socialsArrayChanges.modified.map((change, index) => (
                    <Box key={index} sx={{ ml: 2, mb: 1 }}>
-                     <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                     <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#3d2c02' }}>
                        • {change.old.platform}
                      </Typography>
-                     <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                     <Typography variant="body2" sx={{ color: '#3d2c02' }}>
                        → {change.new.platform}
                      </Typography>
                    </Box>
@@ -228,7 +228,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
           }}>
                          {joinDatePendingChanges.map((change, index) => (
                <Box key={change.id || index} sx={{ mb: index < joinDatePendingChanges.length - 1 ? 1 : 0 }}>
-                 <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 'medium' }}>
+                 <Typography variant="body2" sx={{ color: '#3d2c02', fontWeight: 'medium' }}>
                    {formatValue(change.newValue)}
                  </Typography>
                </Box>
@@ -305,7 +305,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                             size="small"
                             onClick={handleEditSocials}
                             sx={{ 
-                              color: socialsPendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
+                                                             color: socialsPendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                               border: `1px solid ${theme.palette.mode === 'light' ? '#888888' : '#333333'}`,
                               borderRadius: '20%'
                             }}
@@ -384,7 +384,7 @@ function MemberProfileCard({ member, canEdit = false, onSocialsUpdate, onJoinDat
                       size="small"
                       onClick={handleEditJoinDate}
                       sx={{ 
-                        color: joinDatePendingChanges.length > 0 ? '#FFD700' : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
+                                                 color: joinDatePendingChanges.length > 0 ? theme.palette.warning.main : (theme.palette.mode === 'light' ? '#ffffff' : theme.palette.text.primary),
                       }}
                     >
                       <EditIcon fontSize="small" />

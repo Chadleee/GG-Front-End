@@ -207,11 +207,11 @@ function GalleryCarousel({
           }}>
             {arrayChanges.added.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Added ({arrayChanges.added.length}):
                 </Typography>
                 {arrayChanges.added.map((image, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, color: '#3d2c02' }}>
                     • {image.description || 'Untitled image'}
                   </Typography>
                 ))}
@@ -220,11 +220,11 @@ function GalleryCarousel({
             
             {arrayChanges.removed.length > 0 && (
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Removed ({arrayChanges.removed.length}):
                 </Typography>
                 {arrayChanges.removed.map((image, index) => (
-                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#FFD700' }}>
+                  <Typography key={index} variant="body2" sx={{ ml: 2, mb: 0.5, textDecoration: 'line-through', color: '#3d2c02' }}>
                     • {image.description || 'Untitled image'}
                   </Typography>
                 ))}
@@ -233,15 +233,15 @@ function GalleryCarousel({
             
             {arrayChanges.modified.length > 0 && (
               <Box>
-                <Typography variant="subtitle2" sx={{ color: '#FFD700', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ color: '#3d2c02', mb: 1 }}>
                   Modified ({arrayChanges.modified.length}):
                 </Typography>
                 {arrayChanges.modified.map((change, index) => (
                   <Box key={index} sx={{ ml: 2, mb: 1 }}>
-                    <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#FFD700' }}>
+                    <Typography variant="body2" sx={{ textDecoration: 'line-through', color: '#3d2c02' }}>
                       • {change.old.description || 'Untitled image'}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                    <Typography variant="body2" sx={{ color: '#3d2c02' }}>
                       → {change.new.description || 'Untitled image'}
                     </Typography>
                   </Box>
@@ -440,13 +440,13 @@ function GalleryCarousel({
                   handleEditGallery();
                 }}
                 sx={{
-                  color: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
-                  borderColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
+                  color: hasPendingChanges ? theme.palette.warning.main : theme.palette.primary.main,
+                                      borderColor: hasPendingChanges ? theme.palette.warning.main : theme.palette.primary.main,
                   py: 0.5,
                   px: 1,
                   minWidth: 'auto',
                   '&:hover': {
-                    backgroundColor: hasPendingChanges ? '#FFD700' : theme.palette.primary.main,
+                    backgroundColor: hasPendingChanges ? theme.palette.warning.main : theme.palette.primary.main,
                     color: 'white',
                   }
                 }}

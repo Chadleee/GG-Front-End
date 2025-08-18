@@ -87,7 +87,7 @@ function EditableText({
           position: 'absolute',
           top: 0,
           right: 0,
-          color: theme.palette.primary.main,
+          color: theme.palette.warning.main,
           opacity: 0,
           transition: 'opacity 0.2s ease-in-out',
           '&:hover': {
